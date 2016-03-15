@@ -1,6 +1,7 @@
 package com.antiparagon.scalacv
 
 import java.awt.image.BufferedImage
+import javax.imageio.ImageIO
 
 import org.opencv.core._
 import org.opencv.imgcodecs.Imgcodecs
@@ -64,7 +65,36 @@ object CVExperimenter extends JFXApp {
                 tabs(index) = tab
               }
             }
-
+          }
+        },
+        new Button {
+          text = "Save Image..."
+          style = "-fx-font-size: 20pt"
+          onAction = handle {
+            val index = imagePane.getSelectionModel.getSelectedIndex
+            println(s"Index $index")
+            if(index >= 0 && index < tabs.length) {
+              val fileChooser = new FileChooser() {
+                title = "Save Image File"
+              }
+              val img = fileChooser.showSaveDialog(scene.window())
+              if (img != null) {
+                println("Image name: " + img.getName())
+                var imgType = "png"
+                if (img.getName.endsWith(".jpg")) imgType = "jpg"
+                if (img.getName.endsWith(".gif")) imgType = "gif"
+                if (img.getName.endsWith(".bmp")) imgType = "bmp"
+                if (img.getName.endsWith(".png")) imgType = "png"
+                //try {
+                  ImageIO.write(SwingFXUtils.fromFXImage(tabs(index).getImg(), null), imgType, img)
+//                } catch {
+//                  case ex: Throwable => {
+//                    ex.printStackTrace()
+//                    println("Unable to save inmage to:" + img.getName() + " - " + ex.getMessage())
+//                  }
+//                }
+              }
+            }
           }
         },
         new Button {
@@ -90,9 +120,9 @@ object CVExperimenter extends JFXApp {
               imagePane.selectionModel.value.select(etab)
               val i = imagePane.getSelectionModel.getSelectedIndex
               if(tabs.length - 1 < i) {
-                tabs += tab
+                tabs += etab
               } else {
-                tabs(i) = tab
+                tabs(i) = etab
               }
             }
           }
