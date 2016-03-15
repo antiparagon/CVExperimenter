@@ -1,6 +1,7 @@
 package com.antiparagon.scalacv
 
 import java.awt.image.BufferedImage
+import java.io.IOException
 import javax.imageio.ImageIO
 
 import org.opencv.core._
@@ -85,14 +86,14 @@ object CVExperimenter extends JFXApp {
                 if (img.getName.endsWith(".gif")) imgType = "gif"
                 if (img.getName.endsWith(".bmp")) imgType = "bmp"
                 if (img.getName.endsWith(".png")) imgType = "png"
-                //try {
+                try {
                   ImageIO.write(SwingFXUtils.fromFXImage(tabs(index).getImg(), null), imgType, img)
-//                } catch {
-//                  case ex: Throwable => {
-//                    ex.printStackTrace()
-//                    println("Unable to save inmage to:" + img.getName() + " - " + ex.getMessage())
-//                  }
-//                }
+                } catch {
+                  case ex: IOException => {
+                    ex.printStackTrace()
+                    println("Unable to save inmage to:" + img.getName() + " - " + ex.getMessage())
+                  }
+                }
               }
             }
           }
@@ -146,6 +147,7 @@ object CVExperimenter extends JFXApp {
 
   stage = new PrimaryStage {
     title = "CV Experimenter"
+    icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
     scene = new Scene(1500,750) {
       fill = Black
       root = getLayout()
