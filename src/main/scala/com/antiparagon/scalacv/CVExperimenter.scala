@@ -31,11 +31,7 @@ object CVExperimenter extends JFXApp {
 
   System.loadLibrary("opencv_java300")
 
-  val tabs = ArrayBuffer.empty[ExperimenterTab]
-
-  val imagePane = new TabPane {
-    hgrow = Priority.Always
-  }
+  val tabManager: TabManager = new TabManager
 
   val controlPane = new ScrollPane {
     fitToHeight = true
@@ -55,16 +51,7 @@ object CVExperimenter extends JFXApp {
             }
             val img = fileChooser.showOpenDialog(scene.window())
             if (img != null) {
-              val tab = new ExperimenterTab(new Image(img.toURI.toString))
-              tab.text = img.getName
-              imagePane += tab
-              imagePane.selectionModel.value.select(tab)
-              val index = imagePane.getSelectionModel.getSelectedIndex
-              if(tabs.length - 1 < index) {
-                tabs += tab
-              } else {
-                tabs(index) = tab
-              }
+              tabManager.addImageTab(img.getName, new Image(img.toURI.toString))
             }
           }
         },
@@ -72,9 +59,7 @@ object CVExperimenter extends JFXApp {
           text = "Save Image..."
           style = "-fx-font-size: 20pt"
           onAction = handle {
-            val index = imagePane.getSelectionModel.getSelectedIndex
-            println(s"Index $index")
-            if(index >= 0 && index < tabs.length) {
+            if(tabManager.isImageTabSelected()) {
               val fileChooser = new FileChooser() {
                 title = "Save Image File"
               }
@@ -87,7 +72,7 @@ object CVExperimenter extends JFXApp {
                 if (img.getName.endsWith(".bmp")) imgType = "bmp"
                 if (img.getName.endsWith(".png")) imgType = "png"
                 try {
-                  ImageIO.write(SwingFXUtils.fromFXImage(tabs(index).getImg(), null), imgType, img)
+                  ImageIO.write(SwingFXUtils.fromFXImage(tabManager.getSelectedImg(), null), imgType, img)
                 } catch {
                   case ex: IOException => {
                     ex.printStackTrace()
@@ -102,10 +87,8 @@ object CVExperimenter extends JFXApp {
           text = "Apply Outline"
           style = "-fx-font-size: 20pt"
           onAction = handle {
-            val index = imagePane.getSelectionModel.getSelectedIndex
-            if(index >= 0) {
-              val tab = tabs(index)
-              val image: Mat = tab.getMat()
+            if(tabManager.isImageTabSelected()) {
+              val image: Mat = tabManager.getSelectedMat()
               val imageHSV = new Mat(image.size(), 1)
               val imageBlurr = new Mat(image.size(), 1)
               val imageA = new Mat(image.size(), 127)
@@ -115,16 +98,7 @@ object CVExperimenter extends JFXApp {
               Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
               Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5);
 
-              val etab = new ExperimenterTab(converCVtoFX(imageA))
-              etab.text = tab.getText + " - mod"
-              imagePane += etab
-              imagePane.selectionModel.value.select(etab)
-              val i = imagePane.getSelectionModel.getSelectedIndex
-              if(tabs.length - 1 < i) {
-                tabs += etab
-              } else {
-                tabs(i) = etab
-              }
+              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", converCVtoFX(imageA))
             }
           }
         }
@@ -138,7 +112,7 @@ object CVExperimenter extends JFXApp {
       style = "-fx-background-color: black"
       children = Seq(
         controlPane,
-        imagePane
+        tabManager.getTabPane()
       )
     }
 

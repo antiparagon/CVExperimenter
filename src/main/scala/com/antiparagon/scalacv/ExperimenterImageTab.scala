@@ -8,7 +8,7 @@ import scalafx.scene.image.{Image, ImageView}
 /**
   * Created by wmckay on 3/13/16.
   */
-class ExperimenterTab(val img : Image) extends Tab {
+class ExperimenterImageTab(val img : Image) extends Tab {
 
   content = new ScrollPane {
     style = "-fx-background-color: black"
