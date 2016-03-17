@@ -20,7 +20,6 @@ class TabManager {
 
   def isImageTabSelected(): Boolean = {
     val index = imagePane.getSelectionModel.getSelectedIndex
-    println(s"Index $index")
     if(index >= 0 && index < tabs.length) {
       return true
     }
@@ -49,7 +48,7 @@ class TabManager {
     if (getSelectedIndex() >= 0) {
       return tabs(getSelectedIndex()).text.value
     }
-    return null
+    return ""
   }
 
   def addImageTab(name : String, img : Image): Unit = {

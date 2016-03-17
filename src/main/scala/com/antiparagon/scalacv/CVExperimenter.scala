@@ -1,27 +1,21 @@
 package com.antiparagon.scalacv
 
-import java.awt.image.BufferedImage
 import java.io.IOException
 import javax.imageio.ImageIO
 
 import org.opencv.core._
-import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 
-import scala.collection.mutable.ArrayBuffer
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.embed.swing.SwingFXUtils
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.control.{Tab, TabPane, ScrollPane, Button}
-import scalafx.scene.effect.DropShadow
+import scalafx.scene.control.{ScrollPane, Button}
 import scalafx.scene.image._
-import scalafx.scene.layout.{Priority, HBox, VBox}
+import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color._
-import scalafx.scene.paint.{Stops, LinearGradient}
-import scalafx.scene.text.Text
 import scalafx.stage.FileChooser
 
 /**
@@ -98,7 +92,7 @@ object CVExperimenter extends JFXApp {
               Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
               Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5);
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", converCVtoFX(imageA))
+              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", ImageTools.converCVtoFX(imageA))
             }
           }
         }
@@ -128,31 +122,5 @@ object CVExperimenter extends JFXApp {
     }
   }
 
-  def converCVtoFX(mat:Mat) : WritableImage = {
-    var img_type = BufferedImage.TYPE_BYTE_GRAY
-    if ( mat.channels() > 1 ) {
-      img_type = BufferedImage.TYPE_3BYTE_BGR
-    }
 
-    val array_size = mat.channels() * mat.cols() * mat.rows()
-    val b = new Array[Byte](array_size)
-    mat.get(0, 0, b)
-    val view_image: BufferedImage  = new BufferedImage(mat.cols(), mat.rows(), img_type)
-    view_image.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), b)
-    SwingFXUtils.toFXImage(view_image, null)
-  }
-
-  def converFXtoCV(img:Image) : Mat = {
-    val width = img.width.value.toInt
-    val height = img.height.value.toInt
-    val buffer = new Array[Byte](width * height * 4)
-
-    val reader = img.getPixelReader
-    val format = PixelFormat.getByteBgraInstance
-    reader.getPixels(0, 0, width, height, format, buffer, 0, width * 4)
-
-    val mat = new Mat(height, width, CvType.CV_8UC4)
-    mat.put(0, 0, buffer)
-    return mat
-  }
 }

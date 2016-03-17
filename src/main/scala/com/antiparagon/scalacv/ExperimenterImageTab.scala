@@ -1,6 +1,6 @@
 package com.antiparagon.scalacv
 
-import org.opencv.core.{Mat, CvType}
+import org.opencv.core.Mat
 
 import scalafx.scene.control.{ScrollPane, Tab}
 import scalafx.scene.image.{Image, ImageView}
@@ -18,6 +18,6 @@ class ExperimenterImageTab(val img : Image) extends Tab {
   def getImg() : Image = return img
 
   def getMat() : Mat = {
-    CVExperimenter.converFXtoCV(img)
+    ImageTools.converFXtoCV(img)
   }
 }
