@@ -78,6 +78,13 @@ object CVExperimenter extends JFXApp {
           }
         },
         new Button {
+          text = "Open Webcam..."
+          style = "-fx-font-size: 20pt"
+          onAction = handle {
+            tabManager.addVideoTab("Video Tab")
+          }
+        },
+        new Button {
           text = "Apply Outline"
           style = "-fx-font-size: 20pt"
           onAction = handle {

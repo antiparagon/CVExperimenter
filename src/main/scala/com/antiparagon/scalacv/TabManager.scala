@@ -64,6 +64,15 @@ class TabManager {
     }
   }
 
+  def addVideoTab(name : String): Unit = {
+    val tab = new ExperimenterVideoTab()
+    tab.text = name
+    imagePane += tab
+    imagePane.selectionModel.value.select(tab)
+    val index = imagePane.getSelectionModel.getSelectedIndex
+
+  }
+
   def getTabPane() : TabPane = {
     return imagePane
   }

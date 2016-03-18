@@ -9,7 +9,7 @@ import org.opencv.videoio.VideoCapture
 import scalafx.Includes._
 import scalafx.geometry.Insets
 import scalafx.scene.control.{Button, ScrollPane, Tab}
-import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.image.{WritableImage, Image, ImageView}
 import scalafx.scene.layout.VBox
 
 /**
@@ -19,8 +19,10 @@ class ExperimenterVideoTab() extends Tab {
 
   val capture = new VideoCapture()
   var cameraActive = false
-  val currentFrame = new ImageView()
-  var timer: ScheduledExecutorService
+  val currentFrame = {
+    new ImageView(new WritableImage(500, 500))
+  }
+  var timer: ScheduledExecutorService = null
 
   content = new ScrollPane {
     style = "-fx-background-color: black"
@@ -28,7 +30,7 @@ class ExperimenterVideoTab() extends Tab {
       padding = Insets(20)
       style = "-fx-background-color: black"
       children = Seq(
-        //new ImageView(img),
+        currentFrame,
         new Button {
           text = "Start Video"
           style = "-fx-font-size: 20pt"
@@ -42,8 +44,7 @@ class ExperimenterVideoTab() extends Tab {
 
                 // grab a frame every 33 ms (30 frames/sec)
                 val frameGrabber = new Runnable() {
-                  @Override
-                  def run() {
+                  def run {
                     val imageToShow = grabFrame()
                     currentFrame.setImage(imageToShow)
                   }
@@ -57,7 +58,7 @@ class ExperimenterVideoTab() extends Tab {
               }
               else {
                 // log the error
-                println("Impossible to open the camera connection...");
+                println("Impossible to open the camera connection...")
               }
             }
             else {
@@ -79,7 +80,7 @@ class ExperimenterVideoTab() extends Tab {
               // release the camera
               capture.release();
               // clean the frame
-              currentFrame.setImage(null);
+              //currentFrame.setImage(null);
             }
 
           }
@@ -94,10 +95,10 @@ class ExperimenterVideoTab() extends Tab {
     val frame = new Mat()
 
     // check if the capture is open
-    if (capture.isOpened()) {
+    if (capture.isOpened) {
       try {
         // read the current frame
-        capture.read(frame);
+        capture.read(frame)
 
         // if the frame is not empty, process it
         if (!frame.empty()) {
