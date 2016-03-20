@@ -12,7 +12,7 @@ import scalafx.scene.layout.Priority
   */
 class TabManager {
 
-  val tabs = ArrayBuffer.empty[ExperimenterImageTab]
+  val tabs = ArrayBuffer.empty[ExperimenterTab]
 
   val imagePane = new TabPane {
     hgrow = Priority.Always
@@ -46,7 +46,7 @@ class TabManager {
 
   def getSelectedText(): String = {
     if (getSelectedIndex() >= 0) {
-      return tabs(getSelectedIndex()).text.value
+      return tabs(getSelectedIndex()).getTabText()
     }
     return ""
   }
@@ -70,7 +70,11 @@ class TabManager {
     imagePane += tab
     imagePane.selectionModel.value.select(tab)
     val index = imagePane.getSelectionModel.getSelectedIndex
-
+    if(tabs.length - 1 < index) {
+      tabs += tab
+    } else {
+      tabs(index) = tab
+    }
   }
 
   def getTabPane() : TabPane = {

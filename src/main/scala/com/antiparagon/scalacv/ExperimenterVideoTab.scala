@@ -15,7 +15,7 @@ import scalafx.scene.layout.VBox
 /**
   * Created by wmckay on 3/13/16.
   */
-class ExperimenterVideoTab() extends Tab {
+class ExperimenterVideoTab() extends Tab with ExperimenterTab {
 
   val capture = new VideoCapture()
   var cameraActive = false
@@ -117,5 +117,9 @@ class ExperimenterVideoTab() extends Tab {
     return imageToShow
   }
 
+  override def getImg() : Image = {
+    return currentFrame.image.value
+  }
 
+  override def getTabText(): String = text.value
 }
