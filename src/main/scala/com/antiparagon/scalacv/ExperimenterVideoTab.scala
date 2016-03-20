@@ -3,8 +3,7 @@ package com.antiparagon.scalacv
 import java.util.concurrent.{ScheduledExecutorService, TimeUnit, Executors}
 
 import org.opencv.core.Mat
-import org.opencv.imgproc.Imgproc
-import org.opencv.videoio.VideoCapture
+import org.opencv.videoio.{VideoCapture}
 
 import scalafx.Includes._
 import scalafx.geometry.Insets
@@ -41,6 +40,12 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
               // is the video stream available?
               if (capture.isOpened()) {
                 cameraActive = true
+
+                //println("Format: " + capture.get(Videoio.CAP_PROP_FORMAT))
+                //println("Width: " + capture.get(Videoio.CAP_PROP_FRAME_WIDTH)) // 1280
+                //println("Height: " + capture.get(Videoio.CAP_PROP_FRAME_HEIGHT)) // 720
+                val prop = ImageTools.getVideoCapturePropeties(capture)
+                for ((k,v) <- prop) println(s"$k = $v")
 
                 // grab a frame every 33 ms (30 frames/sec)
                 val frameGrabber = new Runnable() {
@@ -99,6 +104,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       try {
         // read the current frame
         capture.read(frame)
+        //println("Channels: " + frame.channels())
 
         // if the frame is not empty, process it
         if (!frame.empty()) {

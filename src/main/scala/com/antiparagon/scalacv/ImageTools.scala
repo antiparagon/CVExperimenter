@@ -3,6 +3,7 @@ package com.antiparagon.scalacv
 import java.awt.image.BufferedImage
 
 import org.opencv.core.{CvType, Mat}
+import org.opencv.videoio.{Videoio, VideoCapture}
 
 import scalafx.embed.swing.SwingFXUtils
 import scalafx.scene.image.{PixelFormat, Image, WritableImage}
@@ -21,7 +22,7 @@ object ImageTools {
     val arraySize = mat.channels() * mat.cols() * mat.rows()
     val b = new Array[Byte](arraySize)
     mat.get(0, 0, b)
-    val viewImage: BufferedImage  = new BufferedImage(mat.cols(), mat.rows(), imgType)
+    val viewImage  = new BufferedImage(mat.cols(), mat.rows(), imgType)
     viewImage.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), b)
     SwingFXUtils.toFXImage(viewImage, null)
   }
@@ -40,4 +41,28 @@ object ImageTools {
     return mat
   }
 
+  def getVideoCapturePropeties(capture: VideoCapture): Map[String, Double] = {
+    val prop = Map[String, Double](
+      "Position"-> capture.get(Videoio.CAP_PROP_POS_MSEC),
+      "Frames"-> capture.get(Videoio.CAP_PROP_POS_FRAMES),
+      "AviRatio"-> capture.get(Videoio.CAP_PROP_POS_AVI_RATIO),
+      "Width" -> capture.get(Videoio.CAP_PROP_FRAME_WIDTH), // 1280
+      "Height" -> capture.get(Videoio.CAP_PROP_FRAME_HEIGHT), // 720
+      "FPS"-> capture.get(Videoio.CAP_PROP_FPS),
+      "FourCC" -> capture.get(Videoio.CAP_PROP_FOURCC),
+      "FrameCount" -> capture.get(Videoio.CAP_PROP_FRAME_COUNT),
+      "Format" -> capture.get(Videoio.CAP_PROP_FORMAT),
+      "Brightness" -> capture.get(Videoio.CAP_PROP_BRIGHTNESS),
+      "Contrast" -> capture.get(Videoio.CAP_PROP_CONTRAST),
+      "Saturation" -> capture.get(Videoio.CAP_PROP_SATURATION),
+      "Hue" -> capture.get(Videoio.CAP_PROP_HUE),
+      "Gain" -> capture.get(Videoio.CAP_PROP_GAIN),
+      "Exposure" -> capture.get(Videoio.CAP_PROP_EXPOSURE),
+      "ConvertRGB" -> capture.get(Videoio.CAP_PROP_CONVERT_RGB),
+      //"WhiteBalance" -> capture.get(Videoio.CAP_PROP_W),
+      "Rectification" -> capture.get(Videoio.CAP_PROP_RECTIFICATION)
+    )
+
+    return prop
+  }
 }
