@@ -35,59 +35,34 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
           style = "-fx-font-size: 20pt"
           onAction = handle {
             if (!cameraActive) {
-              // start the video capture
-              capture.open(0);
-              // is the video stream available?
+              capture.open(0)
               if (capture.isOpened()) {
                 cameraActive = true
-
-                //println("Format: " + capture.get(Videoio.CAP_PROP_FORMAT))
-                //println("Width: " + capture.get(Videoio.CAP_PROP_FRAME_WIDTH)) // 1280
-                //println("Height: " + capture.get(Videoio.CAP_PROP_FRAME_HEIGHT)) // 720
-                val prop = ImageTools.getVideoCapturePropeties(capture)
-                for ((k,v) <- prop) println(s"$k = $v")
-
                 // grab a frame every 33 ms (30 frames/sec)
                 val frameGrabber = new Runnable() {
                   def run {
-                    val imageToShow = grabFrame()
-                    currentFrame.setImage(imageToShow)
+                    val image = grabFrame()
+                    currentFrame.setImage(image)
                   }
                 }
-
                 timer = Executors.newSingleThreadScheduledExecutor()
                 timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS)
-
-                // update the button content
                 text = "Stop Camera"
-              }
-              else {
-                // log the error
+              } else {
                 println("Impossible to open the camera connection...")
               }
             }
             else {
-              // the camera is not active at this point
               cameraActive = false
-              // update again the button content
               text = "Start Camera"
-
-              // stop the timer
               try  {
-                timer.shutdown();
-                timer.awaitTermination(33, TimeUnit.MILLISECONDS);
-              }
-              catch {
-                // log the exception
+                timer.shutdown()
+                timer.awaitTermination(33, TimeUnit.MILLISECONDS)
+              } catch {
                 case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
               }
-
-              // release the camera
-              capture.release();
-              // clean the frame
-              //currentFrame.setImage(null);
+              capture.release()
             }
-
           }
         }
       )
@@ -95,32 +70,22 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
   }
 
   def grabFrame(): Image = {
-    // init everything
-    var imageToShow: Image = null
+    var image: Image = null
     val frame = new Mat()
-
-    // check if the capture is open
     if (capture.isOpened) {
       try {
-        // read the current frame
         capture.read(frame)
-        //println("Channels: " + frame.channels())
-
-        // if the frame is not empty, process it
         if (!frame.empty()) {
           // convert the image to gray scale
           //Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY)
           // convert the Mat object (OpenCV) to Image (JavaFX)
-          imageToShow = ImageTools.converCVtoFX(frame)
+          image = ImageTools.converCVtoFX(frame)
         }
-
       } catch {
-        // log the error
         case e: Exception => println("Exception during the image elaboration: " + e)
       }
     }
-
-    return imageToShow
+    return image
   }
 
   override def getImg() : Image = {

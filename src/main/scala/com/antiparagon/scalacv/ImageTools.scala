@@ -41,7 +41,7 @@ object ImageTools {
     return mat
   }
 
-  def getVideoCapturePropeties(capture: VideoCapture): Map[String, Double] = {
+  def getVideoCaptureProperties(capture: VideoCapture): Map[String, Double] = {
     val prop = Map[String, Double](
       "Position"-> capture.get(Videoio.CAP_PROP_POS_MSEC),
       "Frames"-> capture.get(Videoio.CAP_PROP_POS_FRAMES),
@@ -64,5 +64,27 @@ object ImageTools {
     )
 
     return prop
+  }
+
+  def getMatProperties(mat: Mat): Map[String, Int] = {
+    val prop = Map[String, Int](
+      "Channels" -> mat.channels(),
+      "Depth" -> mat.depth()
+    )
+    return prop
+  }
+
+  def depthToString(depth: Int): String = {
+    depth match {
+      case 0 => "CV_8U"
+      case 1 => "CV_8S"
+      case 2 => "CV_16U"
+      case 3 => "CV_16S"
+      case 4 => "CV_32S"
+      case 5 => "CV_32F"
+      case 6 => "CV_64F"
+      case 7 => "CV_USRTYPE1"
+      case _ => "UNKNOWN"
+    }
   }
 }
