@@ -102,7 +102,20 @@ object CVExperimenter extends JFXApp {
               tabManager.addImageTab(tabManager.getSelectedText() + " - mod", ImageTools.converCVtoFX(imageA))
             }
           }
+        },
+        new Button {
+          text = "translate 10 10"
+          style = "-fx-font-size: 20pt"
+          onAction = handle {
+            if(tabManager.isImageTabSelected()) {
+              val image = tabManager.getSelectedMat()
+              val trans = ImageTools.translate(image, 10.0, 10.0)
+
+              tabManager.addImageTab(tabManager.getSelectedText() + " - trans", ImageTools.converCVtoFX(trans))
+            }
+          }
         }
+
       )
     }
   }
