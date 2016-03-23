@@ -114,6 +114,20 @@ object CVExperimenter extends JFXApp {
               tabManager.addImageTab(tabManager.getSelectedText() + " - trans", ImageTools.converCVtoFX(trans))
             }
           }
+        },
+        new Button {
+          text = "Rotate 45"
+          style = "-fx-font-size: 20pt"
+          onAction = handle {
+            if(tabManager.isImageTabSelected()) {
+              val image = tabManager.getSelectedMat()
+              ImageTools.outputMatProperties(image)
+              val rot = ImageTools.rotate(image, 45.0, new Point(image.width()/2, image.height()/2))
+              ImageTools.outputMatProperties(rot)
+
+              tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.converCVtoFX(rot))
+            }
+          }
         }
 
       )

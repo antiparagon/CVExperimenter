@@ -2,7 +2,7 @@ package com.antiparagon.scalacv
 
 import java.awt.image.BufferedImage
 
-import org.opencv.core.{CvType, Mat, MatOfDouble}
+import org.opencv.core.{CvType, Mat, Point}
 import org.opencv.imgproc.Imgproc
 import org.opencv.videoio.{VideoCapture, Videoio}
 
@@ -75,6 +75,12 @@ object ImageTools {
     return prop
   }
 
+  def outputMatProperties(mat: Mat): Unit = {
+    val prop = getMatProperties(mat)
+    println(s"Channels = ${prop("Channels")}")
+    println(s"Depth = ${depthToString(prop("Depth"))}")
+  }
+
   def depthToString(depth: Int): String = {
     depth match {
       case 0 => "CV_8U"
@@ -101,7 +107,7 @@ object ImageTools {
 
   def translate(image: Mat, x: Double, y: Double): Mat = {
 
-    val trans = new MatOfDouble(2, 3)
+    val trans = new Mat(2, 3, CvType.CV_64F)
     trans.put(0, 0, 1.0)
     trans.put(0, 1, 0.0)
     trans.put(0, 2, x)
@@ -109,11 +115,16 @@ object ImageTools {
     trans.put(1, 1, 1.0)
     trans.put(1, 2, y)
 
+    println(s"Img Size: ${image.size()}")
+    println(s"Size: ${trans.size()}")
+    println(s"Trans: ${trans.dump}")
+
     val shifted = image.clone()
+    println(s"Shifted Size: ${shifted.size()}")
 
-    Imgproc.warpAffine(image, shifted, trans, trans.size())
+    Imgproc.warpAffine(image, shifted, trans, shifted.size())
 
-    return image
+    return shifted
   }
 
 //  def rotate(image, angle, center=None, scale=1.0):
@@ -131,6 +142,19 @@ object ImageTools {
 //
 //  # return the rotated image
 //  return rotated
+  def rotate(image: Mat, angle: Double, center: Point, scale: Double = 1.0): Mat = {
+
+    val rot = Imgproc.getRotationMatrix2D(center, angle, scale)
+    println(s"Size: ${rot.size()}")
+    println(s"Rot: ${rot.dump}")
+
+    val rotated = new Mat(image.rows, image.cols, image.`type`)
+
+    Imgproc.warpAffine(image, rotated, rot, rotated.size)
+
+    return rotated
+  }
+
 
 
 //  def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
