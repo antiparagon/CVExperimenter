@@ -122,7 +122,7 @@ object CVExperimenter extends JFXApp {
             if(tabManager.isImageTabSelected()) {
               val image = tabManager.getSelectedMat()
               ImageTools.outputMatProperties(image)
-              val rot = ImageTools.rotate(image, 45.0, new Point(image.width()/2, image.height()/2))
+              val rot = ImageTools.rotate(image, -45.0, new Point(image.width()/2, image.height()/2))
               ImageTools.outputMatProperties(rot)
 
               tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.converCVtoFX(rot))

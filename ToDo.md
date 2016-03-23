@@ -4,5 +4,7 @@
 * Create start tab with Logo/image, can apply algorithm to it
 * Stop webcam when tab is closed or when app is closed
 * Create a duplicate image button (?)
+
 # Things to learn
-* Build a string in Scala
+* Building a string in Scala
+* Research Sudoku solvers for chess scanner example code

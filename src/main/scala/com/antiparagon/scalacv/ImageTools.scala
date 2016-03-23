@@ -79,6 +79,7 @@ object ImageTools {
     val prop = getMatProperties(mat)
     println(s"Channels = ${prop("Channels")}")
     println(s"Depth = ${depthToString(prop("Depth"))}")
+    println(s"Size = ${mat.size}")
   }
 
   def depthToString(depth: Int): String = {
@@ -115,14 +116,14 @@ object ImageTools {
     trans.put(1, 1, 1.0)
     trans.put(1, 2, y)
 
-    println(s"Img Size: ${image.size()}")
-    println(s"Size: ${trans.size()}")
+    println(s"Img Size: ${image.size}")
+    println(s"Size: ${trans.size}")
     println(s"Trans: ${trans.dump}")
 
     val shifted = image.clone()
-    println(s"Shifted Size: ${shifted.size()}")
+    println(s"Shifted Size: ${shifted.size}")
 
-    Imgproc.warpAffine(image, shifted, trans, shifted.size())
+    Imgproc.warpAffine(image, shifted, trans, shifted.size)
 
     return shifted
   }
@@ -142,13 +143,13 @@ object ImageTools {
 //
 //  # return the rotated image
 //  return rotated
-  def rotate(image: Mat, angle: Double, center: Point, scale: Double = 1.0): Mat = {
+  def rotate(image: Mat, angle: Double, center: Point, scale: Double = 0.5): Mat = {
 
     val rot = Imgproc.getRotationMatrix2D(center, angle, scale)
-    println(s"Size: ${rot.size()}")
     println(s"Rot: ${rot.dump}")
+    outputMatProperties(rot)
 
-    val rotated = new Mat(image.rows, image.cols, image.`type`)
+    val rotated = new Mat
 
     Imgproc.warpAffine(image, rotated, rot, rotated.size)
 
