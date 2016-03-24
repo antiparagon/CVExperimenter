@@ -154,6 +154,7 @@ object CVExperimenter extends JFXApp {
       fill = Black
       root = getLayout()
     }
+    tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("CVExperimenterLogo.png")))
   }
 
 
