@@ -23,50 +23,56 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
   }
   var timer: ScheduledExecutorService = null
 
-  content = new ScrollPane {
+  content = new VBox {
+    padding = Insets(20)
     style = "-fx-background-color: black"
-    content = new VBox {
-      padding = Insets(20)
-      style = "-fx-background-color: black"
-      children = Seq(
-        currentFrame,
-        new Button {
-          text = "Start Video"
-          style = "-fx-font-size: 20pt"
-          onAction = handle {
-            if (!cameraActive) {
-              capture.open(0)
-              if (capture.isOpened()) {
-                cameraActive = true
-                // grab a frame every 33 ms (30 frames/sec)
-                val frameGrabber = new Runnable() {
-                  def run {
-                    val image = grabFrame()
-                    currentFrame.setImage(image)
+    children = Seq(
+      new ScrollPane {
+        style = "-fx-background-color: black"
+        content = new VBox {
+          padding = Insets(20)
+          style = "-fx-background-color: black"
+          children = Seq(
+            currentFrame,
+            new Button {
+              text = "Start Video"
+              style = "-fx-font-size: 20pt"
+              onAction = handle {
+                if (!cameraActive) {
+                  capture.open(0)
+                  if (capture.isOpened()) {
+                    cameraActive = true
+                    // grab a frame every 33 ms (30 frames/sec)
+                    val frameGrabber = new Runnable() {
+                      def run {
+                        val image = grabFrame()
+                        currentFrame.setImage(image)
+                      }
+                    }
+                    timer = Executors.newSingleThreadScheduledExecutor()
+                    timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS)
+                    text = "Stop Camera"
+                  } else {
+                    println("Unable to open the camera connection...")
                   }
                 }
-                timer = Executors.newSingleThreadScheduledExecutor()
-                timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS)
-                text = "Stop Camera"
-              } else {
-                println("Impossible to open the camera connection...")
+                else {
+                  cameraActive = false
+                  text = "Start Camera"
+                  try {
+                    timer.shutdown()
+                    timer.awaitTermination(33, TimeUnit.MILLISECONDS)
+                  } catch {
+                    case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
+                  }
+                  capture.release()
+                }
               }
             }
-            else {
-              cameraActive = false
-              text = "Start Camera"
-              try  {
-                timer.shutdown()
-                timer.awaitTermination(33, TimeUnit.MILLISECONDS)
-              } catch {
-                case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
-              }
-              capture.release()
-            }
-          }
+          )
         }
-      )
-    }
+      }
+    )
   }
 
   def grabFrame(): Image = {
