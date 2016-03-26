@@ -26,19 +26,23 @@ object CVExperimenter extends JFXApp {
   System.loadLibrary("opencv_java300")
 
   val tabManager: TabManager = new TabManager
+  val BUTTON_STYLE = "-fx-font-size: 18pt"
+  val BACKGROUND_STYLE = "-fx-background-color: black"
 
   val controlPane = new ScrollPane {
     fitToHeight = true
     fitToWidth = true
     minViewportWidth = 250.0
-    style = "-fx-background-color: black"
+    style = BACKGROUND_STYLE
     content = new VBox {
       padding = Insets(20)
-      style = "-fx-background-color: black"
+      spacing = 5
+      style = BACKGROUND_STYLE
       children = Seq(
         new Button {
           text = "Open Image..."
-          style = "-fx-font-size: 20pt"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             val fileChooser = new FileChooser() {
               title = "Pick an Image File"
@@ -51,7 +55,8 @@ object CVExperimenter extends JFXApp {
         },
         new Button {
           text = "Save Image..."
-          style = "-fx-font-size: 20pt"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val fileChooser = new FileChooser() {
@@ -79,14 +84,16 @@ object CVExperimenter extends JFXApp {
         },
         new Button {
           text = "Open Webcam..."
-          style = "-fx-font-size: 20pt"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             tabManager.addVideoTab("Video Tab")
           }
         },
         new Button {
           text = "Apply Outline"
-          style = "-fx-font-size: 20pt"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val image: Mat = tabManager.getSelectedMat()
@@ -104,8 +111,9 @@ object CVExperimenter extends JFXApp {
           }
         },
         new Button {
-          text = "translate 10 10"
-          style = "-fx-font-size: 20pt"
+          text = "Translate 10 10"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val image = tabManager.getSelectedMat()
@@ -117,7 +125,8 @@ object CVExperimenter extends JFXApp {
         },
         new Button {
           text = "Rotate 45"
-          style = "-fx-font-size: 20pt"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val image = tabManager.getSelectedMat()
@@ -137,7 +146,7 @@ object CVExperimenter extends JFXApp {
   def getLayout() : HBox = {
     val hbox = new HBox {
       padding = Insets(20)
-      style = "-fx-background-color: black"
+      style = BACKGROUND_STYLE
       children = Seq(
         controlPane,
         tabManager.getTabPane()

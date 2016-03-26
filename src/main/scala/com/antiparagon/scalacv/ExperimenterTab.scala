@@ -9,6 +9,9 @@ import scalafx.scene.image.Image
   */
 trait ExperimenterTab {
 
+  val BUTTON_STYLE = "-fx-font-size: 18pt"
+  val BACKGROUND_STYLE = "-fx-background-color: black"
+
   def getTabText() : String
 
   def getImg() : Image
