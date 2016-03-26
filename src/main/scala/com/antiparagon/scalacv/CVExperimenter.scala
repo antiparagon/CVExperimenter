@@ -161,7 +161,7 @@ object CVExperimenter extends JFXApp {
   stage = new PrimaryStage {
     title = "CV Experimenter"
     icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
-    scene = new Scene(1500,750) {
+    scene = new Scene(1500,850) {
       fill = Black
       root = getLayout()
     }
