@@ -48,35 +48,12 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
                   style = BUTTON_STYLE
                   onAction = handle {
                     if (!cameraActive) {
-                      capture.open(0)
-                      if (capture.isOpened()) {
-                        cameraActive = true
-                        capture.set(Videoio.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
-                        capture.set(Videoio.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
-                        // grab a frame every 33 ms (30 frames/sec)
-                        val frameGrabber = new Runnable() {
-                          def run {
-                            val image = grabFrame()
-                            currentFrame.setImage(image)
-                          }
-                        }
-                        timer = Executors.newSingleThreadScheduledExecutor()
-                        timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS)
-                        text = "Stop Camera"
-                      } else {
-                        println("Unable to open the camera connection...")
+                      if(startVideo()) {
+                        text = "Stop Video"
                       }
-                    }
-                    else {
-                      cameraActive = false
-                      text = "Start Camera"
-                      try {
-                        timer.shutdown()
-                        timer.awaitTermination(33, TimeUnit.MILLISECONDS)
-                      } catch {
-                        case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
-                      }
-                      capture.release()
+                    } else {
+                      text = "Start Video"
+                      stopVideo()
                     }
                   }
                 }
@@ -86,6 +63,42 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
         }
       }
     )
+  }
+
+  def startVideo(): Boolean = {
+    capture.open(0)
+    if (capture.isOpened()) {
+      cameraActive = true
+      capture.set(Videoio.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
+      capture.set(Videoio.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
+      // grab a frame every 33 ms (30 frames/sec)
+      val frameGrabber = new Runnable() {
+        def run {
+          val image = grabFrame()
+          currentFrame.setImage(image)
+        }
+      }
+      timer = Executors.newSingleThreadScheduledExecutor()
+      timer.scheduleAtFixedRate(frameGrabber, 0, 33, TimeUnit.MILLISECONDS)
+      return true
+
+    } else {
+      println("Unable to open the camera connection...")
+      return false
+    }
+  }
+
+  def stopVideo(): Unit = {
+    if(cameraActive) {
+      try {
+        timer.shutdown()
+        timer.awaitTermination(33, TimeUnit.MILLISECONDS)
+      } catch {
+        case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
+      }
+      cameraActive = false
+      capture.release()
+    }
   }
 
   def grabFrame(): Image = {

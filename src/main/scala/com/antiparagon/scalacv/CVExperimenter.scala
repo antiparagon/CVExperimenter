@@ -156,6 +156,8 @@ object CVExperimenter extends JFXApp {
     return hbox
   }
 
+
+
   stage = new PrimaryStage {
     title = "CV Experimenter"
     icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
@@ -166,5 +168,9 @@ object CVExperimenter extends JFXApp {
     tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("CVExperimenterLogo.png")))
   }
 
-
+  override def stopApp(): Unit = {
+    println("Stopping")
+    tabManager.stopVideoTabs()
+    super.stopApp()
+  }
 }

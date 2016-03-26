@@ -51,6 +51,14 @@ class TabManager {
     return ""
   }
 
+  def stopVideoTabs(): Unit = {
+    tabs.foreach(tab => {
+      if(tab.isInstanceOf[ExperimenterVideoTab]) {
+        tab.asInstanceOf[ExperimenterVideoTab].stopVideo()
+      }
+    })
+  }
+
   def addImageTab(name : String, img : Image): Unit = {
     val tab = new ExperimenterImageTab(img)
     tab.text = name
