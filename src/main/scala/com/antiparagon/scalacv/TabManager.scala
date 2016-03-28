@@ -51,6 +51,23 @@ class TabManager {
     return ""
   }
 
+  def hasVideoTab(): Boolean = {
+    tabs.foreach(tab => {
+      if(tab.isInstanceOf[ExperimenterVideoTab]) {
+        return true
+      }
+    })
+    return false
+  }
+
+  def showVideoTab(): Unit = {
+    tabs.foreach(tab => {
+      if(tab.isInstanceOf[ExperimenterVideoTab]) {
+        imagePane.getSelectionModel.select(tab.asInstanceOf[ExperimenterVideoTab])
+      }
+    })
+  }
+
   def stopVideoTabs(): Unit = {
     tabs.foreach(tab => {
       if(tab.isInstanceOf[ExperimenterVideoTab]) {

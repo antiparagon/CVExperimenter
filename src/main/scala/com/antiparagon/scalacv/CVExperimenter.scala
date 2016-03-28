@@ -87,7 +87,11 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            tabManager.addVideoTab("Video Tab")
+            if(tabManager.hasVideoTab()) {
+              tabManager.showVideoTab()
+            } else {
+              tabManager.addVideoTab("Video Tab")
+            }
           }
         },
         new Button {
