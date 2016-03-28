@@ -2,8 +2,6 @@
 * Add functions from imutils (https://github.com/jrosebr1/imutils) to ImageTools
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Create a duplicate image button (?)
-* Handle when video tab is closed when the video is running
-* Handle when a tab is closed
 
 # Things to learn
 * Building a string in Scala
