@@ -3,6 +3,8 @@ package com.antiparagon.scalacv
 import org.opencv.core.Mat
 
 import scala.collection.mutable.ArrayBuffer
+
+import scalafx.Includes._
 import scalafx.scene.control.TabPane
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority
@@ -78,6 +80,9 @@ class TabManager {
 
   def addImageTab(name : String, img : Image): Unit = {
     val tab = new ExperimenterImageTab(img)
+
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+
     tab.text = name
     imagePane += tab
     imagePane.selectionModel.value.select(tab)
@@ -91,6 +96,12 @@ class TabManager {
 
   def addVideoTab(name : String): Unit = {
     val tab = new ExperimenterVideoTab()
+
+    tab.onClosed = handle {
+      tab.stopVideo()
+      tabs.remove(tabs.indexOf(tab))
+    }
+
     tab.text = name
     imagePane += tab
     imagePane.selectionModel.value.select(tab)
