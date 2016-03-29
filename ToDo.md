@@ -5,4 +5,5 @@
 
 # Things to learn
 * Building a string in Scala
+* How to use case classes/remove loops with combinators
 * Research Sudoku solvers for chess scanner example code

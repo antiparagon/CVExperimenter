@@ -14,7 +14,7 @@ import scalafx.scene.image.{Image, PixelFormat, WritableImage}
   */
 object ImageTools {
 
-  def converCVtoFX(mat:Mat) : WritableImage = {
+  def convertCVtoFX(mat:Mat) : WritableImage = {
     var imgType = BufferedImage.TYPE_BYTE_GRAY
     if ( mat.channels() > 1 ) {
       imgType = BufferedImage.TYPE_3BYTE_BGR
@@ -28,14 +28,19 @@ object ImageTools {
     SwingFXUtils.toFXImage(viewImage, null)
   }
 
-  def converFXtoCV(img:Image) : Mat = {
+  def convertFXtoCV(img:Image) : Mat = {
     val width = img.width.value.toInt
     val height = img.height.value.toInt
-    val buffer = new Array[Byte](width * height * 4)
+    val channels = 4
+    val buffer = new Array[Byte](width * height * channels)
 
     val reader = img.getPixelReader
+
+    println(s"Format: ${reader.getPixelFormat.getType}")
+
     val format = PixelFormat.getByteBgraInstance
-    reader.getPixels(0, 0, width, height, format, buffer, 0, width * 4)
+    //val format = PixelFormat.getByteRgbInstance
+    reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
 
     val mat = new Mat(height, width, CvType.CV_8UC4)
     mat.put(0, 0, buffer)
@@ -146,8 +151,8 @@ object ImageTools {
   def rotate(image: Mat, angle: Double, center: Point, scale: Double = 0.5): Mat = {
 
     val rot = Imgproc.getRotationMatrix2D(center, angle, scale)
-    println(s"Rot: ${rot.dump}")
-    outputMatProperties(rot)
+    //println(s"Rot: ${rot.dump}")
+    //outputMatProperties(rot)
 
     val rotated = new Mat
 

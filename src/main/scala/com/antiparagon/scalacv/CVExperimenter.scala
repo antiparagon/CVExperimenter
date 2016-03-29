@@ -111,7 +111,7 @@ object CVExperimenter extends JFXApp {
               Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
               Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5);
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", ImageTools.converCVtoFX(imageA))
+              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", ImageTools.convertCVtoFX(imageA))
             }
           }
         },
@@ -124,7 +124,7 @@ object CVExperimenter extends JFXApp {
               val image = tabManager.getSelectedMat()
               val trans = ImageTools.translate(image, 10.0, 10.0)
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - trans", ImageTools.converCVtoFX(trans))
+              tabManager.addImageTab(tabManager.getSelectedText() + " - trans", ImageTools.convertCVtoFX(trans))
             }
           }
         },
@@ -139,7 +139,7 @@ object CVExperimenter extends JFXApp {
               val rot = ImageTools.rotate(image, -45.0, new Point(image.width()/2, image.height()/2))
               ImageTools.outputMatProperties(rot)
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.converCVtoFX(rot))
+              tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.convertCVtoFX(rot))
             }
           }
         },
@@ -156,15 +156,18 @@ object CVExperimenter extends JFXApp {
             if (img != null) {
               println(s"Opening: ${img.getAbsolutePath}")
               val mat = Imgcodecs.imread(img.getAbsolutePath)
+              ImageTools.outputMatProperties(mat)
+              //tabManager.addImageTab(img.getName, ImageTools.converCVtoFX(mat))
+
               println(s"Mat size: ${mat.size()}")
               val center = new Point(mat.cols()/2.0, mat.rows()/2.0)
               val rot = Imgproc.getRotationMatrix2D(center, 20, 1.0)
-
+              ImageTools.outputMatProperties(rot)
               val rotated = new Mat
 
               Imgproc.warpAffine(mat, mat, rot, mat.size)
 
-              tabManager.addImageTab(img.getName, ImageTools.converCVtoFX(mat))
+              tabManager.addImageTab(img.getName, ImageTools.convertCVtoFX(mat))
             }
           }
         }

@@ -111,7 +111,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
           // convert the image to gray scale
           //Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY)
           // convert the Mat object (OpenCV) to Image (JavaFX)
-          image = ImageTools.converCVtoFX(frame)
+          image = ImageTools.convertCVtoFX(frame)
         }
       } catch {
         case e: Exception => println("Exception during the image elaboration: " + e)
