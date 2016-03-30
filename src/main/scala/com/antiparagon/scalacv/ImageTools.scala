@@ -1,6 +1,8 @@
 package com.antiparagon.scalacv
 
 import java.awt.image.BufferedImage
+import java.io.ByteArrayOutputStream
+import javax.imageio.ImageIO
 
 import org.opencv.core.{CvType, Mat, Point}
 import org.opencv.imgproc.Imgproc
@@ -41,6 +43,13 @@ object ImageTools {
     val format = PixelFormat.getByteBgraInstance
     //val format = PixelFormat.getByteRgbInstance
     reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
+
+
+    //val bImage = SwingFXUtils.fromFXImage(img, null)
+    //val s = new ByteArrayOutputStream()
+    //ImageIO.write(bImage, "bmp", s);
+    //val res  = s.toByteArray()
+
 
     val mat = new Mat(height, width, CvType.CV_8UC4)
     mat.put(0, 0, buffer)
