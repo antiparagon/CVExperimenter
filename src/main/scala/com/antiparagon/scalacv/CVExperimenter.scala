@@ -27,13 +27,13 @@ object CVExperimenter extends JFXApp {
   System.loadLibrary("opencv_java300")
 
   val tabManager: TabManager = new TabManager
-  val BUTTON_STYLE = "-fx-font-size: 18pt"
+  val BUTTON_STYLE = "-fx-font-size: 14pt"
   val BACKGROUND_STYLE = "-fx-background-color: black"
 
   val controlPane = new ScrollPane {
     fitToHeight = true
     fitToWidth = true
-    minViewportWidth = 250.0
+    minViewportWidth = 200.0
     style = BACKGROUND_STYLE
     content = new VBox {
       padding = Insets(20)
@@ -178,7 +178,7 @@ object CVExperimenter extends JFXApp {
 
   def getLayout() : HBox = {
     val hbox = new HBox {
-      padding = Insets(20)
+      padding = Insets(0, 0, 10, 10)
       style = BACKGROUND_STYLE
       children = Seq(
         controlPane,
@@ -190,11 +190,10 @@ object CVExperimenter extends JFXApp {
   }
 
 
-
   stage = new PrimaryStage {
     title = "CV Experimenter"
     icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
-    scene = new Scene(1500,850) {
+    scene = new Scene(1400,850) {
       fill = Black
       root = getLayout()
     }

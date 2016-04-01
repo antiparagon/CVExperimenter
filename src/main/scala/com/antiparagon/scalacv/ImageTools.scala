@@ -1,13 +1,15 @@
 package com.antiparagon.scalacv
 
 import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
+import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import javax.imageio.ImageIO
 
-import org.opencv.core.{CvType, Mat, Point}
+import org.opencv.core._
+import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.opencv.videoio.{VideoCapture, Videoio}
 
+import scalafx.Includes._
 import scalafx.embed.swing.SwingFXUtils
 import scalafx.scene.image.{Image, PixelFormat, WritableImage}
 
@@ -29,6 +31,29 @@ object ImageTools {
     viewImage.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), b)
     SwingFXUtils.toFXImage(viewImage, null)
   }
+
+  def mat2Image(frame: Mat): Image = {
+
+    // create a temporary buffer
+    val buffer = new MatOfByte()
+    // encode the frame in the buffer, according to the PNG format
+    Imgcodecs.imencode(".png", frame, buffer)
+    // build and return an Image created from the image encoded in the
+    // buffer
+    return new Image(new ByteArrayInputStream(buffer.toArray()))
+  }
+
+//  def convertFXtoCVx(img: Image): Mat = {
+//    val bImage = SwingFXUtils.fromFXImage(img, null)
+//    val s = new ByteArrayOutputStream()
+//    ImageIO.write(bImage, "png", s);
+//    val res  = s.toByteArray()
+//    val mat = new Mat(height, width, CvType.CV_8UC4)
+//    //mat.put(0, 0, buffer)
+//    val mat = Imgcodecs.imdecode(res, CvType.CV_8UC3)
+//    //Mat rawData  =  new Mat(1, res.length, CvType.CV_8UC1, new Scalar(res.toBuffer))
+//  }
+
 
   def convertFXtoCV(img:Image) : Mat = {
     val width = img.width.value.toInt
