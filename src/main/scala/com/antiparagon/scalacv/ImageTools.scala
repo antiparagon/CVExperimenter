@@ -20,27 +20,27 @@ object ImageTools {
 
   def convertCVtoFX(mat:Mat) : WritableImage = {
     var imgType = BufferedImage.TYPE_BYTE_GRAY
-    if ( mat.channels() > 1 ) {
+    if ( mat.channels > 1 ) {
       imgType = BufferedImage.TYPE_3BYTE_BGR
     }
 
-    val arraySize = mat.channels() * mat.cols() * mat.rows()
+    val arraySize = mat.channels * mat.cols * mat.rows
     val b = new Array[Byte](arraySize)
     mat.get(0, 0, b)
-    val viewImage  = new BufferedImage(mat.cols(), mat.rows(), imgType)
-    viewImage.getRaster().setDataElements(0, 0, mat.cols(), mat.rows(), b)
+    val viewImage  = new BufferedImage(mat.cols, mat.rows, imgType)
+    viewImage.getRaster.setDataElements(0, 0, mat.cols, mat.rows, b)
     SwingFXUtils.toFXImage(viewImage, null)
   }
 
   def mat2Image(frame: Mat): Image = {
 
     // create a temporary buffer
-    val buffer = new MatOfByte()
+    val buffer = new MatOfByte
     // encode the frame in the buffer, according to the PNG format
     Imgcodecs.imencode(".png", frame, buffer)
     // build and return an Image created from the image encoded in the
     // buffer
-    return new Image(new ByteArrayInputStream(buffer.toArray()))
+    return new Image(new ByteArrayInputStream(buffer.toArray))
   }
 
 //  def convertFXtoCVx(img: Image): Mat = {
@@ -108,8 +108,8 @@ object ImageTools {
 
   def getMatProperties(mat: Mat): Map[String, Int] = {
     val prop = Map[String, Int](
-      "Channels" -> mat.channels(),
-      "Depth" -> mat.depth()
+      "Channels" -> mat.channels,
+      "Depth" -> mat.depth
     )
     return prop
   }
@@ -159,7 +159,7 @@ object ImageTools {
     println(s"Size: ${trans.size}")
     println(s"Trans: ${trans.dump}")
 
-    val shifted = image.clone()
+    val shifted = image.clone
     println(s"Shifted Size: ${shifted.size}")
 
     Imgproc.warpAffine(image, shifted, trans, shifted.size)
