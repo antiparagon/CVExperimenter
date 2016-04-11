@@ -54,6 +54,7 @@ object CVExperimenter extends JFXApp {
             }
           }
         },
+
         new Button {
           text = "Save Image..."
           style = BUTTON_STYLE
@@ -83,6 +84,7 @@ object CVExperimenter extends JFXApp {
             }
           }
         },
+
         new Button {
           text = "Open Webcam..."
           style = BUTTON_STYLE
@@ -95,6 +97,7 @@ object CVExperimenter extends JFXApp {
             }
           }
         },
+
         new Button {
           text = "Apply Outline"
           style = BUTTON_STYLE
@@ -115,6 +118,7 @@ object CVExperimenter extends JFXApp {
             }
           }
         },
+
         new Button {
           text = "Translate 10 10"
           style = BUTTON_STYLE
@@ -128,6 +132,7 @@ object CVExperimenter extends JFXApp {
             }
           }
         },
+
         new Button {
           text = "Rotate 45"
           style = BUTTON_STYLE
@@ -169,6 +174,15 @@ object CVExperimenter extends JFXApp {
 
               tabManager.addImageTab(img.getName, ImageTools.convertCVtoFX(mat))
             }
+          }
+        },
+
+        new Button {
+          text = "Algorithm Test..."
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
+          onAction = handle {
+            println("Algorithm test")
           }
         }
 
