@@ -1,6 +1,6 @@
 package com.antiparagon.scalacv
 
-import java.awt.image.BufferedImage
+import java.awt.image.{BufferedImage, DataBufferByte, DataBufferInt}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import javax.imageio.ImageIO
 
@@ -70,14 +70,18 @@ object ImageTools {
     reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
 
 
-    //val bImage = SwingFXUtils.fromFXImage(img, null)
+    val bImage = SwingFXUtils.fromFXImage(img, null)
     //val s = new ByteArrayOutputStream()
     //ImageIO.write(bImage, "bmp", s);
     //val res  = s.toByteArray()
 
+    //BufferedImage image = new BufferedImage(m.cols(),m.rows(), type);
+    //mat.get(0,0,((DataBufferByte)bImage.getRaster().getDataBuffer()).getData())
+
 
     val mat = new Mat(height, width, CvType.CV_8UC4)
-    mat.put(0, 0, buffer)
+    mat.get(0, 0, buffer)
+    //mat.get(0,0,(bImage.getRaster().getDataBuffer()).asInstanceOf[DataBufferInt].getData())
     return mat
   }
 
