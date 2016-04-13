@@ -58,19 +58,21 @@ object ImageTools {
   def convertFXtoCV(img:Image) : Mat = {
     val width = img.width.value.toInt
     val height = img.height.value.toInt
-    val channels = 4
-    val buffer = new Array[Byte](width * height * channels)
+    //val channels = 4
+    //val buffer = new Array[Byte](width * height * channels)
 
     val reader = img.getPixelReader
 
-    println(s"Format: ${reader.getPixelFormat.getType}")
+    //println(s"Format: ${reader.getPixelFormat.getType}")
 
-    val format = PixelFormat.getByteBgraInstance
-    //val format = PixelFormat.getByteRgbInstance
-    reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
+    //val format = PixelFormat.getByteBgraInstance
+    //reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
 
 
-    val bImage = SwingFXUtils.fromFXImage(img, null)
+    var bImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
+    bImage = SwingFXUtils.fromFXImage(img, bImage)
+
+
     //val s = new ByteArrayOutputStream()
     //ImageIO.write(bImage, "bmp", s);
     //val res  = s.toByteArray()
@@ -79,11 +81,16 @@ object ImageTools {
     //mat.get(0,0,((DataBufferByte)bImage.getRaster().getDataBuffer()).getData())
 
 
-    val mat = new Mat(height, width, CvType.CV_8UC4)
-    mat.get(0, 0, buffer)
-    //mat.get(0,0,(bImage.getRaster().getDataBuffer()).asInstanceOf[DataBufferInt].getData())
+    val mat = new Mat(bImage.getHeight, bImage.getWidth, CvType.CV_8UC3)
+    //mat.put(0, 0, buffer)
+    mat.put(0,0, bImage.getRaster().getDataBuffer().asInstanceOf[DataBufferByte].getData())
     return mat
   }
+
+//  def convertFXtoCV(img:Image) : Mat = {
+//
+//    val mat = new Mat(height, width, CvType.CV_8SC4)
+//  }
 
   def getVideoCaptureProperties(capture: VideoCapture): Map[String, Double] = {
     val prop = Map[String, Double](
