@@ -43,54 +43,17 @@ object ImageTools {
     return new Image(new ByteArrayInputStream(buffer.toArray))
   }
 
-//  def convertFXtoCVx(img: Image): Mat = {
-//    val bImage = SwingFXUtils.fromFXImage(img, null)
-//    val s = new ByteArrayOutputStream()
-//    ImageIO.write(bImage, "png", s);
-//    val res  = s.toByteArray()
-//    val mat = new Mat(height, width, CvType.CV_8UC4)
-//    //mat.put(0, 0, buffer)
-//    val mat = Imgcodecs.imdecode(res, CvType.CV_8UC3)
-//    //Mat rawData  =  new Mat(1, res.length, CvType.CV_8UC1, new Scalar(res.toBuffer))
-//  }
+  def convertFXtoCV(img: Image): Mat = {
+    val bImage = SwingFXUtils.fromFXImage(img, null)
+    val s = new ByteArrayOutputStream()
+    ImageIO.write(bImage, "png", s);
+    val res  = s.toByteArray()
 
-
-  def convertFXtoCV(img:Image) : Mat = {
-    val width = img.width.value.toInt
-    val height = img.height.value.toInt
-    //val channels = 4
-    //val buffer = new Array[Byte](width * height * channels)
-
-    val reader = img.getPixelReader
-
-    //println(s"Format: ${reader.getPixelFormat.getType}")
-
-    //val format = PixelFormat.getByteBgraInstance
-    //reader.getPixels(0, 0, width, height, format, buffer, 0, width * channels)
-
-
-    var bImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB)
-    bImage = SwingFXUtils.fromFXImage(img, bImage)
-
-
-    //val s = new ByteArrayOutputStream()
-    //ImageIO.write(bImage, "bmp", s);
-    //val res  = s.toByteArray()
-
-    //BufferedImage image = new BufferedImage(m.cols(),m.rows(), type);
-    //mat.get(0,0,((DataBufferByte)bImage.getRaster().getDataBuffer()).getData())
-
-
-    val mat = new Mat(bImage.getHeight, bImage.getWidth, CvType.CV_8UC3)
-    //mat.put(0, 0, buffer)
-    mat.put(0,0, bImage.getRaster().getDataBuffer().asInstanceOf[DataBufferByte].getData())
+    val rawData  =  new Mat(res.length, 1, CvType.CV_8UC1)
+    rawData.put(0, 0, res)
+    val mat = Imgcodecs.imdecode(rawData, Imgcodecs.CV_LOAD_IMAGE_COLOR)
     return mat
   }
-
-//  def convertFXtoCV(img:Image) : Mat = {
-//
-//    val mat = new Mat(height, width, CvType.CV_8SC4)
-//  }
 
   def getVideoCaptureProperties(capture: VideoCapture): Map[String, Double] = {
     val prop = Map[String, Double](
