@@ -1,6 +1,6 @@
 package com.antiparagon.scalacv
 
-import java.awt.image.{BufferedImage, DataBufferByte, DataBufferInt}
+import java.awt.image.{BufferedImage}
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import javax.imageio.ImageIO
 
@@ -11,7 +11,7 @@ import org.opencv.videoio.{VideoCapture, Videoio}
 
 import scalafx.Includes._
 import scalafx.embed.swing.SwingFXUtils
-import scalafx.scene.image.{Image, PixelFormat, WritableImage}
+import scalafx.scene.image.{Image, WritableImage}
 
 /**
   * Created by wmckay on 3/17/16.
@@ -32,15 +32,15 @@ object ImageTools {
     SwingFXUtils.toFXImage(viewImage, null)
   }
 
-  def mat2Image(frame: Mat): Image = {
+  def mat2Image(frame: Mat): WriteableImage = {
 
-    // create a temporary buffer
     val buffer = new MatOfByte
     // encode the frame in the buffer, according to the PNG format
     Imgcodecs.imencode(".png", frame, buffer)
-    // build and return an Image created from the image encoded in the
-    // buffer
-    return new Image(new ByteArrayInputStream(buffer.toArray))
+    // build and return an Image created from the image encoded in the buffer
+    val img = new Image(new ByteArrayInputStream(buffer.toArray))
+    val wImg = new WritableImage(img.pixelReader, img.width, img.height)
+    return wImg
   }
 
   def convertFXtoCV(img: Image): Mat = {
