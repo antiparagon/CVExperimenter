@@ -18,7 +18,7 @@ import scalafx.scene.image.{Image, WritableImage}
   */
 object ImageTools {
 
-  def convertCVtoFX(mat:Mat) : WritableImage = {
+  def convertCVtoFX_Old(mat:Mat) : WritableImage = {
     var imgType = BufferedImage.TYPE_BYTE_GRAY
     if ( mat.channels > 1 ) {
       imgType = BufferedImage.TYPE_3BYTE_BGR
@@ -32,15 +32,11 @@ object ImageTools {
     SwingFXUtils.toFXImage(viewImage, null)
   }
 
-  def mat2Image(frame: Mat): WriteableImage = {
-
+  def convertCVtoFX(frame: Mat): WritableImage = {
     val buffer = new MatOfByte
-    // encode the frame in the buffer, according to the PNG format
     Imgcodecs.imencode(".png", frame, buffer)
-    // build and return an Image created from the image encoded in the buffer
-    val img = new Image(new ByteArrayInputStream(buffer.toArray))
-    val wImg = new WritableImage(img.pixelReader, img.width, img.height)
-    return wImg
+    val bImg = ImageIO.read(new ByteArrayInputStream(buffer.toArray))
+    SwingFXUtils.toFXImage(bImg, null)
   }
 
   def convertFXtoCV(img: Image): Mat = {

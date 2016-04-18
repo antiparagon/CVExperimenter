@@ -147,43 +147,6 @@ object CVExperimenter extends JFXApp {
               tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.convertCVtoFX(rot))
             }
           }
-        },
-
-        new Button {
-          text = "Rotate Test..."
-          style = BUTTON_STYLE
-          maxWidth = Double.MaxValue
-          onAction = handle {
-            val fileChooser = new FileChooser() {
-              title = "Pick an Image File"
-            }
-            val img = fileChooser.showOpenDialog(scene.window())
-            if (img != null) {
-              println(s"Opening: ${img.getAbsolutePath}")
-              val mat = Imgcodecs.imread(img.getAbsolutePath)
-              ImageTools.outputMatProperties(mat)
-              //tabManager.addImageTab(img.getName, ImageTools.converCVtoFX(mat))
-
-              println(s"Mat size: ${mat.size()}")
-              val center = new Point(mat.cols()/2.0, mat.rows()/2.0)
-              val rot = Imgproc.getRotationMatrix2D(center, 20, 1.0)
-              ImageTools.outputMatProperties(rot)
-              val rotated = new Mat
-
-              Imgproc.warpAffine(mat, mat, rot, mat.size)
-
-              tabManager.addImageTab(img.getName, ImageTools.convertCVtoFX(mat))
-            }
-          }
-        },
-
-        new Button {
-          text = "Algorithm Test..."
-          style = BUTTON_STYLE
-          maxWidth = Double.MaxValue
-          onAction = handle {
-            println("Algorithm test")
-          }
         }
 
       )
