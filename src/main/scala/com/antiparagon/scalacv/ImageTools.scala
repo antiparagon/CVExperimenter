@@ -105,18 +105,7 @@ object ImageTools {
     }
   }
 
-
-
-//  def translate(image, x, y):
-//  # define the translation matrix and perform the translation
-//    M = np.float32([[1, 0, x], [0, 1, y]])
-//  shifted = cv2.warpAffine(image, M, (image.shape[1], image.shape[0]))
-//
-//  # return the translated image
-//  return shifted
-
   def translate(image: Mat, x: Double, y: Double): Mat = {
-
     val trans = new Mat(2, 3, CvType.CV_64F)
     trans.put(0, 0, 1.0)
     trans.put(0, 1, 0.0)
@@ -124,44 +113,16 @@ object ImageTools {
     trans.put(1, 0, 0.0)
     trans.put(1, 1, 1.0)
     trans.put(1, 2, y)
-
-    println(s"Img Size: ${image.size}")
-    println(s"Size: ${trans.size}")
-    println(s"Trans: ${trans.dump}")
-
     val shifted = image.clone
-    println(s"Shifted Size: ${shifted.size}")
-
     Imgproc.warpAffine(image, shifted, trans, shifted.size)
-
     return shifted
   }
 
-//  def rotate(image, angle, center=None, scale=1.0):
-//  # grab the dimensions of the image
-//    (h, w) = image.shape[:2]
-//
-//  # if the center is None, initialize it as the center of
-//  # the image
-//  if center is None:
-//    center = (w / 2, h / 2)
-//
-//  # perform the rotation
-//  M = cv2.getRotationMatrix2D(center, angle, scale)
-//  rotated = cv2.warpAffine(image, M, (w, h))
-//
-//  # return the rotated image
-//  return rotated
-  def rotate(image: Mat, angle: Double, center: Point, scale: Double = 0.5): Mat = {
 
+  def rotate(image: Mat, angle: Double, center: Point, scale: Double = 1.0): Mat = {
     val rot = Imgproc.getRotationMatrix2D(center, angle, scale)
-    //println(s"Rot: ${rot.dump}")
-    //outputMatProperties(rot)
-
     val rotated = new Mat
-
     Imgproc.warpAffine(image, rotated, rot, rotated.size)
-
     return rotated
   }
 
@@ -197,6 +158,9 @@ object ImageTools {
 //
 //  # return the resized image
 //  return resized
+  def resize(image: Mat, width: Int, height: Int, inter: Int = Imgproc.INTER_AREA): Mat = {
+    null
+  }
 
 
 //  def skeletonize(image, size, structuring=cv2.MORPH_RECT):
@@ -228,6 +192,9 @@ object ImageTools {
 //
 //    # return the skeletonized image
 //  return skeleton
+  def skeletonize(image: Mat, size: Size, structuring: Int = Imgproc.MORPH_RECT): Mat = {
+    null
+  }
 
 
 //  def auto_canny(image, sigma=0.33):
@@ -241,5 +208,8 @@ object ImageTools {
 //
 //  # return the edged image
 //  return edged
+  def autoCanny(image: Mat, sigma: Double = 0.33): Mat = {
+    null
+  }
 
 }
