@@ -159,7 +159,16 @@ object ImageTools {
 //  # return the resized image
 //  return resized
   def resize(image: Mat, width: Int, height: Int, inter: Int = Imgproc.INTER_AREA): Mat = {
-    null
+    val resized = new Mat()
+    val size = new Size(width, height)
+    Imgproc.resize(image, resized, size, 0.0, 0.0, inter)
+    return resized
+  }
+
+  def resize(image: Mat, ratio: Double): Mat = {
+    val resized = new Mat()
+    Imgproc.resize(image, resized, new Size(0,0), ratio, ratio, Imgproc.INTER_AREA)
+    return resized
   }
 
 

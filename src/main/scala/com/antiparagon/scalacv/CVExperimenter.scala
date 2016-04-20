@@ -140,11 +140,23 @@ object CVExperimenter extends JFXApp {
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val image = tabManager.getSelectedMat()
-              ImageTools.outputMatProperties(image)
               val rot = ImageTools.rotate(image, -45.0, new Point(image.width()/2, image.height()/2))
               ImageTools.outputMatProperties(rot)
 
               tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.convertCVtoFX(rot))
+            }
+          }
+        },
+
+        new Button {
+          text = "Resize %50"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
+          onAction = handle {
+            if(tabManager.isImageTabSelected()) {
+              val image = tabManager.getSelectedMat()
+              val resized = ImageTools.resize(image, 0.5)
+              tabManager.addImageTab(tabManager.getSelectedText() + " - resized", ImageTools.convertCVtoFX(resized))
             }
           }
         }
