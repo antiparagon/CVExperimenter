@@ -159,6 +159,19 @@ object CVExperimenter extends JFXApp {
               tabManager.addImageTab(tabManager.getSelectedText() + " - resized", ImageTools.convertCVtoFX(resized))
             }
           }
+        },
+
+        new Button {
+          text = "Skeletonize"
+          style = BUTTON_STYLE
+          maxWidth = Double.MaxValue
+          onAction = handle {
+            if(tabManager.isImageTabSelected()) {
+              val image = tabManager.getSelectedMat()
+              val skeleton = ImageTools.skeletonize(image, image.size)
+              tabManager.addImageTab(tabManager.getSelectedText() + " - skel", ImageTools.convertCVtoFX(skeleton))
+            }
+          }
         }
 
       )
