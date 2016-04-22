@@ -203,7 +203,7 @@ object ImageTools {
 //  return skeleton
   def skeletonize(image: Mat, size: Size, structuring: Int = Imgproc.MORPH_RECT): Mat = {
     val area = image.width * image.height
-    val skeleton = Mat.zeros(image.size, CvType.CV_8U)
+    val skeleton = Mat.zeros(image.size, image.`type`())
     val elem = Imgproc.getStructuringElement(structuring, size)
     var img = image.clone()
     while(true) {
@@ -215,11 +215,12 @@ object ImageTools {
       println(s"Skeleton: ${skeleton.size} temp: ${temp.size()}")
       Core.bitwise_or(skeleton, temp, skeleton)
       img = eroded.clone()
-      if(area != (area - Core.countNonZero(image))) {
+      println(s"Non zero: ${Core.countNonZero(img)}")
+      if(area == (area - Core.countNonZero(img))) {
         return skeleton
       }
     }
-    return image
+    return img
   }
 
 

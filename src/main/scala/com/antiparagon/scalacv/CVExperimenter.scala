@@ -168,7 +168,8 @@ object CVExperimenter extends JFXApp {
           onAction = handle {
             if(tabManager.isImageTabSelected()) {
               val image = tabManager.getSelectedMat()
-              val skeleton = ImageTools.skeletonize(image, image.size)
+              Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY)
+              val skeleton = ImageTools.skeletonize(image, new Size(5, 5))
               tabManager.addImageTab(tabManager.getSelectedText() + " - skel", ImageTools.convertCVtoFX(skeleton))
             }
           }
