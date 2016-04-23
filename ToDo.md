@@ -3,7 +3,8 @@
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Create a duplicate image button (?)
 * Allow the computer screen to be captured as an image
-* image resizing
+* Image resizing
+* Add annotations to the webcam video
 
 # Things to learn
 * Building a string in Scala

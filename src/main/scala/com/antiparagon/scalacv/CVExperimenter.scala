@@ -45,7 +45,7 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            val fileChooser = new FileChooser() {
+            val fileChooser = new FileChooser {
               title = "Pick an Image File"
             }
             val img = fileChooser.showOpenDialog(scene.window())
@@ -60,8 +60,8 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val fileChooser = new FileChooser() {
+            if(tabManager.isImageTabSelected) {
+              val fileChooser = new FileChooser {
                 title = "Save Image File"
               }
               val img = fileChooser.showSaveDialog(scene.window())
@@ -73,11 +73,11 @@ object CVExperimenter extends JFXApp {
                 if (img.getName.endsWith(".bmp")) imgType = "bmp"
                 if (img.getName.endsWith(".png")) imgType = "png"
                 try {
-                  ImageIO.write(SwingFXUtils.fromFXImage(tabManager.getSelectedImg(), null), imgType, img)
+                  ImageIO.write(SwingFXUtils.fromFXImage(tabManager.getSelectedImg, null), imgType, img)
                 } catch {
                   case ex: IOException => {
-                    ex.printStackTrace()
-                    println("Unable to save inmage to:" + img.getName() + " - " + ex.getMessage())
+                    ex.printStackTrace
+                    println("Unable to save inmage to:" + img.getName + " - " + ex.getMessage)
                   }
                 }
               }
@@ -90,8 +90,8 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.hasVideoTab()) {
-              tabManager.showVideoTab()
+            if(tabManager.hasVideoTab) {
+              tabManager.showVideoTab
             } else {
               tabManager.addVideoTab("Video Tab")
             }
@@ -103,18 +103,18 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val image: Mat = tabManager.getSelectedMat()
-              val imageHSV = new Mat(image.size(), 1)
-              val imageBlurr = new Mat(image.size(), 1)
-              val imageA = new Mat(image.size(), 127)
+            if(tabManager.isImageTabSelected) {
+              val image: Mat = tabManager.getSelectedMat
+              val imageHSV = new Mat(image.size, 1)
+              val imageBlurr = new Mat(image.size, 1)
+              val imageA = new Mat(image.size, 127)
               //val imageB = new Mat(image.size(), 1)
               //imageB.setTo(new Scalar(255,255,255))
               Imgproc.cvtColor(image, imageHSV, Imgproc.COLOR_BGR2GRAY)
               Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
               Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5);
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - mod", ImageTools.convertCVtoFX(imageA))
+              tabManager.addImageTab(tabManager.getSelectedText + " - mod", ImageTools.convertCVtoFX(imageA))
             }
           }
         },
@@ -124,11 +124,11 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val image = tabManager.getSelectedMat()
+            if(tabManager.isImageTabSelected) {
+              val image = tabManager.getSelectedMat
               val trans = ImageTools.translate(image, 10.0, 10.0)
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - trans", ImageTools.convertCVtoFX(trans))
+              tabManager.addImageTab(tabManager.getSelectedText + " - trans", ImageTools.convertCVtoFX(trans))
             }
           }
         },
@@ -138,12 +138,12 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val image = tabManager.getSelectedMat()
+            if(tabManager.isImageTabSelected) {
+              val image = tabManager.getSelectedMat
               val rot = ImageTools.rotate(image, -45.0, new Point(image.width()/2, image.height()/2))
               ImageTools.outputMatProperties(rot)
 
-              tabManager.addImageTab(tabManager.getSelectedText() + " - rot", ImageTools.convertCVtoFX(rot))
+              tabManager.addImageTab(tabManager.getSelectedText + " - rot", ImageTools.convertCVtoFX(rot))
             }
           }
         },
@@ -153,10 +153,10 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val image = tabManager.getSelectedMat()
+            if(tabManager.isImageTabSelected) {
+              val image = tabManager.getSelectedMat
               val resized = ImageTools.resize(image, 0.5)
-              tabManager.addImageTab(tabManager.getSelectedText() + " - resized", ImageTools.convertCVtoFX(resized))
+              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(resized))
             }
           }
         },
@@ -166,11 +166,11 @@ object CVExperimenter extends JFXApp {
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
-            if(tabManager.isImageTabSelected()) {
-              val image = tabManager.getSelectedMat()
+            if(tabManager.isImageTabSelected) {
+              val image = tabManager.getSelectedMat
               Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY)
               val skeleton = ImageTools.skeletonize(image, new Size(5, 5))
-              tabManager.addImageTab(tabManager.getSelectedText() + " - skel", ImageTools.convertCVtoFX(skeleton))
+              tabManager.addImageTab(tabManager.getSelectedText + " - skel", ImageTools.convertCVtoFX(skeleton))
             }
           }
         }
@@ -185,7 +185,7 @@ object CVExperimenter extends JFXApp {
       style = BACKGROUND_STYLE
       children = Seq(
         controlPane,
-        tabManager.getTabPane()
+        tabManager.getTabPane
       )
     }
 
@@ -198,14 +198,14 @@ object CVExperimenter extends JFXApp {
     icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
     scene = new Scene(1400,850) {
       fill = Black
-      root = getLayout()
+      root = getLayout
     }
     tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("CVExperimenterLogo.png")))
   }
 
   override def stopApp(): Unit = {
     println("Stopping")
-    tabManager.stopVideoTabs()
-    super.stopApp()
+    tabManager.stopVideoTabs
+    super.stopApp
   }
 }

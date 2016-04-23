@@ -48,12 +48,12 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
                   style = BUTTON_STYLE
                   onAction = handle {
                     if (!cameraActive) {
-                      if(startVideo()) {
+                      if(startVideo) {
                         text = "Stop Video"
                       }
                     } else {
                       text = "Start Video"
-                      stopVideo()
+                      stopVideo
                     }
                   }
                 }
@@ -74,8 +74,9 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       // grab a frame every 33 ms (30 frames/sec)
       val frameGrabber = new Runnable() {
         def run {
-          val image = grabFrame()
-          currentFrame.setImage(image)
+          // Apply algorithm to image
+          val image = ChessScanner.findBoard(grabMatFrame())
+          currentFrame.setImage(ImageTools.convertCVtoFX(image))
         }
       }
       timer = Executors.newSingleThreadScheduledExecutor()
@@ -101,7 +102,19 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
     }
   }
 
-  def grabFrame(): Image = {
+  def grabMatFrame(): Mat = {
+    val frame = new Mat()
+    if (capture.isOpened) {
+      try {
+        capture.read(frame)
+      } catch {
+        case e: Exception => println("Exception during the image elaboration: " + e)
+      }
+    }
+    return frame
+  }
+
+  def grabImageFrame(): Image = {
     var image: Image = null
     val frame = new Mat()
     if (capture.isOpened) {
