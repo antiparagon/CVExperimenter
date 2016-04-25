@@ -112,7 +112,7 @@ object CVExperimenter extends JFXApp {
               //imageB.setTo(new Scalar(255,255,255))
               Imgproc.cvtColor(image, imageHSV, Imgproc.COLOR_BGR2GRAY)
               Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
-              Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5);
+              Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5)
 
               tabManager.addImageTab(tabManager.getSelectedText + " - mod", ImageTools.convertCVtoFX(imageA))
             }
