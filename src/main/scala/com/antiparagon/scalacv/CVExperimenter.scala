@@ -120,57 +120,14 @@ object CVExperimenter extends JFXApp {
         },
 
         new Button {
-          text = "Translate 10 10"
+          text = "Chess Scanner"
           style = BUTTON_STYLE
           maxWidth = Double.MaxValue
           onAction = handle {
             if(tabManager.isImageTabSelected) {
               val image = tabManager.getSelectedMat
-              val trans = ImageTools.translate(image, 10.0, 10.0)
-
-              tabManager.addImageTab(tabManager.getSelectedText + " - trans", ImageTools.convertCVtoFX(trans))
-            }
-          }
-        },
-
-        new Button {
-          text = "Rotate 45"
-          style = BUTTON_STYLE
-          maxWidth = Double.MaxValue
-          onAction = handle {
-            if(tabManager.isImageTabSelected) {
-              val image = tabManager.getSelectedMat
-              val rot = ImageTools.rotate(image, -45.0, new Point(image.width()/2, image.height()/2))
-              ImageTools.outputMatProperties(rot)
-
-              tabManager.addImageTab(tabManager.getSelectedText + " - rot", ImageTools.convertCVtoFX(rot))
-            }
-          }
-        },
-
-        new Button {
-          text = "Resize %50"
-          style = BUTTON_STYLE
-          maxWidth = Double.MaxValue
-          onAction = handle {
-            if(tabManager.isImageTabSelected) {
-              val image = tabManager.getSelectedMat
-              val resized = ImageTools.resize(image, 0.5)
-              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(resized))
-            }
-          }
-        },
-
-        new Button {
-          text = "Skeletonize"
-          style = BUTTON_STYLE
-          maxWidth = Double.MaxValue
-          onAction = handle {
-            if(tabManager.isImageTabSelected) {
-              val image = tabManager.getSelectedMat
-              Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY)
-              val skeleton = ImageTools.skeletonize(image, new Size(5, 5))
-              tabManager.addImageTab(tabManager.getSelectedText + " - skel", ImageTools.convertCVtoFX(skeleton))
+              val result = ChessScanner.findBoard(image)
+              tabManager.addImageTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result))
             }
           }
         }

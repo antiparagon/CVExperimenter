@@ -8,12 +8,15 @@ import org.opencv.imgproc.Imgproc
   */
 object ChessScanner {
 
-  def findBoard(image: Mat): Mat = {
+  def findBoard(inImg: Mat): Mat = {
 
-    Imgproc.circle(image, new Point(image.width()/2, image.height()/2), 50, new Scalar(0.0, 255.0, 0.0), 5)
+    val outImg = new Mat
+    Imgproc.cvtColor(inImg, outImg, Imgproc.COLOR_BGR2GRAY)
+
+    Imgproc.circle(outImg, new Point(outImg.width()/2, outImg.height()/2), 50, new Scalar(0.0, 255.0, 0.0), 5)
 
 
-    return image
+    return outImg
   }
 
 }
