@@ -42,38 +42,62 @@ object ChessScanner {
     var biggest = new MatOfPoint2f
     var maxArea = 0.0
     var maxRect = new MatOfPoint
+
+    val outImg = new Mat
+    Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
+
+    //var contourSave = new MatOfPoint
+    var index = 0
     for(contour <- contours) {
       val area = Imgproc.contourArea(contour)
-      println(s"Area: $area")
+      //println(s"Area: $area")
       if(area > 100.0) {
+        //contourSave = contour.clone().asInstanceOf[MatOfPoint]
         contour.convertTo(contour, CvType.CV_32FC2)
         val contour2f = new MatOfPoint2f(contour)
         val peri = Imgproc.arcLength(contour2f, true)
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02*peri, true)
-        println(s"Size: ${approx.size()}")
+        //println(s"Size: ${approx.size()}")
         if(area > maxArea && approx.rows == 4) {
           biggest = approx
           maxArea = area
           maxRect = contour
-          println("Found rectangle")
+          println(s"Found rectangle: $contour")
+
+          //return outImg
         }
       }
+      index += 1
     }
 
     contours.clear()
     contours.add(maxRect)
 
-    println(s"Rects: ${contours.size()}")
+    //println(s"Rects: ${contours.size()}")
+    //println(s"Contour: ${contours.get(0)}")
+    printMat(maxRect)
 
 
-    val outImg = new Mat
-    Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
-    Imgproc.drawContours(outImg, contours, 0, new Scalar(0.0, 255.0, 0.0), 3)
+
+    Imgproc.polylines(outImg, contours, true, new Scalar(0.0, 255.0, 0.0))
 
     //Imgproc.circle(outImg, new Point(outImg.width()/2, outImg.height()/2), 50, new Scalar(0.0, 255.0, 0.0), 3)
 
     return outImg
+  }
+
+
+  def printMat(mat: Mat) = {
+    for(i <- 0 to mat.rows) {
+      for (j <- 0 to mat.cols) {
+        val elem = mat.get(i, j)
+        if(elem != null)
+          for(e <- elem)
+            print(s"$e ")
+      }
+      println()
+    }
   }
 
 }
