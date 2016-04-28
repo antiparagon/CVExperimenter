@@ -20,71 +20,44 @@ object ChessScanner {
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
-    //Imgproc.circle(outImg, new Point(outImg.width()/2, outImg.height()/2), 50, new Scalar(0.0, 255.0, 0.0), 5)
-
-
+    
     val contours = new util.ArrayList[MatOfPoint]()
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
 
-//    biggest = None
-//    max_area = 0
-//    for i in contours:
-//      area = cv2.contourArea(i)
-//      if area > 100:
-//        peri = cv2.arcLength(i,True)
-//        approx = cv2.approxPolyDP(i,0.02*peri,True)
-//        if area > max_area and len(approx)==4:
-//          biggest = approx
-//          max_area = area
-
     var biggest = new MatOfPoint2f
     var maxArea = 0.0
-    var maxRect = new MatOfPoint
 
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
-    //var contourSave = new MatOfPoint
     var index = 0
     for(contour <- contours) {
       val area = Imgproc.contourArea(contour)
-      //println(s"Area: $area")
       if(area > 100.0) {
-        //contourSave = contour.clone().asInstanceOf[MatOfPoint]
         contour.convertTo(contour, CvType.CV_32FC2)
         val contour2f = new MatOfPoint2f(contour)
         val peri = Imgproc.arcLength(contour2f, true)
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02*peri, true)
-        //println(s"Size: ${approx.size()}")
         if(area > maxArea && approx.rows == 4) {
           biggest = approx
           maxArea = area
-          maxRect = contour
-          println(s"Found rectangle: $contour")
-
-          //return outImg
         }
       }
       index += 1
     }
 
     contours.clear()
+    biggest.convertTo(biggest, CvType.CV_32S)
+    val maxRect = new MatOfPoint
+    biggest.convertTo(maxRect, CvType.CV_32S)
     contours.add(maxRect)
 
-    //println(s"Rects: ${contours.size()}")
-    //println(s"Contour: ${contours.get(0)}")
-    printMat(maxRect)
+    Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0))
 
-
-
-    Imgproc.polylines(outImg, contours, true, new Scalar(0.0, 255.0, 0.0))
-
-    //Imgproc.circle(outImg, new Point(outImg.width()/2, outImg.height()/2), 50, new Scalar(0.0, 255.0, 0.0), 3)
-
-    return outImg
+    return inImg
   }
 
 
