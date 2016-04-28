@@ -10,3 +10,15 @@
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
 * Research Sudoku solvers for chess scanner example code
+
+# Ideas
+* Bug file with
+** Date:
+** Symptom:
+** Cause:
+** How Found:
+** Fix:
+** Fixed in file(s):
+** Caused by me:
+** Time taken to resolve bug:
+** Lessons:
