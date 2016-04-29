@@ -128,6 +128,8 @@ object ImageTools {
 
 
 
+
+
 //  def resize(image, width=None, height=None, inter=cv2.INTER_AREA):
 //  # initialize the dimensions of the image to be resized and
 //  # grab the image size
@@ -159,14 +161,14 @@ object ImageTools {
 //  # return the resized image
 //  return resized
   def resize(image: Mat, width: Int, height: Int, inter: Int = Imgproc.INTER_AREA): Mat = {
-    val resized = new Mat()
+    val resized = new Mat
     val size = new Size(width, height)
     Imgproc.resize(image, resized, size, 0.0, 0.0, inter)
     return resized
   }
 
   def resize(image: Mat, ratio: Double): Mat = {
-    val resized = new Mat()
+    val resized = new Mat
     Imgproc.resize(image, resized, new Size(0,0), ratio, ratio, Imgproc.INTER_AREA)
     return resized
   }
@@ -205,17 +207,15 @@ object ImageTools {
     val area = image.width * image.height
     val skeleton = Mat.zeros(image.size, image.`type`())
     val elem = Imgproc.getStructuringElement(structuring, size)
-    var img = image.clone()
+    var img = image.clone
     while(true) {
-      val eroded = new Mat(img.size(), img.`type`())
+      val eroded = new Mat(img.size, img.`type`())
       Imgproc.erode(img, eroded, elem)
-      val temp = new Mat(img.size(), img.`type`())
+      val temp = new Mat(img.size, img.`type`())
       Imgproc.dilate(eroded, temp, elem)
       Core.subtract(img, temp, temp)
-      println(s"Skeleton: ${skeleton.size} temp: ${temp.size()}")
       Core.bitwise_or(skeleton, temp, skeleton)
-      img = eroded.clone()
-      println(s"Non zero: ${Core.countNonZero(img)}")
+      img = eroded.clone
       if(area == (area - Core.countNonZero(img))) {
         return skeleton
       }
