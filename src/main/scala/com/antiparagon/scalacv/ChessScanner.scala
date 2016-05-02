@@ -12,7 +12,6 @@ import org.opencv.imgproc.Imgproc
 object ChessScanner {
 
   import scala.collection.JavaConversions._
-  import scala.collection.JavaConversions.asScalaIterator
 
   def findBoard(inImg: Mat): Mat = {
 
@@ -20,7 +19,7 @@ object ChessScanner {
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
-    
+
     val contours = new util.ArrayList[MatOfPoint]()
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
@@ -32,7 +31,6 @@ object ChessScanner {
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
-    var index = 0
     for(contour <- contours) {
       val area = Imgproc.contourArea(contour)
       if(area > 100.0) {
@@ -46,10 +44,9 @@ object ChessScanner {
           maxArea = area
         }
       }
-      index += 1
     }
 
-    contours.clear()
+    contours.clear
     biggest.convertTo(biggest, CvType.CV_32S)
     val maxRect = new MatOfPoint
     biggest.convertTo(maxRect, CvType.CV_32S)
