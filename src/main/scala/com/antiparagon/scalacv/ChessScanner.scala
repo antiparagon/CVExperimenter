@@ -46,13 +46,13 @@ object ChessScanner {
       }
     }
 
-    contours.clear
-    biggest.convertTo(biggest, CvType.CV_32S)
     val maxRect = new MatOfPoint
     biggest.convertTo(maxRect, CvType.CV_32S)
+    contours.clear
     contours.add(maxRect)
 
-    Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0))
+    printMat(maxRect)
+    Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
 
     return inImg
   }
