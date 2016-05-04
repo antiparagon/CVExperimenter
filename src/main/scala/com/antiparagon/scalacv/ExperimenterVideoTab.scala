@@ -67,15 +67,15 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
 
   def startVideo(): Boolean = {
     capture.open(0)
-    if (capture.isOpened()) {
+    if (capture.isOpened) {
       cameraActive = true
       capture.set(Videoio.CAP_PROP_FRAME_WIDTH, VIDEO_WIDTH)
       capture.set(Videoio.CAP_PROP_FRAME_HEIGHT, VIDEO_HEIGHT)
       // grab a frame every 33 ms (30 frames/sec)
-      val frameGrabber = new Runnable() {
+      val frameGrabber = new Runnable {
         def run {
           // Apply algorithm to image
-          val image = ChessScanner.findBoard(grabMatFrame())
+          val image = ChessScanner.findBoard(grabMatFrame)
           currentFrame.setImage(ImageTools.convertCVtoFX(image))
         }
       }
@@ -92,18 +92,18 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
   def stopVideo(): Unit = {
     if(cameraActive) {
       try {
-        timer.shutdown()
+        timer.shutdown
         timer.awaitTermination(33, TimeUnit.MILLISECONDS)
       } catch {
         case e: InterruptedException => println("Exception in stopping the frame capture, trying to release the camera now... " + e);
       }
       cameraActive = false
-      capture.release()
+      capture.release
     }
   }
 
   def grabMatFrame(): Mat = {
-    val frame = new Mat()
+    val frame = new Mat
     if (capture.isOpened) {
       try {
         capture.read(frame)
@@ -120,10 +120,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
     if (capture.isOpened) {
       try {
         capture.read(frame)
-        if (!frame.empty()) {
-          // convert the image to gray scale
-          //Imgproc.cvtColor(frame, frame, Imgproc.COLOR_BGR2GRAY)
-          // convert the Mat object (OpenCV) to Image (JavaFX)
+        if (!frame.empty) {
           image = ImageTools.convertCVtoFX(frame)
         }
       } catch {
