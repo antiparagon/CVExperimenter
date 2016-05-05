@@ -52,11 +52,19 @@ object ChessScanner {
     contours.add(maxRect)
 
     printMat(maxRect)
+    getBoundingRect(maxRect)
     Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
 
     return inImg
   }
 
+  def getBoundingRect(rect: MatOfPoint): MatOfPoint = {
+    val bbox = new MatOfPoint
+    for(point <- rect.toArray) {
+      println(s"Point: $point")
+    }
+    bbox
+  }
 
   def printMat(mat: Mat) = {
     for(i <- 0 to mat.rows) {

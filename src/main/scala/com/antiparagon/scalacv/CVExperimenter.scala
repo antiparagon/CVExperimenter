@@ -38,7 +38,7 @@ object CVExperimenter extends JFXApp {
       padding = Insets(20)
       spacing = 5
       style = BACKGROUND_STYLE
-      children ++ (new CommandPanel(tabManager)).getChildren()
+      children = (new CommandPanel(tabManager)).getChildren()
     }
   }
 
