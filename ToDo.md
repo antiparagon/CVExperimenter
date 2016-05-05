@@ -4,6 +4,8 @@
 * Allow the computer screen to be captured as an image
 * Image auto resizing
 * Add annotations to the webcam video
+* Get sub-image of an image
+* Get example images of differnet chess pieces in different styles
 
 # Things to learn
 * Building a string in Scala
