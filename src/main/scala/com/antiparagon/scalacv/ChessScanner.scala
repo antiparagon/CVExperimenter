@@ -46,23 +46,36 @@ object ChessScanner {
       }
     }
 
-    val maxRect = new MatOfPoint
-    biggest.convertTo(maxRect, CvType.CV_32S)
-    contours.clear
-    contours.add(maxRect)
-
-    printMat(maxRect)
-    getBoundingRect(maxRect)
-    Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
-
+    if(maxArea > 0.0) {
+      val maxRect = new MatOfPoint
+      biggest.convertTo(maxRect, CvType.CV_32S)
+      //contours.clear
+      //contours.add(maxRect)
+      //Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
+      val bbox = getBoundingRect(maxRect)
+      return new Mat(inImg, bbox)
+    }
     return inImg
   }
 
-  def getBoundingRect(rect: MatOfPoint): MatOfPoint = {
-    val bbox = new MatOfPoint
+  def getBoundingRect(rect: MatOfPoint): Rect = {
+    val bbox = new Rect
+    var minX = Double.MaxValue
+    var maxX = Double.MinValue
+    var minY = Double.MaxValue
+    var maxY = Double.MinValue
+
     for(point <- rect.toArray) {
-      println(s"Point: $point")
+      if(point.x > maxX) maxX = point.x
+      if(point.x < minX) minX = point.x
+      if(point.y > maxY) maxY = point.y
+      if(point.y < minY) minY = point.y
     }
+
+    bbox.x = minX.toInt
+    bbox.y = minY.toInt
+    bbox.width = (maxX - minX).toInt
+    bbox.height = (maxY - minY).toInt
     bbox
   }
 

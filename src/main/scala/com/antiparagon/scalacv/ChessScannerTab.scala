@@ -12,13 +12,13 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
 
   content = new VBox {
     padding = Insets(20)
-    style = "-fx-background-color: white"
+    style = "-fx-background-color: black"
     alignment = Pos.Center
     children = Seq(
       new HBox {
         alignment = Pos.Center
         children = new ScrollPane {
-          style = "-fx-background-color: white"
+          style = "-fx-background-color: black"
           //alignment = Pos.Center
           val imgView = new ImageView(img)
           imgView.style = "-fx-background-color: transparent"
