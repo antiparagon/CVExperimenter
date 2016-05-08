@@ -13,7 +13,17 @@ object ChessScanner {
 
   import scala.collection.JavaConversions._
 
-  def findBoard(inImg: Mat): Mat = {
+  def getChessboard(inImg: Mat): Mat = {
+
+    val bbox = findBoard(inImg)
+    bbox match {
+      case Some(bbox) => new Mat(inImg, bbox)
+    }
+
+    return inImg
+  }
+
+  def findBoard(inImg: Mat): Option[Rect] = {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
@@ -53,9 +63,9 @@ object ChessScanner {
       //contours.add(maxRect)
       //Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
       val bbox = getBoundingRect(maxRect)
-      return new Mat(inImg, bbox)
+      return Some(bbox)
     }
-    return inImg
+    return None
   }
 
   def getBoundingRect(rect: MatOfPoint): Rect = {

@@ -75,7 +75,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       val frameGrabber = new Runnable {
         def run {
           // Apply algorithm to image
-          val image = ChessScanner.findBoard(grabMatFrame)
+          val image = ChessScanner.getChessboard(grabMatFrame)
           currentFrame.setImage(ImageTools.convertCVtoFX(image))
         }
       }

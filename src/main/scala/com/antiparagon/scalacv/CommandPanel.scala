@@ -108,7 +108,7 @@ class CommandPanel(tabManager: TabManager) {
         onAction = handle {
           if(tabManager.isImageTabSelected) {
             val image = tabManager.getSelectedMat
-            val result = ChessScanner.findBoard(image)
+            val result = ChessScanner.getChessboard(image)
             tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result))
           }
         }
