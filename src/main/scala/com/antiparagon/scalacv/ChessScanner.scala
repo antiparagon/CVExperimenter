@@ -14,13 +14,14 @@ object ChessScanner {
   import scala.collection.JavaConversions._
 
   def getChessboard(inImg: Mat): Mat = {
-
     val bbox = findBoard(inImg)
     bbox match {
-      case Some(bbox) => new Mat(inImg, bbox)
+      case Some(bbox) => return new Mat(inImg, bbox)
+      case None => {
+        println("No chessboard found")
+        return inImg
+      }
     }
-
-    return inImg
   }
 
   def findBoard(inImg: Mat): Option[Rect] = {
