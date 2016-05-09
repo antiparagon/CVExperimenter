@@ -68,6 +68,19 @@ class CommandPanel(tabManager: TabManager) {
       },
 
       new Button {
+        text = "Resize Image"
+        style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
+        onAction = handle {
+          if(tabManager.isImageTabSelected) {
+            val image = tabManager.getSelectedMat
+            val result = ImageTools.resize(image, .5)
+            tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+          }
+        }
+      },
+
+      new Button {
         text = "Open Webcam..."
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
