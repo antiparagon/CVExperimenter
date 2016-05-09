@@ -16,7 +16,11 @@ object ChessScanner {
   def getChessboard(inImg: Mat): Mat = {
     val bbox = findBoard(inImg)
     bbox match {
-      case Some(bbox) => return new Mat(inImg, bbox)
+      case Some(bbox) => {
+        Imgproc.rectangle(inImg, bbox.tl(), bbox.br(), new Scalar(0.0, 255.0, 0.0), 3)
+        return inImg
+        //return new Mat(inImg, bbox)
+      }
       case None => {
         println("No chessboard found")
         return inImg
@@ -60,9 +64,6 @@ object ChessScanner {
     if(maxArea > 0.0) {
       val maxRect = new MatOfPoint
       biggest.convertTo(maxRect, CvType.CV_32S)
-      //contours.clear
-      //contours.add(maxRect)
-      //Imgproc.polylines(inImg, contours, true, new Scalar(0.0, 255.0, 0.0), 3)
       val bbox = getBoundingRect(maxRect)
       return Some(bbox)
     }
