@@ -16,12 +16,20 @@ class TabManager {
 
   val tabs = ArrayBuffer.empty[ExperimenterTab]
 
-  val imagePane = new TabPane {
+  val tabPane = new TabPane {
     hgrow = Priority.Always
   }
 
+  def getSelectedTabWidth() : Double = {
+    tabPane.maxWidth()
+  }
+
+  def getSelectedTabHeight() : Double = {
+    tabPane.maxHeight()
+  }
+
   def isImageTabSelected(): Boolean = {
-    val index = imagePane.getSelectionModel.getSelectedIndex
+    val index = tabPane.getSelectionModel.getSelectedIndex
     if(index >= 0 && index < tabs.length) {
       return true
     }
@@ -29,26 +37,26 @@ class TabManager {
   }
 
   def getSelectedIndex() : Int = {
-    return imagePane.getSelectionModel.getSelectedIndex
+    return tabPane.getSelectionModel.getSelectedIndex
   }
 
   def getSelectedImg(): Image = {
-    if (isImageTabSelected()) {
-      return tabs(getSelectedIndex()).getImg()
+    if (isImageTabSelected) {
+      return tabs(getSelectedIndex).getImg
     }
     return null
   }
 
   def getSelectedMat(): Mat = {
-    if (isImageTabSelected()) {
-      return tabs(getSelectedIndex()).getMat()
+    if (isImageTabSelected) {
+      return tabs(getSelectedIndex).getMat
     }
     return null
   }
 
   def getSelectedText(): String = {
     if (getSelectedIndex() >= 0) {
-      return tabs(getSelectedIndex()).getTabText()
+      return tabs(getSelectedIndex).getTabText
     }
     return ""
   }
@@ -65,7 +73,7 @@ class TabManager {
   def showVideoTab(): Unit = {
     tabs.foreach(tab => {
       if(tab.isInstanceOf[ExperimenterVideoTab]) {
-        imagePane.getSelectionModel.select(tab.asInstanceOf[ExperimenterVideoTab])
+        tabPane.getSelectionModel.select(tab.asInstanceOf[ExperimenterVideoTab])
       }
     })
   }
@@ -84,9 +92,9 @@ class TabManager {
     tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
 
     tab.text = name
-    imagePane += tab
-    imagePane.selectionModel.value.select(tab)
-    val index = imagePane.getSelectionModel.getSelectedIndex
+    tabPane += tab
+    tabPane.selectionModel.value.select(tab)
+    val index = tabPane.getSelectionModel.getSelectedIndex
     if(tabs.length - 1 < index) {
       tabs += tab
     } else {
@@ -100,9 +108,9 @@ class TabManager {
     tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
 
     tab.text = name
-    imagePane += tab
-    imagePane.selectionModel.value.select(tab)
-    val index = imagePane.getSelectionModel.getSelectedIndex
+    tabPane += tab
+    tabPane.selectionModel.value.select(tab)
+    val index = tabPane.getSelectionModel.getSelectedIndex
     if(tabs.length - 1 < index) {
       tabs += tab
     } else {
@@ -119,9 +127,9 @@ class TabManager {
     }
 
     tab.text = name
-    imagePane += tab
-    imagePane.selectionModel.value.select(tab)
-    val index = imagePane.getSelectionModel.getSelectedIndex
+    tabPane += tab
+    tabPane.selectionModel.value.select(tab)
+    val index = tabPane.getSelectionModel.getSelectedIndex
     if(tabs.length - 1 < index) {
       tabs += tab
     } else {
@@ -130,6 +138,6 @@ class TabManager {
   }
 
   def getTabPane() : TabPane = {
-    return imagePane
+    return tabPane
   }
 }

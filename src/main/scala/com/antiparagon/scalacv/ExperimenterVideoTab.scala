@@ -135,4 +135,5 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
   }
 
   override def getTabText(): String = text.value
+
 }

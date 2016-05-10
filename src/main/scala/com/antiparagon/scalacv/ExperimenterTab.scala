@@ -17,6 +17,6 @@ trait ExperimenterTab {
   def getImg() : Image
 
   def getMat() : Mat = {
-    ImageTools.convertFXtoCV(getImg())
+    ImageTools.convertFXtoCV(getImg)
   }
 }

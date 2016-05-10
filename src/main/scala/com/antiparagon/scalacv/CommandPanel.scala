@@ -73,6 +73,9 @@ class CommandPanel(tabManager: TabManager) {
         maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isImageTabSelected) {
+
+            println(s"Selected width: ${tabManager.getSelectedTabWidth()}")
+            println(s"Selected height: ${tabManager.getSelectedTabHeight()}")
             val image = tabManager.getSelectedMat
             val result = ImageTools.resize(image, .5)
             tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))

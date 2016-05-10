@@ -33,4 +33,5 @@ class ExperimenterImageTab(val img : Image) extends Tab with ExperimenterTab {
   override def getImg() : Image = return img
 
   override def getTabText(): String = text.value
+
 }
