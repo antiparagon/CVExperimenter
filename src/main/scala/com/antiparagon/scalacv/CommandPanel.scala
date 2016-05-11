@@ -73,12 +73,17 @@ class CommandPanel(tabManager: TabManager) {
         maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isImageTabSelected) {
-
-            println(s"Selected width: ${tabManager.getSelectedTabWidth()}")
-            println(s"Selected height: ${tabManager.getSelectedTabHeight()}")
             val image = tabManager.getSelectedMat
-            val result = ImageTools.resize(image, .5)
-            tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+            val tabWidth = tabManager.getTabPaneWidth - 100
+            val tabHeight = tabManager.getTabPaneHeight -100
+            if(image.width > tabWidth) {
+              val result = ImageTools.resize(image, tabWidth.toInt, (image.height * tabWidth / image.width).toInt)
+              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+            }
+            if(image.height > tabHeight) {
+              val result = ImageTools.resize(image, (image.width * tabHeight / image.height).toInt, tabHeight.toInt)
+              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+            }
           }
         }
       },

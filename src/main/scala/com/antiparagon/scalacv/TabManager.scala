@@ -20,12 +20,12 @@ class TabManager {
     hgrow = Priority.Always
   }
 
-  def getSelectedTabWidth() : Double = {
-    tabPane.maxWidth()
+  def getTabPaneWidth() : Double = {
+    tabPane.getBoundsInParent.getWidth
   }
 
-  def getSelectedTabHeight() : Double = {
-    tabPane.maxHeight()
+  def getTabPaneHeight() : Double = {
+    tabPane.getBoundsInParent.getHeight
   }
 
   def isImageTabSelected(): Boolean = {
