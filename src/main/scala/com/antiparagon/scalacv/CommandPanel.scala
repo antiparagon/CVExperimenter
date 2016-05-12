@@ -74,14 +74,22 @@ class CommandPanel(tabManager: TabManager) {
         onAction = handle {
           if(tabManager.isImageTabSelected) {
             val image = tabManager.getSelectedMat
-            val tabWidth = tabManager.getTabPaneWidth - 100
-            val tabHeight = tabManager.getTabPaneHeight -100
+            val tabWidth = tabManager.getTabPaneWidth - 50
+            val tabHeight = tabManager.getTabPaneHeight - 75
+            var widthRatio = 1.0
+            var heightRatio = 1.0
             if(image.width > tabWidth) {
-              val result = ImageTools.resize(image, tabWidth.toInt, (image.height * tabWidth / image.width).toInt)
-              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+              widthRatio = tabWidth / image.width
             }
             if(image.height > tabHeight) {
-              val result = ImageTools.resize(image, (image.width * tabHeight / image.height).toInt, tabHeight.toInt)
+              heightRatio = tabHeight / image.height
+            }
+            if(widthRatio < heightRatio) {
+              val result = ImageTools.resize(image, tabWidth.toInt, (image.height * widthRatio).toInt)
+              tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
+            }
+            if(heightRatio < widthRatio) {
+              val result = ImageTools.resize(image, (image.width * heightRatio).toInt, tabHeight.toInt)
               tabManager.addImageTab(tabManager.getSelectedText + " - resized", ImageTools.convertCVtoFX(result))
             }
           }
