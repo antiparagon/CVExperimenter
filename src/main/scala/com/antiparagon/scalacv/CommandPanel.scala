@@ -74,8 +74,8 @@ class CommandPanel(tabManager: TabManager) {
         onAction = handle {
           if(tabManager.isImageTabSelected) {
             val image = tabManager.getSelectedMat
-            val tabWidth = tabManager.getTabPaneWidth - 50
-            val tabHeight = tabManager.getTabPaneHeight - 75
+            val tabWidth = tabManager.getTabPaneWidth - 50 // For TabPane non-tab area
+            val tabHeight = tabManager.getTabPaneHeight - 75 // For TabPane non-tab area
             var widthRatio = 1.0
             var heightRatio = 1.0
             if(image.width > tabWidth) {
