@@ -2,12 +2,20 @@
 * Add functions from imutils (https://github.com/jrosebr1/imutils) to ImageTools
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Allow the computer screen to be captured as an image
-* Change how TabManger adds tabs so it is generic and doesn't need functions add to add new tabs
+* Change how TabManger adds tabs so it is generic and doesn't need functions added to use new tab types
 
 # Things to learn
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
 * Research Sudoku solvers for chess scanner example code
+
+# Object Detection
+* RANSAC
+* Viola-Jones
+* SVM with histograms of oriented gradients (HOG)
+* gradient-based
+* derivative-based
+* template matching
 
 # Ideas
 * Bug file with
