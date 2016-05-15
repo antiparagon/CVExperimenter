@@ -3,9 +3,8 @@ package com.antiparagon.cvexperimenter
 import org.opencv.core.Mat
 
 import scala.collection.mutable.ArrayBuffer
-
 import scalafx.Includes._
-import scalafx.scene.control.TabPane
+import scalafx.scene.control.{Tab, TabPane}
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority
 
@@ -28,7 +27,7 @@ class TabManager {
     tabPane.getBoundsInParent.getHeight
   }
 
-  def isImageTabSelected(): Boolean = {
+  def isTabSelected(): Boolean = {
     val index = tabPane.getSelectionModel.getSelectedIndex
     if(index >= 0 && index < tabs.length) {
       return true
@@ -41,21 +40,21 @@ class TabManager {
   }
 
   def getSelectedImg(): Image = {
-    if (isImageTabSelected) {
+    if (isTabSelected) {
       return tabs(getSelectedIndex).getImg
     }
     return null
   }
 
   def getSelectedMat(): Mat = {
-    if (isImageTabSelected) {
+    if (isTabSelected) {
       return tabs(getSelectedIndex).getMat
     }
     return null
   }
 
   def getSelectedText(): String = {
-    if (getSelectedIndex() >= 0) {
+    if (getSelectedIndex >= 0) {
       return tabs(getSelectedIndex).getTabText
     }
     return ""
@@ -78,7 +77,7 @@ class TabManager {
     })
   }
 
-  def stopVideoTabs(): Unit = {
+  def stopVideoTab(): Unit = {
     tabs.foreach(tab => {
       if(tab.isInstanceOf[ExperimenterVideoTab]) {
         tab.asInstanceOf[ExperimenterVideoTab].stopVideo()
@@ -88,61 +87,36 @@ class TabManager {
 
   def addImageEditorTab(name : String, img : Image): Unit = {
     val tab = new ImageEditorTab(img)
-
-    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
-
     tab.text = name
-    tabPane += tab
-    tabPane.selectionModel.value.select(tab)
-    val index = tabPane.getSelectionModel.getSelectedIndex
-    if(tabs.length - 1 < index) {
-      tabs += tab
-    } else {
-      tabs(index) = tab
-    }
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+    addTab(tab)
   }
 
   def addChessScannerTab(name : String, img : Image): Unit = {
     val tab = new ChessScannerTab(img)
-
-    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
-
     tab.text = name
-    tabPane += tab
-    tabPane.selectionModel.value.select(tab)
-    val index = tabPane.getSelectionModel.getSelectedIndex
-    if(tabs.length - 1 < index) {
-      tabs += tab
-    } else {
-      tabs(index) = tab
-    }
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+    addTab(tab)
   }
 
   def addImageTab(name : String, img : Image): Unit = {
     val tab = new ExperimenterImageTab(img)
-
-    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
-
     tab.text = name
-    tabPane += tab
-    tabPane.selectionModel.value.select(tab)
-    val index = tabPane.getSelectionModel.getSelectedIndex
-    if(tabs.length - 1 < index) {
-      tabs += tab
-    } else {
-      tabs(index) = tab
-    }
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+    addTab(tab)
   }
 
   def addVideoTab(name : String): Unit = {
     val tab = new ExperimenterVideoTab()
-
+    tab.text = name
     tab.onClosed = handle {
       tab.stopVideo()
       tabs.remove(tabs.indexOf(tab))
     }
+    addTab(tab)
+  }
 
-    tab.text = name
+  def addTab(tab : Tab with ExperimenterTab): Unit = {
     tabPane += tab
     tabPane.selectionModel.value.select(tab)
     val index = tabPane.getSelectionModel.getSelectedIndex

@@ -42,7 +42,7 @@ class CommandPanel(tabManager: TabManager) {
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
         onAction = handle {
-          if(tabManager.isImageTabSelected) {
+          if(tabManager.isTabSelected) {
             val fileChooser = new FileChooser {
               title = "Save Image File"
             }
@@ -72,7 +72,7 @@ class CommandPanel(tabManager: TabManager) {
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
         onAction = handle {
-          if(tabManager.isImageTabSelected) {
+          if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
             val tabWidth = tabManager.getTabPaneWidth - 50 // For TabPane non-tab area
             val tabHeight = tabManager.getTabPaneHeight - 75 // For TabPane non-tab area
@@ -114,7 +114,7 @@ class CommandPanel(tabManager: TabManager) {
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
         onAction = handle {
-          if(tabManager.isImageTabSelected) {
+          if(tabManager.isTabSelected) {
             val image: Mat = tabManager.getSelectedMat
             val imageHSV = new Mat(image.size, 1)
             val imageBlurr = new Mat(image.size, 1)
@@ -135,7 +135,7 @@ class CommandPanel(tabManager: TabManager) {
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
         onAction = handle {
-          if(tabManager.isImageTabSelected) {
+          if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
             tabManager.addImageEditorTab(tabManager.getSelectedText + " - edit", ImageTools.convertCVtoFX(image))
           }
@@ -147,7 +147,7 @@ class CommandPanel(tabManager: TabManager) {
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
         onAction = handle {
-          if(tabManager.isImageTabSelected) {
+          if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
             val result = ChessScanner.getChessboard(image)
             tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result))

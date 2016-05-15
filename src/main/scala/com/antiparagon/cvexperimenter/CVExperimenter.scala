@@ -68,7 +68,7 @@ object CVExperimenter extends JFXApp {
 
   override def stopApp(): Unit = {
     println("Stopping")
-    tabManager.stopVideoTabs
+    tabManager.stopVideoTab
     super.stopApp
   }
 }

@@ -11,11 +11,12 @@
 
 # Object Detection
 * RANSAC
-* Viola-Jones
+* Viola-Jones (Haar cascade)
 * SVM with histograms of oriented gradients (HOG)
 * gradient-based
 * derivative-based
 * template matching
+* SURF and SIFT
 
 # Ideas
 * Bug file with
