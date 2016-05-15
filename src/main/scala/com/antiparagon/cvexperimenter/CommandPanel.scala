@@ -1,4 +1,4 @@
-package com.antiparagon.scalacv
+package com.antiparagon.cvexperimenter
 
 import java.io.IOException
 import javax.imageio.ImageIO
@@ -126,6 +126,18 @@ class CommandPanel(tabManager: TabManager) {
             Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5)
 
             tabManager.addImageTab(tabManager.getSelectedText + " - mod", ImageTools.convertCVtoFX(imageA))
+          }
+        }
+      },
+
+      new Button {
+        text = "Image Editor"
+        style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
+        onAction = handle {
+          if(tabManager.isImageTabSelected) {
+            val image = tabManager.getSelectedMat
+            tabManager.addImageEditorTab(tabManager.getSelectedText + " - edit", ImageTools.convertCVtoFX(image))
           }
         }
       },

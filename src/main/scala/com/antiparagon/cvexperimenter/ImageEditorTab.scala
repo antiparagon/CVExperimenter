@@ -1,4 +1,4 @@
-package com.antiparagon.scalacv
+package com.antiparagon.cvexperimenter
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{ScrollPane, Tab}
@@ -6,9 +6,9 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
-  * Created by wmckay on 5/5/16.
+  * Created by wmckay on 5/14/16.
   */
-class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
+class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
 
   content = new VBox {
     padding = Insets(20)

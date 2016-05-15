@@ -1,4 +1,4 @@
-package com.antiparagon.scalacv
+package com.antiparagon.cvexperimenter
 
 import org.opencv.core.Mat
 
@@ -84,6 +84,22 @@ class TabManager {
         tab.asInstanceOf[ExperimenterVideoTab].stopVideo()
       }
     })
+  }
+
+  def addImageEditorTab(name : String, img : Image): Unit = {
+    val tab = new ImageEditorTab(img)
+
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+
+    tab.text = name
+    tabPane += tab
+    tabPane.selectionModel.value.select(tab)
+    val index = tabPane.getSelectionModel.getSelectedIndex
+    if(tabs.length - 1 < index) {
+      tabs += tab
+    } else {
+      tabs(index) = tab
+    }
   }
 
   def addChessScannerTab(name : String, img : Image): Unit = {

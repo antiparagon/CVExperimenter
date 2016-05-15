@@ -2,10 +2,7 @@
 * Add functions from imutils (https://github.com/jrosebr1/imutils) to ImageTools
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Allow the computer screen to be captured as an image
-* Image auto resizing
-* Add annotations to the webcam video
-* Get sub-image of an image
-* Get example images of differnet chess pieces in different styles
+* Change how TabManger adds tabs so it is generic and doesn't need functions add to add new tabs
 
 # Things to learn
 * Building a string in Scala

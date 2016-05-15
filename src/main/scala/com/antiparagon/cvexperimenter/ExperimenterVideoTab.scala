@@ -1,4 +1,4 @@
-package com.antiparagon.scalacv
+package com.antiparagon.cvexperimenter
 
 import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
