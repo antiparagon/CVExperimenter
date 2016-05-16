@@ -17,6 +17,8 @@
 * derivative-based
 * template matching
 * SURF and SIFT
+* LBP cascades
+* KLT algorithm
 
 # Ideas
 * Bug file with
