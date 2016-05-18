@@ -12,6 +12,13 @@ import scalafx.scene.layout.{HBox, VBox}
 class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
 
   val currentFrame =  new ImageView(img)
+  val editButton = new Button {
+    text = "Edit"
+    style = BUTTON_STYLE
+    onAction = handle {
+      println("Pushed button")
+    }
+  }
 
   content = new VBox {
     padding = Insets(20)
@@ -30,13 +37,9 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
               currentFrame,
               new HBox {
                 alignment = Pos.Center
-                children = new Button {
-                  text = "Edit"
-                  style = BUTTON_STYLE
-                  onAction = handle {
-                    println("Pushed button")
-                  }
-                }
+                children = Seq(
+                  editButton
+                )
               }
             )
           }
