@@ -4,6 +4,7 @@ import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, ScrollPane, Tab}
 import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
@@ -12,6 +13,7 @@ import scalafx.scene.layout.{HBox, VBox}
 class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
 
   val currentFrame =  new ImageView(img)
+  currentFrame.setOnMouseClicked((e : MouseEvent) => { println("["+e.getX()+", "+e.getY()+"]"); })
   val editButton = new Button {
     text = "Edit"
     style = BUTTON_STYLE
