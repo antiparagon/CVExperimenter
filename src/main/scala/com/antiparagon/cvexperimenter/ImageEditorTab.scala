@@ -2,7 +2,7 @@ package com.antiparagon.cvexperimenter
 
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
-import scalafx.scene.control.{Button, ScrollPane, Tab}
+import scalafx.scene.control.{Button, Label, ScrollPane, Tab}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input.MouseEvent
 import scalafx.scene.layout.{HBox, VBox}
@@ -12,8 +12,10 @@ import scalafx.scene.layout.{HBox, VBox}
   */
 class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
 
+  val mousePosLabel = new Label("x: 0 y: 0")
   val currentFrame =  new ImageView(img)
-  currentFrame.setOnMouseClicked((e : MouseEvent) => { println("["+e.getX()+", "+e.getY()+"]"); })
+  currentFrame.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[${e.getX()}, ${e.getY()}]"; })
+  currentFrame.setOnMouseClicked((e : MouseEvent) => { println(s"[${e.getX()}, ${e.getY()}]"); })
   val editButton = new Button {
     text = "Edit"
     style = BUTTON_STYLE
@@ -40,6 +42,7 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
               new HBox {
                 alignment = Pos.Center
                 children = Seq(
+                  mousePosLabel,
                   editButton
                 )
               }
