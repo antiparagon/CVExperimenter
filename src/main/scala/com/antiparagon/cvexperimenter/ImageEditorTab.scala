@@ -14,16 +14,23 @@ import scalafx.scene.text.{Font, FontWeight}
   */
 class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
 
+  val imgSizeLabel = new Label {
+    text = s"${img.getWidth.toInt}x${img.getHeight.toInt}"
+    font = Font.font(null, FontWeight.Bold, 18)
+    textFill = Color.Green
+    padding = Insets(50)
+  }
+
+
   val mousePosLabel = new Label {
     text = "x: 0 y: 0"
     font = Font.font(null, FontWeight.Bold, 18)
     textFill = Color.Green
     padding = Insets(50)
-    alignmentInParent = Pos.BaselineLeft
   }
 
   val currentFrame =  new ImageView(img)
-  currentFrame.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[ ${e.getX}, ${e.getY}]"; })
+  currentFrame.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[ ${e.getX.toInt}, ${e.getY.toInt}]"; })
   currentFrame.setOnMouseClicked((e : MouseEvent) => { println(s"[${e.getX}, ${e.getY}]"); })
 
   val editButton = new Button {
@@ -48,6 +55,7 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
             style = BACKGROUND_STYLE
             spacing = 5
             children = Seq(
+              imgSizeLabel,
               currentFrame,
               new VBox {
                 alignment = Pos.Center
