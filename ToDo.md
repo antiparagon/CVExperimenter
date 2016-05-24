@@ -5,7 +5,7 @@
 * Change how TabManger adds tabs so it is generic and doesn't need functions added to use new tab types
 * Add DFT processing for images
 * Draw histogram for image
-* Get ImageEditor editing images
+* Get ImageEditorTab editing images
 
 # Things to learn
 * Building a string in Scala
