@@ -97,6 +97,19 @@ class CommandPanel(tabManager: TabManager) {
       },
 
       new Button {
+        text = "DFT"
+        style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
+        onAction = handle {
+          if(tabManager.isTabSelected) {
+            val image = tabManager.getSelectedMat
+            val result = ImageDft.transformImage(image)
+            tabManager.addImageTab(tabManager.getSelectedText + " - dft", ImageTools.convertCVtoFX(result))
+          }
+        }
+      },
+
+      new Button {
         text = "Open Webcam..."
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue

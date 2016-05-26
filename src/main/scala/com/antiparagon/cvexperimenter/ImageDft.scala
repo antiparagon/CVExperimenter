@@ -4,6 +4,7 @@ import java.util
 
 import collection.JavaConverters._
 import org.opencv.core._
+import org.opencv.imgproc.Imgproc
 
 
 /**
@@ -11,6 +12,32 @@ import org.opencv.core._
   */
 object ImageDft {
 
+  def transformImage(image: Mat): Mat  = {
+    // optimize the dimension of the loaded image
+    val padded = optimizeImageDim(image)
+    padded.convertTo(padded, CvType.CV_32F)
+    Imgproc.cvtColor(padded, padded, Imgproc.COLOR_BGR2GRAY)
+    // prepare the image planes to obtain the complex image
+    val planes: java.util.List[Mat] = new java.util.ArrayList[Mat]
+    planes.add(padded)
+    planes.add(Mat.zeros(padded.size(), CvType.CV_32F))
+    // prepare a complex image for performing the dft
+    val complexImage = new Mat()
+    Core.merge(planes, complexImage)
+
+    ImageTools.outputMatProperties(complexImage)
+
+    // dft
+    Core.dft(complexImage, complexImage)
+
+    // optimize the image resulting from the dft operation
+    val magnitude = createOptimizedMagnitude(complexImage)
+
+    return magnitude
+  }
+  
+  
+  
   def antitransformImage(complexImage: Mat, planes: List[Mat]): Mat = {
     Core.idft(complexImage, complexImage)
 
@@ -35,12 +62,12 @@ object ImageDft {
 
   def createOptimizedMagnitude(complexImage: Mat): Mat = {
     // init
-    val newPlanes: java.util.List[Mat] = new java.util.ArrayList[Mat]
+    val planes: java.util.List[Mat] = new java.util.ArrayList[Mat]
     val mag = new Mat()
     // split the comples image in two planes
-    Core.split(complexImage, newPlanes)
+    Core.split(complexImage,  planes)
     // compute the magnitude
-    Core.magnitude(newPlanes.get(0), newPlanes.get(1), mag)
+    Core.magnitude( planes.get(0),  planes.get(1), mag)
 
     // move to a logarithmic scale
     Core.add(Mat.ones(mag.size(), CvType.CV_32F), mag, mag)
@@ -77,5 +104,7 @@ object ImageDft {
     q1.copyTo(tmp)
     q2.copyTo(q1)
     tmp.copyTo(q2)
+
+    return tmp
   }
 }
