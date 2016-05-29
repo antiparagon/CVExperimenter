@@ -1,5 +1,7 @@
 package com.antiparagon.cvexperimenter
 
+import java.util
+
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 
@@ -10,7 +12,7 @@ class ImageHistogram {
 
   def createHistogram(frame: Mat, gray: Boolean): Unit =  {
     // split the frames in multiple images
-    val images = new Array[Mat]
+    val images = new util.ArrayList[Mat]
     Core.split(frame, images)
 
     // set the number of bins at 256
@@ -37,7 +39,7 @@ class ImageHistogram {
     // draw the histogram
     val hist_w = 150; // width of the histogram image
     val hist_h = 150; // height of the histogram image
-    val bin_w = (int) Math.round(hist_w / histSize.get(0, 0)[0])
+    val bin_w = Math.round(hist_w / histSize.get(0, 0)[0])
 
     val histImage = new Mat(hist_h, hist_w, CvType.CV_8UC3, new Scalar(0, 0, 0))
     // normalize the result to [0, histImage.rows()]
@@ -50,7 +52,8 @@ class ImageHistogram {
     }
 
     // effectively draw the histogram(s)
-    for (int i = 1; i < histSize.get(0, 0)[0]; i++) {
+    var i = 0
+    for (i <- 1 until (histSize.get(0, 0)[0]).toInt) {
       // B component or gray image
       Imgproc.line(histImage, new Point(bin_w * (i - 1), hist_h - Math.round(hist_b.get(i - 1, 0)[0])),
       new Point(bin_w * (i), hist_h - Math.round(hist_b.get(i, 0)[0])), new Scalar(255, 0, 0), 2, 8, 0);
