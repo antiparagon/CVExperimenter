@@ -10,7 +10,7 @@ import org.opencv.imgproc.Imgproc
   */
 class ImageHistogram {
 
-  def createHistogram(frame: Mat, gray: Boolean): Unit =  {
+  def createHistogram(frame: Mat, gray: Boolean): Mat =  {
     // split the frames in multiple images
     val images = new util.ArrayList[Mat]
     Core.split(frame, images)
@@ -66,9 +66,7 @@ class ImageHistogram {
       }
     }
 
-    // display the histogram...
-    //Image histImg = mat2Image(histImage);
-    //this.histogram.setImage(histImg);
+    return histImage
 
   }
 
