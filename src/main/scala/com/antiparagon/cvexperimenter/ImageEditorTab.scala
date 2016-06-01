@@ -28,9 +28,9 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
     padding = Insets(10)
   }
 
-  val currentFrame =  new ImageView(img)
-  currentFrame.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[ ${e.getX.toInt}, ${e.getY.toInt}]"; })
-  currentFrame.setOnMouseClicked((e : MouseEvent) => { println(s"[${e.getX}, ${e.getY}]"); })
+  val imgView =  new ImageView(img)
+  imgView.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[ ${e.getX.toInt}, ${e.getY.toInt}]"; })
+  imgView.setOnMouseClicked((e : MouseEvent) => { println(s"[${e.getX}, ${e.getY}]"); })
 
   val editButton = new Button {
     text = "Edit"
@@ -54,15 +54,23 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
             style = BACKGROUND_STYLE
             spacing = 5
             children = Seq(
-              currentFrame,
-              new VBox {
+              new HBox {
                 alignment = Pos.Center
                 padding = Insets(10)
                 style = BACKGROUND_STYLE
                 spacing = 5
                 children = Seq(
                   mousePosLabel,
-                  imgSizeLabel,
+                  imgSizeLabel
+                )
+              },
+              imgView,
+              new VBox {
+                alignment = Pos.Center
+                padding = Insets(10)
+                style = BACKGROUND_STYLE
+                spacing = 5
+                children = Seq(
                   editButton
                 )
               }
