@@ -32,6 +32,8 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
   imgView.setOnMouseMoved((e : MouseEvent) => { mousePosLabel.text = s"[ ${e.getX.toInt}, ${e.getY.toInt}]"; })
   imgView.setOnMouseClicked((e : MouseEvent) => { println(s"[${e.getX}, ${e.getY}]"); })
 
+  val histView = new ImageView(ImageTools.convertCVtoFX(ImageHistogram.createHistogram(ImageTools.convertFXtoCV(img), false)))
+
   val editButton = new Button {
     text = "Edit"
     style = BUTTON_STYLE
@@ -71,6 +73,7 @@ class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {
                 style = BACKGROUND_STYLE
                 spacing = 5
                 children = Seq(
+                  histView,
                   editButton
                 )
               }
