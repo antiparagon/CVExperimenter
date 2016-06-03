@@ -37,15 +37,11 @@ object ImageHistogram {
     }
 
     // draw the histogram
-    val hist_w = 150 // width of the histogram image
+    val hist_w = 256 // width of the histogram image
     val hist_h = 150 // height of the histogram image
     val bin_w = Math.round(hist_w / histSize.get(0, 0)(0)).toInt
 
-    println("histSize.get(0, 0)(0): " + histSize.get(0, 0)(0))
-    println("bin_w: " + bin_w)
-    
     val histImage = new Mat(hist_h, hist_w, CvType.CV_8UC3, new Scalar(0, 0, 0))
-    println(s"histImage.rows(): ${histImage.rows()}")
     // normalize the result to [0, histImage.rows()]
     Core.normalize(hist_b, hist_b, 0, histImage.rows(), Core.NORM_MINMAX, -1, new Mat())
 
@@ -59,10 +55,6 @@ object ImageHistogram {
     var i = 0
     for (i <- 1 until (histSize.get(0, 0)(0)).toInt) {
 
-      println(s"bin_w * (i - 1): ${bin_w * (i - 1)}")
-      println(s"hist_b.get(i - 1, 0)(0): ${hist_b.get(i - 1, 0)(0)}")
-      println(s"Math.round(hist_h - hist_b.get(i - 1, 0)(0)): ${hist_h - Math.round(hist_b.get(i - 1, 0)(0))}")
-      println()
       // B component or gray image
       Imgproc.line(histImage, new Point(bin_w * (i - 1), hist_h - Math.round(hist_b.get(i - 1, 0)(0))),
       new Point(bin_w * (i), hist_h - Math.round(hist_b.get(i, 0)(0))), new Scalar(255, 0, 0), 2, 8, 0);
