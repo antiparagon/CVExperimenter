@@ -21,18 +21,6 @@ class TabManager {
     hgrow = Priority.Always
   }
 
-  val contextMenu = new ContextMenu {
-    items += (
-      new MenuItem("MenuItemA") {
-        onAction = {e: ActionEvent => println(e.eventType + " occurred on Menu Item A")}
-      },
-      new MenuItem("MenuItemB") {
-        onAction = {e: ActionEvent => println(e.eventType + " occurred on Menu Item B")}
-      })
-  }
-  tabPane.setContextMenu(contextMenu)
-
-
   def getTabPaneWidth() : Double = {
     tabPane.getBoundsInParent.getWidth
   }
