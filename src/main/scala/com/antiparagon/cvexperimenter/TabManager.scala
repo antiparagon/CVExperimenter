@@ -2,9 +2,11 @@ package com.antiparagon.cvexperimenter
 
 import org.opencv.core.Mat
 
-import scala.collection.mutable.ArrayBuffer
 import scalafx.Includes._
-import scalafx.scene.control.{Tab, TabPane}
+import scala.collection.mutable.ArrayBuffer
+import scalafx.event.ActionEvent
+import scalafx.scene.control.MenuItem._
+import scalafx.scene.control._
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority
 
@@ -18,6 +20,18 @@ class TabManager {
   val tabPane = new TabPane {
     hgrow = Priority.Always
   }
+
+  val contextMenu = new ContextMenu {
+    items += (
+      new MenuItem("MenuItemA") {
+        onAction = {e: ActionEvent => println(e.eventType + " occurred on Menu Item A")}
+      },
+      new MenuItem("MenuItemB") {
+        onAction = {e: ActionEvent => println(e.eventType + " occurred on Menu Item B")}
+      })
+  }
+  tabPane.setContextMenu(contextMenu)
+
 
   def getTabPaneWidth() : Double = {
     tabPane.getBoundsInParent.getWidth
