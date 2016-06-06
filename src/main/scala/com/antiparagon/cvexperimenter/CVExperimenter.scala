@@ -1,22 +1,14 @@
 package com.antiparagon.cvexperimenter
 
-import java.io.IOException
-import javax.imageio.ImageIO
-
-import org.opencv.core._
-import org.opencv.imgproc.Imgproc
-
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.embed.swing.SwingFXUtils
 import scalafx.geometry.Insets
 import scalafx.scene.Scene
-import scalafx.scene.control.{Button, ScrollPane}
+import scalafx.scene.control.{ScrollPane}
 import scalafx.scene.image._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color._
-import scalafx.stage.FileChooser
 
 /**
   * Created by wmckay on 11/29/15.

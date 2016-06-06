@@ -1,7 +1,5 @@
 package com.antiparagon.cvexperimenter
 
-import org.opencv.core.Mat
-
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{ScrollPane, Tab}
 import scalafx.scene.image.{Image, ImageView}

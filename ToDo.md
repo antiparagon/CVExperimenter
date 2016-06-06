@@ -4,8 +4,8 @@
 * Allow the computer screen to be captured as an image
 * Change how TabManger adds tabs so it is generic and doesn't need functions added to use new tab types
 * Add DFT processing for images
-* Draw histogram for image
 * Get ImageEditorTab editing images
+* Setup unit testing
 
 # Things to learn
 * Building a string in Scala

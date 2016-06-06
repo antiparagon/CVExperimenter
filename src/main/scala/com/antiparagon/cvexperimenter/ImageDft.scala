@@ -1,7 +1,5 @@
 package com.antiparagon.cvexperimenter
 
-import java.util
-
 import collection.JavaConverters._
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc

@@ -9,7 +9,6 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.opencv.videoio.{VideoCapture, Videoio}
 
-import scalafx.Includes._
 import scalafx.embed.swing.SwingFXUtils
 import scalafx.scene.image.{Image, WritableImage}
 

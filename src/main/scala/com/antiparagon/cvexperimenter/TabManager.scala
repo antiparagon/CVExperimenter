@@ -4,8 +4,6 @@ import org.opencv.core.Mat
 
 import scalafx.Includes._
 import scala.collection.mutable.ArrayBuffer
-import scalafx.event.ActionEvent
-import scalafx.scene.control.MenuItem._
 import scalafx.scene.control._
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority

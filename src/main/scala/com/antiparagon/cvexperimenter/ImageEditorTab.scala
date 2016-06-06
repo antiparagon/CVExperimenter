@@ -5,7 +5,7 @@ import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, Label, ScrollPane, Tab}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input.MouseEvent
-import scalafx.scene.layout.{BorderPane, HBox, VBox}
+import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color
 import scalafx.scene.text.{Font, FontWeight}
 
