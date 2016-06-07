@@ -90,6 +90,18 @@ object ImageTools {
     println(s"Size = ${mat.size}")
   }
 
+  def printMat(mat: Mat) = {
+    for(i <- 0 to mat.rows) {
+      for (j <- 0 to mat.cols) {
+        val elem = mat.get(i, j)
+        if(elem != null)
+          for(e <- elem)
+            print(s"$e ")
+      }
+      println()
+    }
+  }
+
   def depthToString(depth: Int): String = {
     depth match {
       case 0 => "CV_8U"

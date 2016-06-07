@@ -43,10 +43,8 @@ object CVExperimenter extends JFXApp {
         tabManager.getTabPane
       )
     }
-
     return hbox
   }
-
 
   stage = new PrimaryStage {
     title = "CV Experimenter"

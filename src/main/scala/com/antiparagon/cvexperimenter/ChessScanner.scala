@@ -91,16 +91,4 @@ object ChessScanner {
     bbox
   }
 
-  def printMat(mat: Mat) = {
-    for(i <- 0 to mat.rows) {
-      for (j <- 0 to mat.cols) {
-        val elem = mat.get(i, j)
-        if(elem != null)
-          for(e <- elem)
-            print(s"$e ")
-      }
-      println()
-    }
-  }
-
 }
