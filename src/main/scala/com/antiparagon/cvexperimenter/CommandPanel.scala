@@ -25,7 +25,6 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Open Image..."
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           val fileChooser = new FileChooser {
             title = "Pick an Image File"
@@ -40,7 +39,6 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Save Image..."
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val fileChooser = new FileChooser {
@@ -70,7 +68,6 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Resize Image"
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
@@ -99,7 +96,6 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "DFT"
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
@@ -110,9 +106,20 @@ class CommandPanel(tabManager: TabManager) {
       },
 
       new Button {
+        text = "IDFT"
+        style = BUTTON_STYLE
+        onAction = handle {
+          if(tabManager.isTabSelected) {
+            val image = tabManager.getSelectedMat
+            val result = ImageDft.antitransformImage(image)
+            tabManager.addImageTab(tabManager.getSelectedText + " - idft", ImageTools.convertCVtoFX(result))
+          }
+        }
+      },
+
+      new Button {
         text = "Open Webcam..."
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.hasVideoTab) {
             tabManager.showVideoTab
@@ -125,7 +132,6 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Apply Outline"
         style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image: Mat = tabManager.getSelectedMat

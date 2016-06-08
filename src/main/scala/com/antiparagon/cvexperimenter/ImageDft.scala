@@ -36,12 +36,13 @@ object ImageDft {
   
   
   
-  def antitransformImage(complexImage: Mat, planes: List[Mat]): Mat = {
+  def antitransformImage(complexImage: Mat): Mat = {
     Core.idft(complexImage, complexImage)
 
+    val planes = new java.util.ArrayList[Mat]
     val restoredImage = new Mat()
-    Core.split(complexImage, planes.asJava)
-    Core.normalize(planes(0), restoredImage, 0, 255, Core.NORM_MINMAX)
+    Core.split(complexImage, planes)
+    Core.normalize(planes.get(0), restoredImage, 0, 255, Core.NORM_MINMAX)
     return restoredImage
   }
 
