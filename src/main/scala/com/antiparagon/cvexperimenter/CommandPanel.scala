@@ -8,9 +8,11 @@ import org.opencv.imgproc.Imgproc
 
 import scalafx.Includes._
 import scalafx.embed.swing.SwingFXUtils
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.image.Image
+import scalafx.scene.layout.{HBox}
 import scalafx.stage.FileChooser
 
 /**
@@ -25,6 +27,7 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Open Image..."
         style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
         onAction = handle {
           val fileChooser = new FileChooser {
             title = "Pick an Image File"
@@ -39,6 +42,7 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Save Image..."
         style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val fileChooser = new FileChooser {
@@ -68,6 +72,7 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Resize Image"
         style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
@@ -93,33 +98,41 @@ class CommandPanel(tabManager: TabManager) {
         }
       },
 
-      new Button {
-        text = "DFT"
-        style = BUTTON_STYLE
-        onAction = handle {
-          if(tabManager.isTabSelected) {
-            val image = tabManager.getSelectedMat
-            val result = ImageDft.transformImage(image)
-            tabManager.addImageTab(tabManager.getSelectedText + " - dft", ImageTools.convertCVtoFX(result))
-          }
-        }
-      },
+      new HBox {
+        spacing = 5
+        alignment = Pos.Center
+        children = Seq(
+          new Button {
+            text = "DFT"
+            style = BUTTON_STYLE
+            maxWidth = Double.MaxValue
+            onAction = handle {
+              if (tabManager.isTabSelected) {
+                val image = tabManager.getSelectedMat
+                val result = ImageDft.transformImage(image)
+                tabManager.addImageTab(tabManager.getSelectedText + " - dft", ImageTools.convertCVtoFX(result))
+              }
+            }
+          },
 
-      new Button {
-        text = "IDFT"
-        style = BUTTON_STYLE
-        onAction = handle {
-          if(tabManager.isTabSelected) {
-            val image = tabManager.getSelectedMat
-            val result = ImageDft.antitransformImage(image)
-            tabManager.addImageTab(tabManager.getSelectedText + " - idft", ImageTools.convertCVtoFX(result))
-          }
-        }
+          new Button {
+            text = "IDFT"
+            style = BUTTON_STYLE
+            maxWidth = Double.MaxValue
+            onAction = handle {
+              if (tabManager.isTabSelected) {
+                val image = tabManager.getSelectedMat
+                val result = ImageDft.antitransformImage(image)
+                tabManager.addImageTab(tabManager.getSelectedText + " - idft", ImageTools.convertCVtoFX(result))
+              }
+            }
+          })
       },
 
       new Button {
         text = "Open Webcam..."
         style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.hasVideoTab) {
             tabManager.showVideoTab
@@ -132,6 +145,7 @@ class CommandPanel(tabManager: TabManager) {
       new Button {
         text = "Apply Outline"
         style = BUTTON_STYLE
+        maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image: Mat = tabManager.getSelectedMat

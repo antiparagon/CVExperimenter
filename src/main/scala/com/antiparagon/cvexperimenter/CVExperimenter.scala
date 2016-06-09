@@ -3,9 +3,9 @@ package com.antiparagon.cvexperimenter
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.geometry.Insets
+import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
-import scalafx.scene.control.{ScrollPane}
+import scalafx.scene.control.ScrollPane
 import scalafx.scene.image._
 import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color._
