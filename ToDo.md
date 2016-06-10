@@ -3,14 +3,12 @@
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Allow the computer screen to be captured as an image
 * Change how TabManger adds tabs so it is generic and doesn't need functions added to use new tab types
-* Add DFT processing for images
 * Get ImageEditorTab editing images
 * Setup unit testing
 
 # Things to learn
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
-* Research Sudoku solvers for chess scanner example code
 
 # Object Detection
 * RANSAC

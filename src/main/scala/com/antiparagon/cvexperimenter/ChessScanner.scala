@@ -17,7 +17,7 @@ object ChessScanner {
     val bbox = findBoard(inImg)
     bbox match {
       case Some(bbox) => {
-        Imgproc.rectangle(inImg, bbox.tl(), bbox.br(), new Scalar(0.0, 255.0, 0.0), 3)
+        Imgproc.rectangle(inImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
         return inImg
         //return new Mat(inImg, bbox)
       }
