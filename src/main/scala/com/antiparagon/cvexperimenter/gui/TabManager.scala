@@ -1,9 +1,9 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
 
 import org.opencv.core.Mat
 
-import scalafx.Includes._
 import scala.collection.mutable.ArrayBuffer
+import scalafx.Includes._
 import scalafx.scene.control._
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority

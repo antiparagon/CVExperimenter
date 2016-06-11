@@ -1,4 +1,4 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
 
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{ScrollPane, Tab}

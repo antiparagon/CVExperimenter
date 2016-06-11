@@ -1,4 +1,6 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
+
+import com.antiparagon.cvexperimenter.tools.{ImageHistogram, ImageTools}
 
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}

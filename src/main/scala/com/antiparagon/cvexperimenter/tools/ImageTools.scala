@@ -1,6 +1,6 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.tools
 
-import java.awt.image.{BufferedImage}
+import java.awt.image.BufferedImage
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream}
 import javax.imageio.ImageIO
 

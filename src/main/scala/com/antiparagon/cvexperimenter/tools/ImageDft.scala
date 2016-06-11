@@ -1,6 +1,6 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.tools
 
-import collection.JavaConverters._
+import ImageTools
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 

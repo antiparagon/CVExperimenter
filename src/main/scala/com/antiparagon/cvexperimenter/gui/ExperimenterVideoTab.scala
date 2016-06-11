@@ -1,7 +1,9 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
 
 import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
+import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.Mat
 import org.opencv.videoio.{VideoCapture, Videoio}
 

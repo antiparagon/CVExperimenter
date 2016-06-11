@@ -1,18 +1,20 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
 
 import java.io.IOException
 import javax.imageio.ImageIO
 
+import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
+import com.antiparagon.cvexperimenter.tools.{ImageDft, ImageTools}
 import org.opencv.core.{Mat, Size}
 import org.opencv.imgproc.Imgproc
 
 import scalafx.Includes._
 import scalafx.embed.swing.SwingFXUtils
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Pos
 import scalafx.scene.Node
 import scalafx.scene.control.Button
 import scalafx.scene.image.Image
-import scalafx.scene.layout.{HBox}
+import scalafx.scene.layout.HBox
 import scalafx.stage.FileChooser
 
 /**

@@ -1,5 +1,6 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.gui
 
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.Mat
 
 import scalafx.scene.image.Image

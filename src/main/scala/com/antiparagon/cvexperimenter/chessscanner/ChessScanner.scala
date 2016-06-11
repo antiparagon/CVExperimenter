@@ -1,4 +1,4 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
@@ -38,7 +38,6 @@ object ChessScanner {
     val contours = new util.ArrayList[MatOfPoint]()
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
-
 
     var biggest = new MatOfPoint2f
     var maxArea = 0.0

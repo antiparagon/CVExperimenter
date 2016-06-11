@@ -1,5 +1,7 @@
 package com.antiparagon.cvexperimenter
 
+import com.antiparagon.cvexperimenter.gui.{CommandPanel, TabManager}
+
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
