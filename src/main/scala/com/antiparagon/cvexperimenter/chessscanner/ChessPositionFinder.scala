@@ -1,15 +1,11 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.util
-
-import org.opencv.core._
-import org.opencv.imgproc.Imgproc
-
+import org.opencv.core.Mat
 
 /**
-  * Created by wmckay on 4/23/16.
+  * Created by wmckay on 6/12/16.
   */
-object ChessScanner {
+object ChessPositionFinder {
 
   def getFenPosition(inImg: Mat): String = {
     "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
