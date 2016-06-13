@@ -12,6 +12,13 @@ object ChessBoardFinder {
 
   import scala.collection.JavaConversions._
 
+  /**
+    * Finds a chessboard in an image and returns a cropped image of
+    * just the chessboard.
+    *
+    * @param inImg with a chessboard
+    * @return cropped image of only the chessboard
+    */
   def getChessboard(inImg: Mat): Mat = {
     val bbox = findBoard(inImg)
     bbox match {
@@ -27,6 +34,12 @@ object ChessBoardFinder {
     }
   }
 
+  /**
+    * Finds a chessboard in an image and returns the rectangle of the found chessboard.
+    *
+    * @param inImg that contains a chessboard
+    * @return rectangle coordinates of the chessboard
+    */
   def findBoard(inImg: Mat): Option[Rect] = {
 
     val tempImg = new Mat
