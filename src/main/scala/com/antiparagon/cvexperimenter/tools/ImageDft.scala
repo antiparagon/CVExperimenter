@@ -6,6 +6,8 @@ import org.opencv.imgproc.Imgproc
 
 
 /**
+  * Utility to creat the DFT of an image.
+  *
   * Created by wmckay on 5/24/16.
   */
 object ImageDft {

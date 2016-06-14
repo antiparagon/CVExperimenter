@@ -13,6 +13,8 @@ import scalafx.scene.layout.{HBox, VBox}
 import scalafx.scene.paint.Color._
 
 /**
+  * Main class for CVExperimenter.
+  *
   * Created by wmckay on 11/29/15.
   */
 object CVExperimenter extends JFXApp {

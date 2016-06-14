@@ -81,14 +81,20 @@ object ChessBoardFinder {
     return None
   }
 
-  def getBoundingRect(rect: MatOfPoint): Rect = {
+  /**
+    * Returns the bounding Rect from the MatOfPoints.
+    *
+    * @param points to bound
+    * @return bounding Rect
+    */
+  def getBoundingRect(points: MatOfPoint): Rect = {
     val bbox = new Rect
     var minX = Double.MaxValue
     var maxX = Double.MinValue
     var minY = Double.MaxValue
     var maxY = Double.MinValue
 
-    for(point <- rect.toArray) {
+    for(point <- points.toArray) {
       if(point.x > maxX) maxX = point.x
       if(point.x < minX) minX = point.x
       if(point.y > maxY) maxY = point.y

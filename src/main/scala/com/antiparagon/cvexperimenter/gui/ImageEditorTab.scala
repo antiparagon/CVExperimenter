@@ -12,6 +12,8 @@ import scalafx.scene.paint.Color
 import scalafx.scene.text.{Font, FontWeight}
 
 /**
+  * Tab to edit an image.
+  *
   * Created by wmckay on 5/14/16.
   */
 class ImageEditorTab(val img : Image) extends Tab with ExperimenterTab {

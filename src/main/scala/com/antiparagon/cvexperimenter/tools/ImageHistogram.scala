@@ -6,6 +6,8 @@ import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 
 /**
+  * Utility to create a histogram of an image.
+  *
   * Created by wmckay on 5/28/16.
   */
 object ImageHistogram {

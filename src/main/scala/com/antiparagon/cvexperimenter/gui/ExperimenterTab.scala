@@ -6,6 +6,8 @@ import org.opencv.core.Mat
 import scalafx.scene.image.Image
 
 /**
+  * Trait for tabs.
+  *
   * Created by wmckay on 3/19/16.
   */
 trait ExperimenterTab {

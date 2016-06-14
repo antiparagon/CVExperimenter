@@ -13,6 +13,8 @@ import scalafx.embed.swing.SwingFXUtils
 import scalafx.scene.image.{Image, WritableImage}
 
 /**
+  * Contains useful functions for working with images.
+  *
   * Created by wmckay on 3/17/16.
   */
 object ImageTools {

@@ -18,6 +18,8 @@ import scalafx.scene.layout.HBox
 import scalafx.stage.FileChooser
 
 /**
+  * Holds all the GUI widgets for CVExperimenter.
+  *
   * Created by wmckay on 5/4/16.
   */
 class CommandPanel(tabManager: TabManager) {

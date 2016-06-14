@@ -14,6 +14,8 @@ import scalafx.scene.image.{Image, ImageView, WritableImage}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
+  * Tab that displays the video from webcam.
+  *
   * Created by wmckay on 3/13/16.
   */
 class ExperimenterVideoTab() extends Tab with ExperimenterTab {
