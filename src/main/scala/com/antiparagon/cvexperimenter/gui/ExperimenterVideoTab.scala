@@ -14,7 +14,8 @@ import scalafx.scene.image.{Image, ImageView, WritableImage}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
-  * Tab that displays the video from webcam.
+  * Tab that displays the video from webcam. The video is captured
+  * as images in a thread and displayed in an ImageView.
   *
   * Created by wmckay on 3/13/16.
   */
@@ -93,6 +94,9 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
     }
   }
 
+  /**
+    * This is to insure the video is stopped.
+    */
   def stopVideo(): Unit = {
     if(cameraActive) {
       try {

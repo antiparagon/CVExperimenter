@@ -60,6 +60,9 @@ object CVExperimenter extends JFXApp {
     tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("CVExperimenterLogo.png")))
   }
 
+  /**
+    * This is to insure the webcam is released.
+    */
   override def stopApp(): Unit = {
     println("Stopping")
     tabManager.stopVideoTab
