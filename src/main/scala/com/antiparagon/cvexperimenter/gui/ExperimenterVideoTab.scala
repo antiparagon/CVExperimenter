@@ -2,7 +2,7 @@ package com.antiparagon.cvexperimenter.gui
 
 import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
-import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
+import com.antiparagon.cvexperimenter.chessscanner.{ChessBoardFinder, ChessScanner}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.Mat
 import org.opencv.videoio.{VideoCapture, Videoio}
@@ -70,6 +70,12 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
     )
   }
 
+  /**
+    * Grabs the camera and starts a background thread to grab images
+    * from the frame and put the image in an ImageView.
+    *
+    * @return true if camera started
+    */
   def startVideo(): Boolean = {
     capture.open(0)
     if (capture.isOpened) {
@@ -80,7 +86,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       val frameGrabber = new Runnable {
         def run {
           // Apply algorithm to image
-          val image = ChessScanner.getChessboard(grabMatFrame)
+          val image = ChessBoardFinder.getChessboard(grabMatFrame)
           currentFrame.setImage(ImageTools.convertCVtoFX(image))
         }
       }

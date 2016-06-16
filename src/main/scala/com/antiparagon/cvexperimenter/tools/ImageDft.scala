@@ -1,6 +1,5 @@
 package com.antiparagon.cvexperimenter.tools
 
-import ImageTools
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 

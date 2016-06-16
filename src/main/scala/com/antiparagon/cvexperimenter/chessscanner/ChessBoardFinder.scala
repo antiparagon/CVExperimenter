@@ -19,17 +19,17 @@ object ChessBoardFinder {
     * @param inImg with a chessboard
     * @return cropped image of only the chessboard
     */
-  def getChessboard(inImg: Mat): Mat = {
+  def getChessboard(inImg: Mat): Option[Mat] = {
     val bbox = findBoard(inImg)
     bbox match {
       case Some(bbox) => {
         Imgproc.rectangle(inImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
-        return inImg
+        return Option(inImg)
         //return new Mat(inImg, bbox)
       }
       case None => {
         println("No chessboard found")
-        return inImg
+        return None
       }
     }
   }
@@ -76,7 +76,7 @@ object ChessBoardFinder {
       val maxRect = new MatOfPoint
       biggest.convertTo(maxRect, CvType.CV_32S)
       val bbox = getBoundingRect(maxRect)
-      return Some(bbox)
+      return Option(bbox)
     }
     return None
   }
