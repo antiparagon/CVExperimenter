@@ -187,7 +187,7 @@ class CommandPanel(tabManager: TabManager) {
           if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
             val result = ChessBoardFinder.getChessboard(image)
-            tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result))
+            tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result.get))
           }
         }
       }

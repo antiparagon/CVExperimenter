@@ -14,8 +14,8 @@ object ChessPositionFinder {
     * @param inImg of chessboard
     * @return string FEN position
     */
-  def getFenPosition(inImg: Mat): String = {
-    "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
+  def getFenPosition(inImg: Mat): Option[String] = {
+    Option("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   }
 
 }

@@ -87,7 +87,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
         def run {
           // Apply algorithm to image
           val image = ChessBoardFinder.getChessboard(grabMatFrame)
-          currentFrame.setImage(ImageTools.convertCVtoFX(image))
+          currentFrame.setImage(ImageTools.convertCVtoFX(image.get))
         }
       }
       timer = Executors.newSingleThreadScheduledExecutor()
