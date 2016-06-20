@@ -12,7 +12,7 @@ object ChessPositionFinder {
     * function assumes that the full image is just the chessboard.
     *
     * @param inImg of chessboard
-    * @return string FEN position
+    * @return Option string FEN position
     */
   def getFenPosition(inImg: Mat): Option[String] = {
 

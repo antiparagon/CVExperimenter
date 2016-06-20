@@ -11,6 +11,12 @@ import org.opencv.imgproc.Imgproc
   */
 object ChessScanner {
 
+  /**
+    * Returns the chess piece postions in FEN notation for the 2D chessboard in an image.
+    *
+    * @param inImg to find position in
+    * @return Option string FEN postion of chess pieces
+    */
   def getFenPosition(inImg: Mat): Option[String] = {
 
     val boardImg = ChessBoardFinder.getChessboard(inImg)

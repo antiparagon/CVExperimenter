@@ -17,7 +17,7 @@ object ChessBoardFinder {
     * just the chessboard.
     *
     * @param inImg with a chessboard
-    * @return cropped image of only the chessboard
+    * @return Option cropped image of only the chessboard
     */
   def getChessboard(inImg: Mat): Option[Mat] = {
     val bbox = findBoard(inImg)
@@ -38,7 +38,7 @@ object ChessBoardFinder {
     * Finds a chessboard in an image and returns the rectangle of the found chessboard.
     *
     * @param inImg that contains a chessboard
-    * @return rectangle coordinates of the chessboard
+    * @return Option rectangle coordinates of the chessboard
     */
   def findBoard(inImg: Mat): Option[Rect] = {
 
