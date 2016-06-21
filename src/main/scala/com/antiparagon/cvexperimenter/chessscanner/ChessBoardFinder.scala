@@ -8,7 +8,7 @@ import org.opencv.imgproc.Imgproc
 /**
   * Created by wmckay on 6/12/16.
   */
-object ChessBoardFinder {
+object ChessboardFinder {
 
   import scala.collection.JavaConversions._
 

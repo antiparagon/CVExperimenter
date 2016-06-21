@@ -3,7 +3,7 @@ package com.antiparagon.cvexperimenter.gui
 import java.io.IOException
 import javax.imageio.ImageIO
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessBoardFinder, ChessScanner}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessboardFinder, ChessScanner}
 import com.antiparagon.cvexperimenter.tools.{ImageDft, ImageTools}
 import org.opencv.core.{Mat, Size}
 import org.opencv.imgproc.Imgproc
@@ -186,7 +186,7 @@ class CommandPanel(tabManager: TabManager) {
         onAction = handle {
           if(tabManager.isTabSelected) {
             val image = tabManager.getSelectedMat
-            val result = ChessBoardFinder.getChessboard(image)
+            val result = ChessboardFinder.getChessboard(image)
             tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result.get))
           }
         }
