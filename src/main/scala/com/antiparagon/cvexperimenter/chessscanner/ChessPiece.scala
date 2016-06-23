@@ -5,4 +5,12 @@ package com.antiparagon.cvexperimenter.chessscanner
   */
 object ChessPiece {
 
+  // Holds the piece symbol
+  var name = "P"
+
+  // Has utility functions
+  def isWhite(): Boolean = {
+    return true
+  }
+
 }
