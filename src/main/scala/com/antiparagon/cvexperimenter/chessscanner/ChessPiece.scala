@@ -6,11 +6,14 @@ package com.antiparagon.cvexperimenter.chessscanner
 object ChessPiece {
 
   // Holds the piece symbol
-  var name = "P"
+  var symbol = "P"
 
   // Has utility functions
   def isWhite(): Boolean = {
-    return true
+    return symbol == symbol.toUpperCase()
   }
 
+  def isBlack(): Boolean = {
+    return symbol == symbol.toLowerCase()
+  }
 }
