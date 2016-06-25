@@ -3,7 +3,11 @@ package com.antiparagon.cvexperimenter.chessscanner
 /**
   * Created by wmckay on 6/21/16.
   */
-object Chessboard {
+class Chessboard {
+
+  val rows = 8
+  val columns = 8
+  val board = Array.ofDim[ChessSquare](rows, columns)
 
   /**
     * Returns the position in FEN notation.
