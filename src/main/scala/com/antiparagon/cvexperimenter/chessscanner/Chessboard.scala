@@ -7,8 +7,14 @@ class Chessboard {
 
   val rows = 8
   val columns = 8
-  val board = Array.ofDim[ChessSquare](rows, columns)
+  // The '+1' is so that indexing can be 1 based instead of 0 based
+  val board = Array.ofDim[ChessSquare](rows + 1, columns + 1)
 
+  for(row <- 1 to rows) {
+    for(column <- 1 to columns) {
+      board(row)(column) = new ChessSquare
+    }
+  }
   /**
     * Returns the position in FEN notation.
     *
