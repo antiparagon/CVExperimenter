@@ -18,4 +18,10 @@ class ChessboardTest extends FlatSpec with Matchers {
     }
   }
 
+  "A new chessboard" should "be 9x9 (for '1' based indexing" in {
+    val chessboard = new Chessboard
+    chessboard.board.size should be (9)
+    chessboard.board(1).size should be (9)
+  }
+
 }

@@ -8,6 +8,10 @@ class ChessSquare {
   // Holds the piece symbol
   var symbol = ""
 
+  def clear() = {
+    symbol = ""
+  }
+
   // Has utility functions
   def isWhite(): Boolean = {
     if(symbol.isEmpty) return false

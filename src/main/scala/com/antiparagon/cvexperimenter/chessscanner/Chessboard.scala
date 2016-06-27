@@ -15,6 +15,19 @@ class Chessboard {
       board(row)(column) = new ChessSquare
     }
   }
+
+  /**
+    * Clears all the squares. Results in an empty board.
+    */
+  def clearBoard() = {
+    for(row <- 1 to rows) {
+      for(column <- 1 to columns) {
+        board(row)(column).clear
+      }
+    }
+  }
+
+
   /**
     * Returns the position in FEN notation.
     *
@@ -23,7 +36,6 @@ class Chessboard {
   def getFenPosition(): Option[String] = {
 
     // Use the position to create the FEN string
-
 
     Option("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   }
