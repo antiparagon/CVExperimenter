@@ -27,6 +27,11 @@ class Chessboard {
     }
   }
 
+  def setStartPosition() = {
+    board(1)(1).symbol = "R"
+
+  }
+
 
   /**
     * Returns the position in FEN notation.
@@ -35,9 +40,21 @@ class Chessboard {
     */
   def getFenPosition(): Option[String] = {
 
+    val buf = new StringBuilder
+    for(row <- 1 to rows) {
+      for(column <- 1 to columns) {
+
+        if(board(row)(column).symbol.equals("")) {
+
+        }
+        buf ++= board(row)(column).symbol
+      }
+      buf += '/'
+    }
+
     // Use the position to create the FEN string
 
-    Option("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    Option(buf.toString())
   }
 
 }

@@ -24,4 +24,9 @@ class ChessboardTest extends FlatSpec with Matchers {
     chessboard.board(1).size should be (9)
   }
 
+
+  "A new chessboard" should "have an empty FEN position" in {
+    val chessboard = new Chessboard
+    chessboard.getFenPosition().get should be ("8/8/8/8/8/8/8/8")
+  }
 }
