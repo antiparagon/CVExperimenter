@@ -29,4 +29,10 @@ class ChessboardTest extends FlatSpec with Matchers {
     val chessboard = new Chessboard
     chessboard.getFenPosition().get should be ("8/8/8/8/8/8/8/8")
   }
+
+  "A chessboard with the starting position" should "have a starting FEN position" in {
+    val chessboard = new Chessboard
+    chessboard.setStartPosition
+    chessboard.getFenPosition().get should be ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+  }
 }

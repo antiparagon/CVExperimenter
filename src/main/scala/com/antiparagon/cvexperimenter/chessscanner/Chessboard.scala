@@ -27,9 +27,29 @@ class Chessboard {
     }
   }
 
+  /**
+    * Initialize the board to the starting position.
+    */
   def setStartPosition() = {
-    board(1)(1).symbol = "R"
+    board(1)(1).symbol = "r"
+    board(1)(2).symbol = "n"
+    board(1)(3).symbol = "b"
+    board(1)(4).symbol = "q"
+    board(1)(5).symbol = "k"
+    board(1)(6).symbol = "b"
+    board(1)(7).symbol = "n"
+    board(1)(8).symbol = "r"
+    for(column <- 1 to columns) board(2)(column).symbol = "p"
 
+    for(column <- 1 to columns) board(7)(column).symbol = "P"
+    board(8)(1).symbol = "R"
+    board(8)(2).symbol = "N"
+    board(8)(3).symbol = "B"
+    board(8)(4).symbol = "Q"
+    board(8)(5).symbol = "K"
+    board(8)(6).symbol = "B"
+    board(8)(7).symbol = "N"
+    board(8)(8).symbol = "R"
   }
 
 
@@ -42,14 +62,22 @@ class Chessboard {
 
     val buf = new StringBuilder
     for(row <- 1 to rows) {
+      var empty = 0
       for(column <- 1 to columns) {
-
-        if(board(row)(column).symbol.equals("")) {
-
+        if(board(row)(column).isEmpty) {
+          empty += 1
+        } else {
+          if(empty > 0) {
+            buf ++= empty.toString
+            empty = 0
+          }
+          buf ++= board(row)(column).symbol
         }
-        buf ++= board(row)(column).symbol
       }
-      buf += '/'
+      if(empty > 0) { // Catch the case when the whole row is empty
+        buf ++= empty.toString
+      }
+      if(row < rows) buf += '/'
     }
 
     // Use the position to create the FEN string

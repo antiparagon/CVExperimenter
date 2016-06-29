@@ -12,6 +12,10 @@ class ChessSquare {
     symbol = ""
   }
 
+  def isEmpty(): Boolean = {
+    symbol.isEmpty
+  }
+
   // Has utility functions
   def isWhite(): Boolean = {
     if(symbol.isEmpty) return false
