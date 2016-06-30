@@ -27,6 +27,23 @@ class Chessboard {
     }
   }
 
+  def getPiece(column: String, row: Int): String = {
+
+    if(column.isEmpty) {
+      return ""
+    }
+    val colChar = column.toLowerCase.charAt(0);
+    if(colChar < 97 || colChar > 104) {
+      return ""
+    }
+    if(row < 1 || row > 8) {
+      return ""
+    }
+    val col = colChar - 96
+    val flippedRow = (row + 7) % 8
+    board(flippedRow)(col)
+  }
+
   /**
     * Initialize the board to the starting position.
     */
