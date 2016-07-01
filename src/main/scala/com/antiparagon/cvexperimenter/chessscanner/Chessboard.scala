@@ -40,8 +40,17 @@ class Chessboard {
       return ""
     }
     val col = colChar - 96
-    val flippedRow = (row + 7) % 8
-    board(flippedRow)(col)
+    val flippedRow = row match {
+      case 1  => 8
+      case 2  => 7
+      case 3  => 6
+      case 4  => 5
+      case 5  => 4
+      case 6  => 3
+      case 7  => 2
+      case 8  => 1
+    }
+    board(flippedRow)(col).symbol
   }
 
   /**
