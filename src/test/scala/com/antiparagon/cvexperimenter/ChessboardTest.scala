@@ -39,7 +39,15 @@ class ChessboardTest extends FlatSpec with Matchers {
   "A chessboard with the starting position" should "have a K on e1 and k on e8" in {
     val chessboard = new Chessboard
     chessboard.setStartPosition
+    chessboard.getPiece("e", 8) should be ("k")
+    chessboard.getPiece("e", 7) should be ("p")
+    chessboard.getPiece("e", 6) should be ("")
+    chessboard.getPiece("e", 5) should be ("")
+    chessboard.getPiece("e", 4) should be ("")
+    chessboard.getPiece("e", 3) should be ("")
+    chessboard.getPiece("e", 2) should be ("P")
     chessboard.getPiece("e", 1) should be ("K")
-    chessboard.getPiece("e", 8) should be ("K")
   }
+
+
 }
