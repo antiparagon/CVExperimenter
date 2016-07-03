@@ -27,8 +27,30 @@ class Chessboard {
     }
   }
 
-  def getPiece(column: String, row: Int): String = {
+  /**
+    * Sets the piece at on the square specified in algebraic notation.
+    *
+    * @param column to use
+    * @param row to use
+    * @param piece to use
+    */
+  def setPiece(column: String, row: Int, piece: String): Unit = {
+    if(column.isEmpty) {
+      return
+    }
+    val colChar = column.toLowerCase.charAt(0);
+    if(colChar < 97 || colChar > 104) {
+      return
+    }
+    if(row < 1 || row > 8) {
+      return
+    }
+    val col = colChar - 96
+    val flippedRow = 9 - row
+    board(flippedRow)(col).piece = piece
+  }
 
+  def getPiece(column: String, row: Int): String = {
     if(column.isEmpty) {
       return ""
     }
@@ -41,32 +63,48 @@ class Chessboard {
     }
     val col = colChar - 96
     val flippedRow = 9 - row
-    board(flippedRow)(col).symbol
+    board(flippedRow)(col).piece
+  }
+
+  def isWhite(column: String, row: Int): Boolean = {
+    if(column.isEmpty) {
+      return false
+    }
+    val colChar = column.toLowerCase.charAt(0);
+    if(colChar < 97 || colChar > 104) {
+      return false
+    }
+    if(row < 1 || row > 8) {
+      return false
+    }
+    val col = colChar - 96
+    val flippedRow = 9 - row
+    board(flippedRow)(col).isWhite()
   }
 
   /**
     * Initialize the board to the starting position.
     */
   def setStartPosition() = {
-    board(1)(1).symbol = "r"
-    board(1)(2).symbol = "n"
-    board(1)(3).symbol = "b"
-    board(1)(4).symbol = "q"
-    board(1)(5).symbol = "k"
-    board(1)(6).symbol = "b"
-    board(1)(7).symbol = "n"
-    board(1)(8).symbol = "r"
-    for(column <- 1 to columns) board(2)(column).symbol = "p"
+    board(1)(1).piece = "r"
+    board(1)(2).piece = "n"
+    board(1)(3).piece = "b"
+    board(1)(4).piece = "q"
+    board(1)(5).piece = "k"
+    board(1)(6).piece = "b"
+    board(1)(7).piece = "n"
+    board(1)(8).piece = "r"
+    for(column <- 1 to columns) board(2)(column).piece = "p"
 
-    for(column <- 1 to columns) board(7)(column).symbol = "P"
-    board(8)(1).symbol = "R"
-    board(8)(2).symbol = "N"
-    board(8)(3).symbol = "B"
-    board(8)(4).symbol = "Q"
-    board(8)(5).symbol = "K"
-    board(8)(6).symbol = "B"
-    board(8)(7).symbol = "N"
-    board(8)(8).symbol = "R"
+    for(column <- 1 to columns) board(7)(column).piece = "P"
+    board(8)(1).piece = "R"
+    board(8)(2).piece = "N"
+    board(8)(3).piece = "B"
+    board(8)(4).piece = "Q"
+    board(8)(5).piece = "K"
+    board(8)(6).piece = "B"
+    board(8)(7).piece = "N"
+    board(8)(8).piece = "R"
   }
 
 
@@ -88,7 +126,7 @@ class Chessboard {
             buf ++= empty.toString
             empty = 0
           }
-          buf ++= board(row)(column).symbol
+          buf ++= board(row)(column).piece
         }
       }
       if(empty > 0) { // Catch the case when the whole row is empty

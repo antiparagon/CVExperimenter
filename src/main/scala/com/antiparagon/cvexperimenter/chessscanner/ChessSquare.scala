@@ -6,24 +6,24 @@ package com.antiparagon.cvexperimenter.chessscanner
 class ChessSquare {
 
   // Holds the piece symbol
-  var symbol = ""
+  var piece = ""
 
   def clear() = {
-    symbol = ""
+    piece = ""
   }
 
   def isEmpty(): Boolean = {
-    symbol.isEmpty
+    piece.isEmpty
   }
 
   // Has utility functions
   def isWhite(): Boolean = {
-    if(symbol.isEmpty) return false
-    return symbol == symbol.toUpperCase()
+    if(piece.isEmpty) return false
+    return piece == piece.toUpperCase()
   }
 
   def isBlack(): Boolean = {
-    if(symbol.isEmpty) return false
-    return symbol == symbol.toLowerCase()
+    if(piece.isEmpty) return false
+    return piece == piece.toLowerCase()
   }
 }

@@ -49,5 +49,12 @@ class ChessboardTest extends FlatSpec with Matchers {
     chessboard.getPiece("e", 1) should be ("K")
   }
 
+  "A chessboard with the starting position" should "have a white K on e1 and black k on e8" in {
+    val chessboard = new Chessboard
+    chessboard.setStartPosition
+    chessboard.isWhite("e", 1) should be (true)
+    chessboard.isWhite("e", 8) should be (false)
+
+  }
 
 }
