@@ -28,58 +28,69 @@ class Chessboard {
   }
 
   /**
-    * Sets the piece at on the square specified in algebraic notation.
-    *
+    * Sets the piece at the square specified in algebraic notation.
     * @param column to use
     * @param row to use
     * @param piece to use
     */
   def setPiece(column: String, row: Int, piece: String): Unit = {
-    if(column.isEmpty) {
-      return
-    }
-    val colChar = column.toLowerCase.charAt(0);
-    if(colChar < 97 || colChar > 104) {
-      return
-    }
-    if(row < 1 || row > 8) {
-      return
-    }
-    val col = colChar - 96
-    val flippedRow = 9 - row
-    board(flippedRow)(col).piece = piece
+    val (r, c) = translateAlgebraicCoor(column, row)
+    board(r)(c).piece = piece
   }
 
+  /**
+    * Gets the piece at the given algebraic coordinates.
+    * @param column to use
+    * @param row to use
+    * @return piece at the square
+    */
   def getPiece(column: String, row: Int): String = {
-    if(column.isEmpty) {
-      return ""
-    }
-    val colChar = column.toLowerCase.charAt(0);
-    if(colChar < 97 || colChar > 104) {
-      return ""
-    }
-    if(row < 1 || row > 8) {
-      return ""
-    }
-    val col = colChar - 96
-    val flippedRow = 9 - row
-    board(flippedRow)(col).piece
+    val (r, c) = translateAlgebraicCoor(column, row)
+    board(r)(c).piece
   }
 
+  /**
+    * Checks the piece at the given algebraic coordinates.
+    * @param column to use
+    * @param row to use
+    * @return true if piece is white
+    */
   def isWhite(column: String, row: Int): Boolean = {
+    val (r, c) = translateAlgebraicCoor(column, row)
+    board(r)(c).isWhite()
+  }
+
+  /**
+    * Checks the piece at the given algebraic coordinates.
+    * @param column to use
+    * @param row to use
+    * @return true if piece is black
+    */
+  def isBlack(column: String, row: Int): Boolean = {
+    val (r, c) = translateAlgebraicCoor(column, row)
+    board(r)(c).isBlack()
+  }
+
+  /**
+    * Trnslates the given algebraic coordinates into row and column coordinates.
+    * @param column
+    * @param row
+    * @return
+    */
+  def translateAlgebraicCoor(column: String, row: Int) = {
     if(column.isEmpty) {
-      return false
+      throw new IllegalArgumentException("Column is empty")
     }
     val colChar = column.toLowerCase.charAt(0);
     if(colChar < 97 || colChar > 104) {
-      return false
+      throw new IllegalArgumentException("Column is not between 'a' and 'h'")
     }
     if(row < 1 || row > 8) {
-      return false
+      throw new IllegalArgumentException("Row not between 1 and 8")
     }
     val col = colChar - 96
     val flippedRow = 9 - row
-    board(flippedRow)(col).isWhite()
+    (flippedRow, col)
   }
 
   /**
