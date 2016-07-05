@@ -125,7 +125,6 @@ class Chessboard {
     * @return Option string FEN position
     */
   def getFenPosition(): Option[String] = {
-
     val buf = new StringBuilder
     for(row <- 1 to rows) {
       var empty = 0
@@ -145,9 +144,7 @@ class Chessboard {
       }
       if(row < rows) buf += '/'
     }
-
     // Use the position to create the FEN string
-
     Option(buf.toString())
   }
 

@@ -33,10 +33,10 @@ class ChessboardTest extends FlatSpec with Matchers {
   "A chessboard with the starting position" should "have a starting FEN position" in {
     val chessboard = new Chessboard
     chessboard.setStartPosition
-    chessboard.getFenPosition().get should be ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
+    chessboard.getFenPosition.get should be ("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR")
   }
 
-  "A chessboard with the starting position" should "have a K on e1 and k on e8" in {
+  "A chessboard at the starting position" should "have a K on e1 and k on e8 and pawns and empty squares" in {
     val chessboard = new Chessboard
     chessboard.setStartPosition
     chessboard.getPiece("e", 8) should be ("k")
@@ -54,7 +54,19 @@ class ChessboardTest extends FlatSpec with Matchers {
     chessboard.setStartPosition
     chessboard.isWhite("e", 1) should be (true)
     chessboard.isWhite("e", 8) should be (false)
-
   }
 
+  "The algebraic notation 'h1'" should "have row = 8 and column = 8 in matrix coordinates" in {
+    val chessboard = new Chessboard
+    val (row, col) = chessboard.translateAlgebraicCoor("h", 1)
+    row should be (8)
+    col should be (8)
+  }
+
+  "The algebraic notation 'h9'" should "throw an IllegalArgumentException" in {
+    val chessboard = new Chessboard
+    intercept[IllegalArgumentException] {
+      val (row, col) = chessboard.translateAlgebraicCoor("h", 9)
+    }
+  }
 }
