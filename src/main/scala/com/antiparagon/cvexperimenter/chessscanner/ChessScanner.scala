@@ -19,6 +19,10 @@ object ChessScanner {
     */
   def getFenPosition(inImg: Mat): Option[String] = {
 
+    if(inImg == null) {
+      return None
+    }
+
     val boardImg = ChessboardFinder.getChessboard(inImg)
 
     // Unable to find a rectangle that has a chessboard

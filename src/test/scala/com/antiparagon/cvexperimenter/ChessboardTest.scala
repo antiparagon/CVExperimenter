@@ -65,7 +65,7 @@ class ChessboardTest extends FlatSpec with Matchers {
 
   "The algebraic notation 'h9'" should "throw an IllegalArgumentException" in {
     val chessboard = new Chessboard
-    intercept[IllegalArgumentException] {
+    a [IllegalArgumentException] should be thrownBy {
       val (row, col) = chessboard.translateAlgebraicCoor("h", 9)
     }
   }

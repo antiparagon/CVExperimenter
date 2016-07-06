@@ -20,6 +20,9 @@ object ChessboardFinder {
     * @return Option cropped image of only the chessboard
     */
   def getChessboard(inImg: Mat): Option[Mat] = {
+    if(inImg == null) {
+      return None
+    }
     val bbox = findBoard(inImg)
     bbox match {
       case Some(bbox) => {
