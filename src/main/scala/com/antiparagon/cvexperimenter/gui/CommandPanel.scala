@@ -173,8 +173,8 @@ class CommandPanel(tabManager: TabManager) {
         maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
-            val image = tabManager.getSelectedMat
-            tabManager.addImageEditorTab(tabManager.getSelectedText + " - edit", ImageTools.convertCVtoFX(image))
+            val image = tabManager.getSelectedImg
+            tabManager.addImageEditorTab(tabManager.getSelectedText + " - edit", image)
           }
         }
       },
@@ -185,9 +185,8 @@ class CommandPanel(tabManager: TabManager) {
         maxWidth = Double.MaxValue
         onAction = handle {
           if(tabManager.isTabSelected) {
-            val image = tabManager.getSelectedMat
-            val result = ChessboardFinder.getChessboard(image)
-            tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", ImageTools.convertCVtoFX(result.get))
+            val image = tabManager.getSelectedImg
+            tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", image)
           }
         }
       }
