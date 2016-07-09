@@ -11,6 +11,19 @@ import org.opencv.imgproc.Imgproc
   */
 object ChessScanner {
 
+
+  def findChessboard(inImg: Mat): Option[Mat] = {
+    return ChessboardFinder.getChessboard(inImg)
+  }
+
+  def findSquares(inImg: Mat): Option[Mat] = {
+    return ChessboardFinder.getChessboard(inImg)
+  }
+
+  def findPieces(inImg: Mat): Option[Mat] = {
+    return ChessboardFinder.getChessboard(inImg)
+  }
+
   /**
     * Returns the chess piece postions in FEN notation for the 2D chessboard in an image.
     *

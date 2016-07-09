@@ -1,5 +1,9 @@
 package com.antiparagon.cvexperimenter.gui
 
+import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
+import com.antiparagon.cvexperimenter.tools.ImageTools
+import org.opencv.core.Mat
+
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, ScrollPane, Tab}
@@ -21,29 +25,52 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
   val imgView =  new ImageView(img)
 
   val startButton = new Button {
+    var board: Option[Mat] = None
+    var squares: Option[Mat] = None
+    var pieces: Option[Mat] = None
     text = STEP1_TEXT
     style = BUTTON_STYLE
     onAction = handle {
       text.value match {
         case STEP1_TEXT => {
           println(STEP1_TEXT)
-          text = STEP2_TEXT
+          board = ChessScanner.findChessboard(ImageTools.convertFXtoCV(img))
+          if(!board.isEmpty) {
+            text = STEP2_TEXT
+          } else {
+            println("Unable to find chessboard")
+          }
         }
         case STEP2_TEXT => {
           println(STEP2_TEXT)
-          text = STEP3_TEXT
+          squares = ChessScanner.findSquares(board.get)
+          if(!squares.isEmpty) {
+            text = STEP3_TEXT
+          } else {
+            println("Unable to find squares")
+          }
         }
         case STEP3_TEXT => {
           println(STEP3_TEXT)
-          text = STEP4_TEXT
+          pieces = ChessScanner.findPieces(board.get)
+          if(!pieces.isEmpty) {
+            text = STEP4_TEXT
+          } else {
+            println("Unable to find pieces")
+          }
         }
         case STEP4_TEXT => {
           println(STEP4_TEXT)
-          text = "Done"
+          val position = ChessScanner.getFenPosition(board.get)
+          if(!position.isEmpty) {
+            println(position.get)
+            text = "Done"
+          } else {
+            println("Unable to get position")
+          }
         }
-        case _ => {}
+        case _ =>
       }
-
     }
   }
 
