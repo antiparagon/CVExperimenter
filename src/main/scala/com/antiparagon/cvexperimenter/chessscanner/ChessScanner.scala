@@ -17,11 +17,11 @@ object ChessScanner {
   }
 
   def findSquares(inImg: Mat): Option[Mat] = {
-    return ChessboardFinder.getChessboard(inImg)
+    return ChessSquareFinder.getChessboardSquares(inImg)
   }
 
   def findPieces(inImg: Mat): Option[Mat] = {
-    return ChessboardFinder.getChessboard(inImg)
+    return ChessPieceFinder.getChessPieces(inImg)
   }
 
   /**
