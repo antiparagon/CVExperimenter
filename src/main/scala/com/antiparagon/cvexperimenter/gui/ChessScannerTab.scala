@@ -48,6 +48,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
             text = STEP3_TEXT
           } else {
             println("Unable to find squares")
+            text = "Done"
           }
         }
         case STEP3_TEXT => {
@@ -57,6 +58,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
             text = STEP4_TEXT
           } else {
             println("Unable to find pieces")
+            text = "Done"
           }
         }
         case STEP4_TEXT => {
@@ -67,6 +69,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
             text = "Done"
           } else {
             println("Unable to get position")
+            text = "Done"
           }
         }
         case _ =>
