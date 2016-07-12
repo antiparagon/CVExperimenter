@@ -37,6 +37,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           board = ChessScanner.findChessboard(ImageTools.convertFXtoCV(img))
           if(!board.isEmpty) {
             text = STEP2_TEXT
+            imgView.setImage(ImageTools.convertCVtoFX(board.get))
           } else {
             println("Unable to find chessboard")
           }

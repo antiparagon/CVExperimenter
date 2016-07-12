@@ -26,9 +26,9 @@ object ChessboardFinder {
     val bbox = findBoard(inImg)
     bbox match {
       case Some(bbox) => {
-        Imgproc.rectangle(inImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
-        return Option(inImg)
-        //return new Mat(inImg, bbox)
+        //Imgproc.rectangle(inImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
+        //return Option(inImg)
+        return Some(new Mat(inImg, bbox))
       }
       case None => {
         println("No chessboard found")
