@@ -5,6 +5,9 @@ import java.util
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by wmckay on 7/10/16.
   */
@@ -19,8 +22,8 @@ object ChessSquareFinder {
     * @param inImg with a chessboard
     * @return Option cropped image of only the chessboard
     */
-  def getChessboardSquares(inImg: Mat): Option[Mat] = {
-    None
+  def getChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
+    findChessboardSquares(inImg)
   }
 
   /**
@@ -29,7 +32,7 @@ object ChessSquareFinder {
     * @param inImg that contains a chessboard
     * @return Option rectangle coordinates of the chessboard
     */
-  def findChessboardSquares(inImg: Mat): Option[Rect] = {
+  def findChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
@@ -39,8 +42,7 @@ object ChessSquareFinder {
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
-    var biggest = new MatOfPoint2f
-    var maxArea = 0.0
+    val squares = mutable.ArrayBuffer.empty[Rect]
 
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
@@ -53,20 +55,13 @@ object ChessSquareFinder {
         val peri = Imgproc.arcLength(contour2f, true)
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02*peri, true)
-        if(area > maxArea && approx.rows == 4) {
-          biggest = approx
-          maxArea = area
+        if(approx.rows == 4) {
+          squares += getBoundingRect(approx)
         }
       }
     }
 
-    if(maxArea > 0.0) {
-      val maxRect = new MatOfPoint
-      biggest.convertTo(maxRect, CvType.CV_32S)
-      val bbox = getBoundingRect(maxRect)
-      return Option(bbox)
-    }
-    return None
+    return squares
   }
 
   /**
@@ -75,7 +70,7 @@ object ChessSquareFinder {
     * @param points to bound
     * @return bounding Rect
     */
-  def getBoundingRect(points: MatOfPoint): Rect = {
+  def getBoundingRect(points: MatOfPoint2f): Rect = {
     val bbox = new Rect
     var minX = Double.MaxValue
     var maxX = Double.MinValue

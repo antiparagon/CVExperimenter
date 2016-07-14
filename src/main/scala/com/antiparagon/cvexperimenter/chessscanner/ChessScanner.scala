@@ -5,6 +5,8 @@ import java.util
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 
+import scala.collection.mutable.ArrayBuffer
+
 
 /**
   * Created by wmckay on 6/16/16.
@@ -16,7 +18,7 @@ object ChessScanner {
     return ChessboardFinder.getChessboard(inImg)
   }
 
-  def findSquares(inImg: Mat): Option[Mat] = {
+  def findSquares(inImg: Mat): ArrayBuffer[Rect] = {
     return ChessSquareFinder.getChessboardSquares(inImg)
   }
 

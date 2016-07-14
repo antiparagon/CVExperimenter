@@ -2,8 +2,10 @@ package com.antiparagon.cvexperimenter.gui
 
 import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
 import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.Mat
+import org.opencv.core.{Mat, Rect, Scalar}
+import org.opencv.imgproc.Imgproc
 
+import scala.collection.mutable.ArrayBuffer
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, ScrollPane, Tab}
@@ -26,7 +28,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
 
   val startButton = new Button {
     var board: Option[Mat] = None
-    var squares: Option[Mat] = None
+    var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
     var pieces: Option[Mat] = None
     text = STEP1_TEXT
     style = BUTTON_STYLE
@@ -46,6 +48,11 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           println(STEP2_TEXT)
           squares = ChessScanner.findSquares(board.get)
           if(!squares.isEmpty) {
+
+            for(bbox <- squares) {
+              Imgproc.rectangle(board.get, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
+            }
+            imgView.setImage(ImageTools.convertCVtoFX(board.get))
             text = STEP3_TEXT
           } else {
             println("Unable to find squares")
@@ -104,7 +111,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
     )
   }
 
-  override def getImg() : Image = return img
+  override def getImg() : Image = return imgView.getImage
 
   override def getTabText(): String = text.value
 
