@@ -48,7 +48,6 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           println(STEP2_TEXT)
           squares = ChessScanner.findSquares(board.get)
           if(!squares.isEmpty) {
-
             for(bbox <- squares) {
               Imgproc.rectangle(board.get, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
             }

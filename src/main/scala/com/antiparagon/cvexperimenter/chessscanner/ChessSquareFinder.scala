@@ -42,7 +42,7 @@ object ChessSquareFinder {
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
-    val squares = mutable.ArrayBuffer.empty[Rect]
+    val squares = mutable.ArrayBuffer[Rect]()
 
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
@@ -60,8 +60,16 @@ object ChessSquareFinder {
         }
       }
     }
-
+    outputSquares(squares)
     return squares
+  }
+
+  def outputSquares(squares: Seq[Rect]): Unit = {
+
+    for(square <- squares) {
+      println(s"${square.x},${square.y},${square.width},${square.height}")
+    }
+
   }
 
   /**
