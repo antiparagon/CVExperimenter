@@ -64,12 +64,15 @@ object ChessSquareFinder {
     return squares
   }
 
-  def outputSquares(squares: Seq[Rect]): Unit = {
 
-    for(square <- squares) {
-      println(s"${square.x},${square.y},${square.width},${square.height}")
-    }
+  def calculateGrid(board: Mat) = {
+    val squareWidth = board.width / 8
+    val squareHeight = board.height / 8
+    //Imgproc.rectangle(board.get, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
+  }
 
+  def outputSquares(squares: Seq[Rect]) = {
+    squares.foreach(square => println(s"${square.x},${square.y},${square.width},${square.height}"))
   }
 
   /**
