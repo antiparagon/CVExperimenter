@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
+import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessSquareFinder}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, Rect, Scalar}
 import org.opencv.imgproc.Imgproc
@@ -49,6 +49,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           squares = ChessScanner.findSquares(board.get)
           if(!squares.isEmpty) {
             squares.foreach(square => Imgproc.rectangle(board.get, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
+            ChessSquareFinder.calculateGrid(board.get)
             imgView.setImage(ImageTools.convertCVtoFX(board.get))
             text = STEP3_TEXT
           } else {

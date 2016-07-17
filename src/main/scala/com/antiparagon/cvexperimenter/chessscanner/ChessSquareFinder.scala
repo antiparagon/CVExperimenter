@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
@@ -64,10 +65,12 @@ object ChessSquareFinder {
     return squares
   }
 
-
-  def calculateGrid(board: Mat) = {
+  def calculateGrid(board: Mat): Unit = {
     val squareWidth = board.width / 8
     val squareHeight = board.height / 8
+    for(row <- 0 to 8) {
+      Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(0.0, 255.0, 0.0), 1)
+    }
     //Imgproc.rectangle(board.get, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
   }
 
