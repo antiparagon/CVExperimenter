@@ -48,8 +48,8 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           println(STEP2_TEXT)
           squares = ChessScanner.findSquares(board.get)
           if(!squares.isEmpty) {
-            squares.foreach(square => Imgproc.rectangle(board.get, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
-            ChessSquareFinder.calculateGrid(board.get)
+            //ChessSquareFinder.drawSquares(board.get, squares)
+            ChessSquareFinder.drawGrid(board.get)
             imgView.setImage(ImageTools.convertCVtoFX(board.get))
             text = STEP3_TEXT
           } else {
