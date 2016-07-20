@@ -65,21 +65,37 @@ object ChessSquareFinder {
     return squares
   }
 
-  def drawSquares(board: Mat, squares: ArrayBuffer[Rect]) = {
+  /**
+    * Draws the squares in the array on the provided Mat.
+    * 
+    * @param board
+    * @param squares
+    */
+  def drawSquares(board: Mat, squares: ArrayBuffer[Rect]): Unit = {
     squares.foreach(square => Imgproc.rectangle(board, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
   }
 
+  /**
+    * Draws and 8x8 grid on the provided Mat.
+    *
+    * @param board
+    */
   def drawGrid(board: Mat): Unit = {
     val squareWidth = board.width / 8
     val squareHeight = board.height / 8
     for(row <- 0 to 8) {
-      Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(0.0, 255.0, 0.0), 1)
+      Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(0.0, 255.0, 0.0), 2)
     }
     for(column <- 0 to 8) {
-      Imgproc.line(board, new Point(squareHeight * column, 0), new Point(squareHeight * column, board.width), new Scalar(0.0, 255.0, 0.0), 1)
+      Imgproc.line(board, new Point(squareHeight * column, 0), new Point(squareHeight * column, board.width), new Scalar(0.0, 255.0, 0.0), 2)
     }
   }
 
+  /**
+    * Outputs the square points.
+    *
+    * @param squares
+    */
   def outputSquares(squares: Seq[Rect]) = {
     squares.foreach(square => println(s"${square.x},${square.y},${square.width},${square.height}"))
   }
