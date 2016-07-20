@@ -76,7 +76,6 @@ object ChessSquareFinder {
       Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(0.0, 255.0, 0.0), 1)
     }
     for(column <- 0 to 8) {
-      //println(s"Start $squareWidth $squareHeight")
       Imgproc.line(board, new Point(squareHeight * column, 0), new Point(squareHeight * column, board.width), new Scalar(0.0, 255.0, 0.0), 1)
     }
   }
