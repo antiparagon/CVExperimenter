@@ -2,7 +2,6 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
-import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
@@ -48,6 +47,8 @@ object ChessSquareFinder {
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
+    val xCoords = mutable.Map[Int, Int]()
+
     for(contour <- contours) {
       val area = Imgproc.contourArea(contour)
       if(area > 100.0) {
@@ -57,17 +58,20 @@ object ChessSquareFinder {
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02*peri, true)
         if(approx.rows == 4) {
-          squares += getBoundingRect(approx)
+          val rect = getBoundingRect(approx)
+          squares += rect
+          xCoords(rect.x) = xCoords.getOrElseUpdate(rect.x, 0) + 1
         }
       }
     }
-    outputSquares(squares)
+    for ((k,v) <- xCoords) printf("key: %s, value: %s\n", k, v)
+    //outputSquares(squares)
     return squares
   }
 
   /**
-    * Draws the squares in the array on the provided Mat.
-    * 
+    * Draws the squares in the squares array on the provided Mat.
+    *
     * @param board
     * @param squares
     */
