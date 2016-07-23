@@ -47,7 +47,7 @@ object ChessSquareFinder {
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
-    val xCoords = mutable.Map[Int, Int]()
+    val xCoordsRect = mutable.Map[Int, mutable.ArrayBuffer[Rect]]()
 
     for(contour <- contours) {
       val area = Imgproc.contourArea(contour)
@@ -60,13 +60,19 @@ object ChessSquareFinder {
         if(approx.rows == 4) {
           val rect = getBoundingRect(approx)
           squares += rect
-          xCoords(rect.x) = xCoords.getOrElseUpdate(rect.x, 0) + 1
+          xCoordsRect.getOrElseUpdate(rect.x, mutable.ArrayBuffer[Rect]()) += rect
         }
       }
     }
-    for ((k,v) <- xCoords) printf("key: %s, value: %s\n", k, v)
+    outputSquareStats(xCoordsRect)
     //outputSquares(squares)
     return squares
+  }
+
+  def outputSquareStats(xCoordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
+    for ((k,v) <- xCoordsRect) {
+      println(s"X coordinate: ${k}, value: ${v}")
+    }
   }
 
   /**
