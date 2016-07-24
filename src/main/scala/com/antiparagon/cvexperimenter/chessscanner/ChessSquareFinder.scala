@@ -70,9 +70,12 @@ object ChessSquareFinder {
   }
 
   def outputSquareStats(xCoordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
+    var max = 0
     for ((k,v) <- xCoordsRect) {
       println(s"X coordinate: ${k}, value: ${v}")
+      if(v.size > max) max = v.size
     }
+    println(s"Max squares: $max")
   }
 
   /**
