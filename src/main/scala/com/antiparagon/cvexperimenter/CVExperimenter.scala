@@ -24,6 +24,8 @@ object CVExperimenter extends JFXApp {
   val tabManager: TabManager = new TabManager
   val BUTTON_STYLE = "-fx-font-size: 14pt"
   val BACKGROUND_STYLE = "-fx-background-color: black"
+  //val START_UP_PIC = "CVExperimenterLogo.png"
+  val START_UP_PIC = "Chessboard.png"
 
   val controlPane = new ScrollPane {
     fitToHeight = true
@@ -57,7 +59,7 @@ object CVExperimenter extends JFXApp {
       fill = Black
       root = getLayout
     }
-    tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("CVExperimenterLogo.png")))
+    tabManager.addImageTab("Logo", new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream(START_UP_PIC)))
   }
 
   /**
