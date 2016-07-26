@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
@@ -54,6 +55,7 @@ object ChessboardFinder {
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
+    //ImageTools.outputMatProperties(hierarchy)
     // What is findContours doing?
 
     var biggest = new MatOfPoint2f
@@ -71,7 +73,7 @@ object ChessboardFinder {
         // What is peri?
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02*peri, true)
-        // What is approcPolyDP?
+        // What is approxPolyDP?
         if(area > maxArea && approx.rows == 4) {
           biggest = approx
           maxArea = area

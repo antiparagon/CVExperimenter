@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
@@ -42,11 +43,15 @@ object ChessSquareFinder {
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
+    ImageTools.outputMatProperties(hierarchy)
+
+
     val squares = mutable.ArrayBuffer[Rect]()
 
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
+    val yCoordsRect = mutable.Map[Int, mutable.ArrayBuffer[Rect]]()
     val xCoordsRect = mutable.Map[Int, mutable.ArrayBuffer[Rect]]()
 
     for(contour <- contours) {
@@ -60,18 +65,23 @@ object ChessSquareFinder {
         if(approx.rows == 4) {
           val rect = getBoundingRect(approx)
           squares += rect
+          yCoordsRect.getOrElseUpdate(rect.y, mutable.ArrayBuffer[Rect]()) += rect
           xCoordsRect.getOrElseUpdate(rect.x, mutable.ArrayBuffer[Rect]()) += rect
         }
       }
     }
+
+    println("Rows")
+    outputSquareStats(yCoordsRect)
+    println("Columns")
     outputSquareStats(xCoordsRect)
     //outputSquares(squares)
     return squares
   }
 
-  def outputSquareStats(xCoordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
+  def outputSquareStats(coordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
     var max = 0
-    for ((k,v) <- xCoordsRect) {
+    for ((k,v) <- coordsRect) {
       println(s"X coordinate: ${k}, value: ${v}")
       if(v.size > max) max = v.size
     }
@@ -97,10 +107,10 @@ object ChessSquareFinder {
     val squareWidth = board.width / 8
     val squareHeight = board.height / 8
     for(row <- 0 to 8) {
-      Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(0.0, 255.0, 0.0), 2)
+      Imgproc.line(board, new Point(0, squareWidth * row), new Point(board.height, squareWidth * row), new Scalar(255.0, 0.0, 0.0), 2)
     }
     for(column <- 0 to 8) {
-      Imgproc.line(board, new Point(squareHeight * column, 0), new Point(squareHeight * column, board.width), new Scalar(0.0, 255.0, 0.0), 2)
+      Imgproc.line(board, new Point(squareHeight * column, 0), new Point(squareHeight * column, board.width), new Scalar(255.0, 0.0, 0.0), 2)
     }
   }
 
