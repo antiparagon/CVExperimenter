@@ -6,6 +6,7 @@ import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
@@ -80,9 +81,10 @@ object ChessSquareFinder {
   }
 
   def outputSquareStats(coordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
+    var map = ListMap(coordsRect.toSeq.sortBy(_._1):_*)
     var max = 0
-    for ((k,v) <- coordsRect) {
-      println(s"X coordinate: ${k}, value: ${v}")
+    for ((k,v) <- map) {
+      println(s"Start coordinate: ${k}, value: ${v}")
       if(v.size > max) max = v.size
     }
     println(s"Max squares: $max")
