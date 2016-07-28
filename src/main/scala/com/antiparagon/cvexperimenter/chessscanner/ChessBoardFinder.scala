@@ -64,7 +64,7 @@ object ChessboardFinder {
     val outImg = new Mat
     Imgproc.cvtColor(tempImg, outImg, Imgproc.COLOR_GRAY2BGR)
 
-    for(contour <- contours) {
+    contours.foreach(contour => {
       val area = Imgproc.contourArea(contour)
       if(area > 100.0) {
         contour.convertTo(contour, CvType.CV_32FC2)
@@ -79,7 +79,7 @@ object ChessboardFinder {
           maxArea = area
         }
       }
-    }
+    })
 
     if(maxArea > 0.0) {
       val maxRect = new MatOfPoint

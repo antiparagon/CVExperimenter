@@ -55,7 +55,7 @@ object ChessSquareFinder {
     val yCoordsRect = mutable.Map[Int, mutable.ArrayBuffer[Rect]]()
     val xCoordsRect = mutable.Map[Int, mutable.ArrayBuffer[Rect]]()
 
-    for(contour <- contours) {
+    contours.foreach(contour => {
       val area = Imgproc.contourArea(contour)
       if(area > 100.0) {
         contour.convertTo(contour, CvType.CV_32FC2)
@@ -70,7 +70,7 @@ object ChessSquareFinder {
           xCoordsRect.getOrElseUpdate(rect.x, mutable.ArrayBuffer[Rect]()) += rect
         }
       }
-    }
+    })
 
     println("Rows")
     outputSquareStats(yCoordsRect)
