@@ -72,12 +72,36 @@ object ChessSquareFinder {
       }
     })
 
-    println("Rows")
-    outputSquareStats(yCoordsRect)
-    println("Columns")
-    outputSquareStats(xCoordsRect)
+
+    //println("Rows")
+    //outputSquareStats(yCoordsRect)
+    //println("Columns")
+    //outputSquareStats(xCoordsRect)
     //outputSquares(squares)
-    return squares
+    filterSquares(inImg, squares)
+  }
+
+  /**
+    * Checks to see if a square is about 1/64 the area of the overall chessbaord.
+    *
+    * @param chessboard
+    * @param squares
+    * @return array of squares hat are close to the correct area
+    */
+  def filterSquares(chessboard: Mat, squares: ArrayBuffer[Rect]): ArrayBuffer[Rect] = {
+    val filteredSquares = mutable.ArrayBuffer[Rect]()
+    val chessboardArea = chessboard.width * chessboard.height
+    squares.foreach(square => {
+      val area = square.area().toInt
+      if(area * 50 > chessboardArea) {
+        println(s"FAIL Square area of $area is to big for chessboard area of $chessboardArea")
+      } else {
+        println(s"PASS Square area of $area is OK for chessboard area of $chessboardArea")
+        filteredSquares += square
+      }
+    })
+
+    return filteredSquares
   }
 
   def outputSquareStats(coordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
