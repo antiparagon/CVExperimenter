@@ -25,7 +25,7 @@ object CVExperimenter extends JFXApp {
   val BUTTON_STYLE = "-fx-font-size: 14pt"
   val BACKGROUND_STYLE = "-fx-background-color: black"
   //val START_UP_PIC = "CVExperimenterLogo.png"
-  val START_UP_PIC = "Chessboard.gif"
+  val START_UP_PIC = "twic.png"
 
   val controlPane = new ScrollPane {
     fitToHeight = true
@@ -55,7 +55,7 @@ object CVExperimenter extends JFXApp {
   stage = new PrimaryStage {
     title = "CV Experimenter"
     icons += new Image(CVExperimenter.getClass.getClassLoader.getResourceAsStream("icon.png"))
-    scene = new Scene(1400,850) {
+    scene = new Scene(1400,900) {
       fill = Black
       root = getLayout
     }
