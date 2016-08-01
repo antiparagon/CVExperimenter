@@ -54,14 +54,21 @@ object ChessboardFinder {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
+    Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
+    //return Some(tempImg)
+
+
     val boardSize = new Size(7, 7)
     val imageCorners = new MatOfPoint2f()
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, imageCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
-    if(!found) println("Chessboard not found")
-    //val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
-    //Imgproc.cornerSubPix(tempImg, imageCorners, new Size(11, 11), new Size(-1, -1), term)
+    if(!found) {
+      println("Chessboard not found")
+      return None
+    }
+    val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
+    Imgproc.cornerSubPix(tempImg, imageCorners, new Size(11, 11), new Size(-1, -1), term)
     Calib3d.drawChessboardCorners(inImg, boardSize, imageCorners, found)
-    return Some(inImg)
+    Some(inImg)
   }
 
   /**
