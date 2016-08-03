@@ -108,6 +108,13 @@ class TabManager {
     addTab(tab)
   }
 
+  def addDebugImageTab(name : String, img : Image): Unit = {
+    val tab = new ExperimenterImageTab(img)
+    tab.text = name
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+    addDebugTab(tab)
+  }
+
   def addVideoTab(name : String): Unit = {
     val tab = new ExperimenterVideoTab()
     tab.text = name
@@ -122,6 +129,16 @@ class TabManager {
     tabPane += tab
     tabPane.selectionModel.value.select(tab)
     val index = tabPane.getSelectionModel.getSelectedIndex
+    if(tabs.length - 1 < index) {
+      tabs += tab
+    } else {
+      tabs(index) = tab
+    }
+  }
+
+  def addDebugTab(tab : Tab with ExperimenterTab): Unit = {
+    tabPane += tab
+    val index = tabPane.getTabs.size - 1
     if(tabs.length - 1 < index) {
       tabs += tab
     } else {
