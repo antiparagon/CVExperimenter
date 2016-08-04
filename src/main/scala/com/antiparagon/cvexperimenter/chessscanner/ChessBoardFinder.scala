@@ -55,23 +55,55 @@ object ChessboardFinder {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
-    //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
-    //return Some(tempImg)
     CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
 
-
     val boardSize = new Size(7, 7)
-    val imageCorners = new MatOfPoint2f()
-    val found = Calib3d.findChessboardCorners(tempImg, boardSize, imageCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
+    val squareCorners = new MatOfPoint2f()
+    val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       println("Chessboard not found")
       return None
     }
     val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
-    Imgproc.cornerSubPix(tempImg, imageCorners, new Size(11, 11), new Size(-1, -1), term)
-    Calib3d.drawChessboardCorners(inImg, boardSize, imageCorners, found)
+    Imgproc.cornerSubPix(tempImg, squareCorners, new Size(11, 11), new Size(-1, -1), term)
+    ImageTools.printMat(squareCorners)
+
+    var minX = Double.MaxValue
+    var maxX = Double.MinValue
+    var minY = Double.MaxValue
+    var maxY = Double.MinValue
+    var avgWidth = 0.0
+    var avgHeight = 0.0
+
+    val points = squareCorners.toList
+    var loops = 0.0
+    for(i <- 0 to points.size - 1) {
+      val point = points.get(i)
+      if(point.x < minX) minX = point.x
+      if(point.x > maxX) maxX = point.x
+      if(point.y < minY) minY = point.y
+      if(point.y > maxX) maxY = point.y
+      avgWidth += (points.get(i + 1).x - point.x).abs
+      avgHeight += (point.y - points.get(i + 1).y).abs
+      loops += 1.0
+    }
+    if(points.get(points.size - 1).x < minX) minX = points.get(points.size - 1).x
+    if(points.get(points.size - 1).x > maxX) maxX = points.get(points.size - 1).x
+    if(points.get(points.size - 1).y < minY) minY = points.get(points.size - 1).y
+    if(points.get(points.size - 1).y > maxX) maxY = points.get(points.size - 1).y
+    avgWidth = avgWidth / loops
+    avgHeight = avgHeight / loops
+
+    println(s"Min x: $minX")
+    println(s"Max x: $maxX")
+    println(s"Min y: $minY")
+    println(s"Max y: $maxY")
+    println(s"Avg width: $avgWidth")
+    println(s"Avg height: $avgHeight")
+
+    Calib3d.drawChessboardCorners(inImg, boardSize, squareCorners, found)
     Some(inImg)
   }
 
