@@ -68,7 +68,10 @@ object ChessboardFinder {
     }
     val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
     Imgproc.cornerSubPix(tempImg, squareCorners, new Size(11, 11), new Size(-1, -1), term)
-    ImageTools.printMat(squareCorners)
+    //ImageTools.printMat(squareCorners)
+
+    println(s"rows: ${squareCorners.rows()}")
+    println(s"cols: ${squareCorners.cols()}")
 
     var minX = Double.MaxValue
     var maxX = Double.MinValue
@@ -76,25 +79,29 @@ object ChessboardFinder {
     var maxY = Double.MinValue
     var avgWidth = 0.0
     var avgHeight = 0.0
-
     val points = squareCorners.toList
-    var loops = 0.0
-    for(i <- 0 to points.size - 1) {
-      val point = points.get(i)
-      if(point.x < minX) minX = point.x
-      if(point.x > maxX) maxX = point.x
-      if(point.y < minY) minY = point.y
-      if(point.y > maxX) maxY = point.y
-      avgWidth += (points.get(i + 1).x - point.x).abs
-      avgHeight += (point.y - points.get(i + 1).y).abs
-      loops += 1.0
+    for(row <- 0 until 7) {
+      for(col <- 0 until 7) {
+        val index = col + row * 7
+        val point = points.get(index)
+        if(point.x < minX) minX = point.x
+        if(point.x > maxX) maxX = point.x
+        if(point.y < minY) minY = point.y
+        if(point.y > maxY) maxY = point.y
+
+        if(col > 0) {
+          avgWidth += (point.x - points.get(index - 1).x).abs
+        }
+        if(row > 0) {
+          val tempIndex = col + (row - 1) * 7
+          avgHeight += (point.y - points.get(tempIndex).y).abs
+        }
+      }
     }
-    if(points.get(points.size - 1).x < minX) minX = points.get(points.size - 1).x
-    if(points.get(points.size - 1).x > maxX) maxX = points.get(points.size - 1).x
-    if(points.get(points.size - 1).y < minY) minY = points.get(points.size - 1).y
-    if(points.get(points.size - 1).y > maxX) maxY = points.get(points.size - 1).y
-    avgWidth = avgWidth / loops
-    avgHeight = avgHeight / loops
+
+    val squares = 36
+    avgWidth = avgWidth / squares
+    avgHeight = avgHeight / squares
 
     println(s"Min x: $minX")
     println(s"Max x: $maxX")
@@ -102,6 +109,26 @@ object ChessboardFinder {
     println(s"Max y: $maxY")
     println(s"Avg width: $avgWidth")
     println(s"Avg height: $avgHeight")
+
+//    val points = squareCorners.toList
+//    var loops = 0.0
+//    for(i <- 0 until points.size - 2) {
+//      val point = points.get(i)
+//      if(point.x < minX) minX = point.x
+//      if(point.x > maxX) maxX = point.x
+//      if(point.y < minY) minY = point.y
+//      if(point.y > maxX) maxY = point.y
+//      avgWidth += (points.get(i + 1).x - point.x).abs
+//      avgHeight += (point.y - points.get(i + 1).y).abs
+//      loops += 1.0
+//    }
+//    if(points.get(points.size - 1).x < minX) minX = points.get(points.size - 1).x
+//    if(points.get(points.size - 1).x > maxX) maxX = points.get(points.size - 1).x
+//    if(points.get(points.size - 1).y < minY) minY = points.get(points.size - 1).y
+//    if(points.get(points.size - 1).y > maxY) maxY = points.get(points.size - 1).y
+
+//
+
 
     Calib3d.drawChessboardCorners(inImg, boardSize, squareCorners, found)
     Some(inImg)
