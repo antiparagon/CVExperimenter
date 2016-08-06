@@ -27,22 +27,19 @@ object ChessboardFinder {
       return None
     }
 
-    findBoard(inImg)
-
-    /*
     val bbox = findBoard(inImg)
     bbox match {
       case Some(bbox) => {
-        //Imgproc.rectangle(inImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
-        //return Option(inImg)
-        return Some(new Mat(inImg, bbox))
+        val copyImg = inImg.clone()
+        Imgproc.rectangle(copyImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
+        CVExperimenter.tabManager.addDebugImageTab("Found chessboard", ImageTools.convertCVtoFX(copyImg))
+        Some(new Mat(inImg, bbox))
       }
       case None => {
         println("No chessboard found")
-        return None
+        None
       }
     }
-    */
   }
 
   /**
@@ -51,7 +48,7 @@ object ChessboardFinder {
     * @param inImg that contains a chessboard
     * @return Option rectangle coordinates of the chessboard
     */
-  def findBoard(inImg: Mat): Option[Mat] = {
+  def findBoard(inImg: Mat): Option[Rect] = {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
@@ -68,10 +65,6 @@ object ChessboardFinder {
     }
     val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
     Imgproc.cornerSubPix(tempImg, squareCorners, new Size(11, 11), new Size(-1, -1), term)
-    //ImageTools.printMat(squareCorners)
-
-    println(s"rows: ${squareCorners.rows()}")
-    println(s"cols: ${squareCorners.cols()}")
 
     var minX = Double.MaxValue
     var maxX = Double.MinValue
@@ -88,7 +81,6 @@ object ChessboardFinder {
         if(point.x > maxX) maxX = point.x
         if(point.y < minY) minY = point.y
         if(point.y > maxY) maxY = point.y
-
         if(col > 0) {
           avgWidth += (point.x - points.get(index - 1).x).abs
         }
@@ -99,7 +91,7 @@ object ChessboardFinder {
       }
     }
 
-    val squares = 36
+    val squares = 42
     avgWidth = avgWidth / squares
     avgHeight = avgHeight / squares
 
@@ -110,28 +102,12 @@ object ChessboardFinder {
     println(s"Avg width: $avgWidth")
     println(s"Avg height: $avgHeight")
 
-//    val points = squareCorners.toList
-//    var loops = 0.0
-//    for(i <- 0 until points.size - 2) {
-//      val point = points.get(i)
-//      if(point.x < minX) minX = point.x
-//      if(point.x > maxX) maxX = point.x
-//      if(point.y < minY) minY = point.y
-//      if(point.y > maxX) maxY = point.y
-//      avgWidth += (points.get(i + 1).x - point.x).abs
-//      avgHeight += (point.y - points.get(i + 1).y).abs
-//      loops += 1.0
-//    }
-//    if(points.get(points.size - 1).x < minX) minX = points.get(points.size - 1).x
-//    if(points.get(points.size - 1).x > maxX) maxX = points.get(points.size - 1).x
-//    if(points.get(points.size - 1).y < minY) minY = points.get(points.size - 1).y
-//    if(points.get(points.size - 1).y > maxY) maxY = points.get(points.size - 1).y
-
-//
-
-
-    Calib3d.drawChessboardCorners(inImg, boardSize, squareCorners, found)
-    Some(inImg)
+    val bbox = new Rect
+    bbox.x = (minX - avgWidth).toInt
+    bbox.y = (minY - avgHeight).toInt
+    bbox.width = (8.0 * avgWidth).toInt
+    bbox.height = (8.0 * avgHeight).toInt
+    return Option(bbox)
   }
 
   /**
