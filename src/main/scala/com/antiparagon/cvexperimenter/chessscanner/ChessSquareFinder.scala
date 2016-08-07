@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.antiparagon.cvexperimenter.CVExperimenter
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{CvType, MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
@@ -37,8 +38,11 @@ object ChessSquareFinder {
   def findChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
+    //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
-    Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
+    Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+    CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
 
     val contours = new util.ArrayList[MatOfPoint]()
     val hierarchy = new Mat
