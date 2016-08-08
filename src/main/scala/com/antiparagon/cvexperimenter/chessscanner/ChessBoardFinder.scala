@@ -53,8 +53,9 @@ object ChessboardFinder {
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 11, 2)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
-    //CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
+    CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
 
     val boardSize = new Size(7, 7)
     val squareCorners = new MatOfPoint2f()
@@ -107,7 +108,7 @@ object ChessboardFinder {
     bbox.y = (minY - avgHeight).toInt
     bbox.width = (8.0 * avgWidth).toInt
     bbox.height = (8.0 * avgHeight).toInt
-    return Option(bbox)
+    Option(bbox)
   }
 
   /**
