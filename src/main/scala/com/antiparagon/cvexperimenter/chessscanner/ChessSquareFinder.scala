@@ -90,11 +90,19 @@ object ChessSquareFinder {
     println(s"Avg width: $avgWidth")
     println(s"Avg height: $avgHeight")
 
-    val bbox = new Rect
-    bbox.x = (minX - avgWidth).toInt
-    bbox.y = (minY - avgHeight).toInt
-    bbox.width = (8.0 * avgWidth).toInt
-    bbox.height = (8.0 * avgHeight).toInt
+    for(row <- 0 until 7) {
+      for(col <- 0 until 7) {
+        val index = col + row * 7
+        val point = points.get(index)
+        val nextPoint = points.get(index + 1)
+        val square = new Rect
+        square.x = point.x.toInt
+        square.y = point.y.toInt
+        square.width = (nextPoint.x.toInt - square.x)
+        square.height = (nextPoint.y.toInt - square.y)
+        squares += square
+      }
+    }
 
     squares
   }

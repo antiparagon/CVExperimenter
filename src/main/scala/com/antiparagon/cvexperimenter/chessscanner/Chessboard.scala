@@ -16,6 +16,28 @@ class Chessboard {
     }
   }
 
+
+  /**
+    * Gets the square at the square specified in algebraic notation.
+    * @param column to use
+    * @param row to use
+    */
+  def getSquare(column: String, row: Int): ChessSquare = {
+    val (r, c) = translateAlgebraicCoor(column, row)
+    board(r)(c)
+  }
+
+  /**
+    * Gets the square at the square specified by row and column.
+    * @param row to use
+    * @param column to use
+    */
+  def getSquare(row: Int, column: Int): ChessSquare = {
+    board(row)(column)
+  }
+
+
+
   /**
     * Clears all the squares. Results in an empty board.
     */
@@ -72,7 +94,7 @@ class Chessboard {
   }
 
   /**
-    * Trnslates the given algebraic coordinates into row and column coordinates.
+    * Translates the given algebraic coordinates into row and column coordinates.
     * @param column
     * @param row
     * @return
@@ -118,7 +140,6 @@ class Chessboard {
     board(8)(8).piece = "R"
   }
 
-
   /**
     * Returns the position in FEN notation.
     *
@@ -147,5 +168,4 @@ class Chessboard {
     // Use the position to create the FEN string
     Option(buf.toString())
   }
-
 }
