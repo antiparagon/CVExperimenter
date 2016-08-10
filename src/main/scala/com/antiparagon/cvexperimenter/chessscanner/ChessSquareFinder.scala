@@ -90,16 +90,115 @@ object ChessSquareFinder {
     println(s"Avg width: $avgWidth")
     println(s"Avg height: $avgHeight")
 
-    for(row <- 0 until 7) {
-      for(col <- 0 until 7) {
+    // Very top row
+    for(col <- 0 until 6) {
+      val point = points.get(col)
+      val nextPoint = points.get(col + 1)
+      if(col == 0) {
+        val square = new Rect
+        square.x = (point.x - avgWidth).toInt
+        if(square.x < 0) square.x = 0
+        square.y = (point.y - avgHeight).toInt
+        if(square.y < 0 ) square.y = 0
+        square.width = (point.x - square.x).toInt
+        println(s"width: ${square.width}")
+        square.height = (point.y - square.y).toInt
+        println(s"height: ${square.height}")
+        squares += square
+      }
+      val square = new Rect
+      square.x = point.x.toInt
+      square.y = (point.y - avgHeight).toInt
+      if(square.y < 0 ) square.y = 0
+      square.width = (nextPoint.x.toInt - square.x)
+      println(s"width: ${square.width}")
+      square.height = (point.y - square.y).toInt
+      println(s"height: ${square.height}")
+      squares += square
+      if(col == 5) {
+        val square = new Rect
+        square.x = nextPoint.x.toInt
+        square.y = (nextPoint.y - avgHeight).toInt
+        if(square.y < 0 ) square.y = 0
+        square.width = (inImg.width - nextPoint.x).toInt
+        println(s"width: ${square.width}")
+        square.height = avgHeight.toInt
+        println(s"height: ${square.height}")
+        squares += square
+      }
+    }
+
+    // Inner rows
+    for(row <- 0 until 6) {
+      for(col <- 0 until 6) {
         val index = col + row * 7
         val point = points.get(index)
         val nextPoint = points.get(index + 1)
+        val nextRowPoint = points(col + (row + 1) * 7)
+        if(col == 0) {
+          val square = new Rect
+          square.x = (point.x - avgWidth).toInt
+          if(square.x < 0) square.x = 0
+          square.y = point.y.toInt
+          square.width = (nextPoint.x - point.x).toInt
+          println(s"width: ${square.width}")
+          square.height = (nextRowPoint.y - square.y).toInt
+          println(s"height: ${square.height}")
+          squares += square
+        }
         val square = new Rect
         square.x = point.x.toInt
         square.y = point.y.toInt
         square.width = (nextPoint.x.toInt - square.x)
-        square.height = (nextPoint.y.toInt - square.y)
+        println(s"width: ${square.width}")
+        square.height = (nextRowPoint.y.toInt - square.y)
+        println(s"height: ${square.height}")
+        squares += square
+        if(col == 5) {
+          val square = new Rect
+          square.x = nextPoint.x.toInt
+          square.y = nextPoint.y.toInt
+          square.width = (inImg.width - nextPoint.x).toInt
+          println(s"width: ${square.width}")
+          square.height = inImg.height - square.y
+          println(s"height: ${square.height}")
+          squares += square
+        }
+      }
+    }
+
+    // Very bottom row
+    for(col <- 0 until 6) {
+      val index = col + 6 * 7
+      val point = points.get(index)
+      val nextPoint = points.get(index + 1)
+      if(col == 0) {
+        val square = new Rect
+        square.x = (point.x - avgWidth).toInt
+        if(square.x < 0) square.x = 0
+        square.y = point.y.toInt
+        square.width = (point.x - square.x).toInt
+        println(s"width: ${square.width}")
+        square.height = inImg.height - square.y
+        println(s"height: ${square.height}")
+        squares += square
+      }
+      val square = new Rect
+      square.x = point.x.toInt
+      square.y = point.y.toInt
+      square.width = (nextPoint.x.toInt - square.x)
+      println(s"width: ${square.width}")
+      square.height = inImg.height - square.y
+      println(s"height: ${square.height}")
+      squares += square
+      if(col == 5) {
+        val square = new Rect
+        square.x = nextPoint.x.toInt
+        square.y = nextPoint.y.toInt
+        square.width = (inImg.width - nextPoint.x).toInt
+        println(s"width: ${square.width}")
+        square.height = inImg.height - square.y
+        println(s"height: ${square.height}")
         squares += square
       }
     }
