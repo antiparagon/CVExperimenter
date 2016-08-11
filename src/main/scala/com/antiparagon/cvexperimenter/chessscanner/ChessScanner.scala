@@ -11,41 +11,46 @@ import scala.collection.mutable.ArrayBuffer
 /**
   * Created by wmckay on 6/16/16.
   */
-object ChessScanner {
+class ChessScanner {
 
+  var fullImage: Mat = null
+  var boardImage: Mat = null
+  var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
+  val chessboard: Chessboard = new Chessboard
 
   def findChessboard(inImg: Mat): Option[Mat] = {
-    return ChessboardFinder.getChessboard(inImg)
+    reset()
+    fullImage = inImg.clone()
+    boardImage = ChessboardFinder.getChessboard(fullImage).getOrElse(null)
+    if(boardImage != null)
+      Some(boardImage)
+    else
+      None
   }
 
-  def findSquares(inImg: Mat): ArrayBuffer[Rect] = {
-    return ChessSquareFinder.getChessboardSquares(inImg)
+  def findSquares(): ArrayBuffer[Rect] = {
+    if(boardImage != null) squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    squares
   }
 
-  def findPieces(inImg: Mat): Option[Mat] = {
-    return ChessPieceFinder.getChessPieces(inImg)
+  def findPieces(): Option[Chessboard] = {
+    None
   }
 
   /**
-    * Returns the chess piece postions in FEN notation for the 2D chessboard in an image.
+    * Returns the chess piece postions in FEN notation.
     *
-    * @param inImg to find position in
     * @return Option string FEN postion of chess pieces
     */
-  def getFenPosition(inImg: Mat): Option[String] = {
+  def getFenPosition(): Option[String] = {
+    chessboard.getFenPosition()
+  }
 
-    if(inImg == null) {
-      return None
-    }
-
-    val boardImg = ChessboardFinder.getChessboard(inImg)
-
-    // Unable to find a rectangle that has a chessboard
-    if(boardImg.isEmpty) {
-      return None
-    }
-
-    ChessPositionFinder.getFenPosition(boardImg.get)
+  def reset(): Unit = {
+    fullImage = null
+    boardImage = null
+    squares = ArrayBuffer.empty[Rect]
+    chessboard.clearBoard()
   }
 
 }

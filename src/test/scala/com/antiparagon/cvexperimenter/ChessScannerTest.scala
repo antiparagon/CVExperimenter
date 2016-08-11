@@ -11,7 +11,8 @@ import org.scalatest._
 class ChessScannerTest extends FlatSpec with Matchers {
 
   "ChessScanner" should "return None when given an empty image" in {
-    val pos = ChessScanner.getFenPosition(null)
+    val chessScanner = new ChessScanner
+    val pos = chessScanner.getFenPosition()
     pos should be (None)
   }
 

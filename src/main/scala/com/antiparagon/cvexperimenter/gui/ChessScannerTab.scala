@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessSquareFinder}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessSquareFinder, Chessboard}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, Rect, Scalar}
 import org.opencv.imgproc.Imgproc
@@ -25,32 +25,33 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
   val STEP4_TEXT = "Get Position"
 
   val imgView =  new ImageView(img)
+  val chessScanner = new ChessScanner
 
   val startButton = new Button {
-    var board: Option[Mat] = None
+    var boardImg: Option[Mat] = None
     var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
-    var pieces: Option[Mat] = None
+    var board: Option[Chessboard] = None
     text = STEP1_TEXT
     style = BUTTON_STYLE
     onAction = handle {
       text.value match {
         case STEP1_TEXT => {
           println(STEP1_TEXT)
-          board = ChessScanner.findChessboard(ImageTools.convertFXtoCV(img))
-          if(!board.isEmpty) {
+          boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
+          if(!boardImg.isEmpty) {
             text = STEP2_TEXT
-            imgView.setImage(ImageTools.convertCVtoFX(board.get))
+            imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
           } else {
             println("Unable to find chessboard")
           }
         }
         case STEP2_TEXT => {
           println(STEP2_TEXT)
-          squares = ChessScanner.findSquares(board.get)
+          squares = chessScanner.findSquares()
           if(!squares.isEmpty) {
-            ChessSquareFinder.drawSquares(board.get, squares)
+            ChessSquareFinder.drawSquares(boardImg.get, squares)
             //ChessSquareFinder.drawGrid(board.get)
-            imgView.setImage(ImageTools.convertCVtoFX(board.get))
+            imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
             text = STEP3_TEXT
           } else {
             println("Unable to find squares")
@@ -59,8 +60,8 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP3_TEXT => {
           println(STEP3_TEXT)
-          pieces = ChessScanner.findPieces(board.get)
-          if(!pieces.isEmpty) {
+          board = chessScanner.findPieces()
+          if(!board.isEmpty) {
             text = STEP4_TEXT
           } else {
             println("Unable to find pieces")
@@ -69,7 +70,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP4_TEXT => {
           println(STEP4_TEXT)
-          val position = ChessScanner.getFenPosition(board.get)
+          val position = chessScanner.getFenPosition()
           if(!position.isEmpty) {
             println(position.get)
             text = "Done"
