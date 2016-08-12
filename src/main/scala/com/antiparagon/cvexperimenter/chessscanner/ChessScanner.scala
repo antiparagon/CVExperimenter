@@ -29,7 +29,19 @@ class ChessScanner {
   }
 
   def findSquares(): ArrayBuffer[Rect] = {
-    if(boardImage != null) squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    if(boardImage != null) {
+      squares = ChessSquareFinder.getChessboardSquares(boardImage)
+      println(s"Squares found: ${squares.size}")
+      if(squares.size == 64) {
+        var index = 0
+        for(row <- 1 to 8) {
+          for(col <- 1 to 8) {
+            chessboard.getSquare(row, col).rect = squares(index)
+            index += 1
+          }
+        }
+      }
+    }
     squares
   }
 
@@ -51,6 +63,16 @@ class ChessScanner {
     boardImage = null
     squares = ArrayBuffer.empty[Rect]
     chessboard.clearBoard()
+  }
+
+  /**
+    * Draws the squares in the squares array on the provided Mat.
+    *
+    * @param board
+    * @param squares
+    */
+  def drawSquares(board: Mat, squares: ArrayBuffer[Rect]): Unit = {
+    squares.foreach(square => Imgproc.rectangle(board, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
   }
 
 }

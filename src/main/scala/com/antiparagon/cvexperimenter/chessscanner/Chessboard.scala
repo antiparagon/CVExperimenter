@@ -1,5 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+
 /**
   * Created by wmckay on 6/21/16.
   */
@@ -35,7 +36,6 @@ class Chessboard {
   def getSquare(row: Int, column: Int): ChessSquare = {
     board(row)(column)
   }
-
 
 
   /**
