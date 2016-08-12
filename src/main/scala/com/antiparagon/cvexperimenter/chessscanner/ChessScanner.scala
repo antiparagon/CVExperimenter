@@ -66,6 +66,15 @@ class ChessScanner {
   }
 
   /**
+    * Draws the squares in chessboard.
+    */
+  def drawSquares(): Unit = {
+    if(boardImage == null) return
+    val squares = chessboard.getSquares()
+    squares.foreach(square => Imgproc.rectangle(boardImage, square.rect.tl, square.rect.br, new Scalar(0.0, 255.0, 0.0), 3))
+  }
+
+  /**
     * Draws the squares in the squares array on the provided Mat.
     *
     * @param board

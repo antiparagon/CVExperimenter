@@ -1,5 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import scala.collection.mutable.ArrayBuffer
+
 
 /**
   * Created by wmckay on 6/21/16.
@@ -37,6 +39,18 @@ class Chessboard {
     board(row)(column)
   }
 
+  /**
+    * Returns all the squares.
+    */
+  def getSquares(): ArrayBuffer[ChessSquare] = {
+    val squares = ArrayBuffer[ChessSquare]()
+    for(row <- 1 to rows) {
+      for(column <- 1 to columns) {
+        squares += board(row)(column)
+      }
+    }
+    squares
+  }
 
   /**
     * Clears all the squares. Results in an empty board.

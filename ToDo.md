@@ -1,10 +1,7 @@
 # List of things that can be worked on
 * Add functions from imutils (https://github.com/jrosebr1/imutils) to ImageTools
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
-* Allow the computer screen to be captured as an image
-* Change how TabManger adds tabs so it is generic and doesn't need functions added to use new tab types
-* Get ImageEditorTab editing images
-* Setup unit testing
+* Insure comments are correct on functions, comment code
 
 # Things to learn
 * Building a string in Scala
