@@ -71,8 +71,31 @@ class ChessScanner {
   def drawSquares(): Unit = {
     if(boardImage == null) return
     val squares = chessboard.getSquares()
-    squares.foreach(square => Imgproc.rectangle(boardImage, square.rect.tl, square.rect.br, new Scalar(0.0, 255.0, 0.0), 3))
+    squares.foreach(square => drawSquare(square))
   }
+
+  /**
+    * Draws the square on the chessboard.
+    */
+  def drawSquare(square: ChessSquare): Unit = {
+    if(boardImage == null) return
+    Imgproc.rectangle(boardImage, square.rect.tl, square.rect.br, new Scalar(0.0, 255.0, 0.0), 3)
+  }
+
+  def drawSquaresCoor(): Unit = {
+    if(boardImage == null) return
+    val squares = chessboard.getSquares()
+    squares.foreach(square => drawSquareCoor(square))
+  }
+
+  def drawSquareCoor(square: ChessSquare): Unit = {
+    if(boardImage == null) return
+    val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
+    val coorStr = col + row.toString
+    val point = new Point(square.rect.tl.x + 5.0, square.rect.br.y - 5.0)
+    Imgproc.putText(boardImage, coorStr, point, Core.FONT_HERSHEY_PLAIN, 1.2, new Scalar(0.0, 0.0, 255.0))
+  }
+
 
   /**
     * Draws the squares in the squares array on the provided Mat.
@@ -83,5 +106,6 @@ class ChessScanner {
   def drawSquares(board: Mat, squares: ArrayBuffer[Rect]): Unit = {
     squares.foreach(square => Imgproc.rectangle(board, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
   }
+
 
 }

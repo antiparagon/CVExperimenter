@@ -15,10 +15,9 @@ class Chessboard {
 
   for(row <- 1 to rows) {
     for(column <- 1 to columns) {
-      board(row)(column) = new ChessSquare
+      board(row)(column) = new ChessSquare(row, column)
     }
   }
-
 
   /**
     * Gets the square at the square specified in algebraic notation.
@@ -127,6 +126,23 @@ class Chessboard {
     val col = colChar - 96
     val flippedRow = 9 - row
     (flippedRow, col)
+  }
+
+  /**
+    * Translates the given row, col coordinates to algebraic coordinates.
+    * @param row
+    * @param column
+    * @return
+    */
+  def translateMatrixCoor(row: Int, column: Int) = {
+    if(row < 1 || row > 8) {
+      throw new IllegalArgumentException("Row must be 1 to 8")
+    }
+    if(column < 1 || column > 8) {
+      throw new IllegalArgumentException("Column must be 1 to 8")
+    }
+    val colChar = 96 + column
+    (colChar.toChar.toString, 9 - row)
   }
 
   /**

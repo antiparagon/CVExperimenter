@@ -50,7 +50,12 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           squares = chessScanner.findSquares()
           if(!squares.isEmpty) {
             chessScanner.drawSquares()
+            chessScanner.drawSquaresCoor()
             //ChessSquareFinder.drawGrid(board.get)
+            //val squareH7 = chessScanner.chessboard.getSquare("h", 7)
+            //val squareH6 = chessScanner.chessboard.getSquare("h", 6)
+            //chessScanner.drawSquare(squareH7)
+            //chessScanner.drawSquare(squareH6)
             imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
             text = STEP3_TEXT
           } else {

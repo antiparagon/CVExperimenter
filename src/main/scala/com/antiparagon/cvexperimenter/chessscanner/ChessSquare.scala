@@ -5,7 +5,7 @@ import org.opencv.core.Rect
 /**
   * Created by wmckay on 6/22/16.
   */
-class ChessSquare {
+class ChessSquare(val row: Int, val column: Int) {
 
   // Holds the piece symbol
   var piece = ""

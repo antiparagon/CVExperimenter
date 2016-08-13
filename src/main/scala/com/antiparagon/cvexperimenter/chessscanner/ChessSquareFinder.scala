@@ -142,7 +142,7 @@ object ChessSquareFinder {
           square.x = nextPoint.x.toInt
           square.y = nextPoint.y.toInt
           square.width = (inImg.width - nextPoint.x).toInt
-          square.height = inImg.height - square.y
+          square.height = nextRowPoint.y.toInt - square.y
           squares += square
         }
       }

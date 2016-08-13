@@ -1,8 +1,5 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.chessscanner
 
-import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
-
-import collection.mutable.Stack
 import org.scalatest._
 
 /**

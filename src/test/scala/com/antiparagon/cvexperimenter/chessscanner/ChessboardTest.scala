@@ -1,6 +1,5 @@
-package com.antiparagon.cvexperimenter
+package com.antiparagon.cvexperimenter.chessscanner
 
-import com.antiparagon.cvexperimenter.chessscanner.Chessboard
 import org.scalatest.{FlatSpec, Matchers}
 
 /**
@@ -67,6 +66,20 @@ class ChessboardTest extends FlatSpec with Matchers {
     val chessboard = new Chessboard
     a [IllegalArgumentException] should be thrownBy {
       val (row, col) = chessboard.translateAlgebraicCoor("h", 9)
+    }
+  }
+
+  "The matrix notation (3, 3)" should " be c5 in algebraic notation" in {
+    val chessboard = new Chessboard
+    chessboard.translateMatrixCoor(1, 1) should be ("a", 8)
+    chessboard.translateMatrixCoor(3, 3) should be ("c", 6)
+    chessboard.translateMatrixCoor(8, 8) should be ("h", 1)
+  }
+
+  "The matrix notation (1, 9)" should "throw an IllegalArgumentException" in {
+    val chessboard = new Chessboard
+    a [IllegalArgumentException] should be thrownBy {
+      val (col, row) = chessboard.translateMatrixCoor(1, 9)
     }
   }
 }
