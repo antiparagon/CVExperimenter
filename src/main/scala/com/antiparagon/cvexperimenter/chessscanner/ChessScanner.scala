@@ -18,6 +18,11 @@ class ChessScanner {
   var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
   val chessboard: Chessboard = new Chessboard
 
+  /**
+    * Finds a chessboard in an image.
+    * @param inImg that contains a chessboard to find
+    * @return the chessboard in the image or None if not found
+    */
   def findChessboard(inImg: Mat): Option[Mat] = {
     reset()
     fullImage = inImg.clone()
@@ -28,6 +33,10 @@ class ChessScanner {
       None
   }
 
+  /**
+    * Finds the Rect of the squares of the chessboard image returned by findChessboard() above.
+    * @return ArrayBuffer of Rect for the chessboard squares
+    */
   def findSquares(): ArrayBuffer[Rect] = {
     if(boardImage != null) {
       squares = ChessSquareFinder.getChessboardSquares(boardImage)
@@ -45,12 +54,17 @@ class ChessScanner {
     squares
   }
 
+  /**
+    * Finds the pieces on the chessboard found by findChessboard() using the squares
+    * found by findSquares().
+    * @return the Chessboard with all the pieces on the correct squares
+    */
   def findPieces(): Option[Chessboard] = {
     None
   }
 
   /**
-    * Returns the chess piece postions in FEN notation.
+    * Returns the chess piece postion in FEN notation.
     *
     * @return Option string FEN postion of chess pieces
     */
@@ -58,6 +72,9 @@ class ChessScanner {
     chessboard.getFenPosition()
   }
 
+  /**
+    * Clears the state of ChessScanner.
+    */
   def reset(): Unit = {
     fullImage = null
     boardImage = null
@@ -66,7 +83,7 @@ class ChessScanner {
   }
 
   /**
-    * Draws the squares in chessboard.
+    * Draws the squares on the boardImage chessboard.
     */
   def drawSquares(): Unit = {
     if(boardImage == null) return
@@ -75,19 +92,26 @@ class ChessScanner {
   }
 
   /**
-    * Draws the square on the chessboard.
+    * Draws the square on the boardImage chessboard.
     */
   def drawSquare(square: ChessSquare): Unit = {
     if(boardImage == null) return
     Imgproc.rectangle(boardImage, square.rect.tl, square.rect.br, new Scalar(0.0, 255.0, 0.0), 3)
   }
 
+  /**
+    * Draws the algebraic coordinates on the boardImage chessboard square.
+    */
   def drawSquaresCoor(): Unit = {
     if(boardImage == null) return
     val squares = chessboard.getSquares()
     squares.foreach(square => drawSquareCoor(square))
   }
 
+  /**
+    * Draws the square's coordinates on the boardImage chessboard.
+    * @param square to use dor coordinates.
+    */
   def drawSquareCoor(square: ChessSquare): Unit = {
     if(boardImage == null) return
     val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
@@ -100,8 +124,8 @@ class ChessScanner {
   /**
     * Draws the squares in the squares array on the provided Mat.
     *
-    * @param board
-    * @param squares
+    * @param board image to draw
+    * @param squares ArrayBuffer of Rect to draw
     */
   def drawSquares(board: Mat, squares: ArrayBuffer[Rect]): Unit = {
     squares.foreach(square => Imgproc.rectangle(board, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))

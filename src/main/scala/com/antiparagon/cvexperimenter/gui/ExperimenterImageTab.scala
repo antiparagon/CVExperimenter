@@ -6,7 +6,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
-  * Basic tab to display and image.
+  * Basic tab to display an image.
   *
   * Created by wmckay on 3/13/16.
   */

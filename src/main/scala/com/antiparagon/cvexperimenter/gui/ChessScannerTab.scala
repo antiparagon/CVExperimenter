@@ -1,15 +1,14 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessSquareFinder, Chessboard}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, Chessboard}
 import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.{Mat, Rect, Scalar}
-import org.opencv.imgproc.Imgproc
+import org.opencv.core.{Mat, Rect}
 
 import scala.collection.mutable.ArrayBuffer
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.control.{Button, ScrollPane, Tab}
-import scalafx.scene.image.{Image, ImageView, WritableImage}
+import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**

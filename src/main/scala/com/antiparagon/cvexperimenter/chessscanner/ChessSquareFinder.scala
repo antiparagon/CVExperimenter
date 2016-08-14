@@ -1,14 +1,9 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.util
-
-import com.antiparagon.cvexperimenter.CVExperimenter
-import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.calib3d.Calib3d
-import org.opencv.core.{CvType, MatOfPoint2f, _}
+import org.opencv.core.{MatOfPoint2f, _}
 import org.opencv.imgproc.Imgproc
 
-import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
@@ -20,23 +15,13 @@ object ChessSquareFinder {
   import scala.collection.JavaConversions._
 
   /**
-    * Finds a chessboard in an image and returns a cropped image of
-    * just the chessboard.
+    * Finds the Rect of the squares in the image of a chessboard. This function
+    * assumes that the inImg is just of a cropped chessboard and nothing else.
     *
-    * @param inImg with a chessboard
-    * @return Option cropped image of only the chessboard
+    * @param inImg of a chessboard
+    * @return ArrayBuffer of Rect of the found squares or empty if unable to find the squares
     */
   def getChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
-    findChessboardSquares(inImg)
-  }
-
-  /**
-    * Finds a chessboard in an image and returns the rectangle of the found chessboard.
-    *
-    * @param inImg that contains a chessboard
-    * @return Option rectangle coordinates of the chessboard
-    */
-  def findChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
@@ -79,7 +64,7 @@ object ChessSquareFinder {
       }
     }
 
-    val numSquares = 42
+    val numSquares = 42 // inner squares
     avgWidth = avgWidth / numSquares
     avgHeight = avgHeight / numSquares
 

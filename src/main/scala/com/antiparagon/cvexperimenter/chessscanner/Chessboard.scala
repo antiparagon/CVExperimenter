@@ -10,7 +10,7 @@ class Chessboard {
 
   val rows = 8
   val columns = 8
-  // The '+1' is so that indexing can be 1 based instead of 0 based
+  // The '+ 1' is so that indexing can be 1 based instead of 0 based
   val board = Array.ofDim[ChessSquare](rows + 1, columns + 1)
 
   for(row <- 1 to rows) {
@@ -20,7 +20,7 @@ class Chessboard {
   }
 
   /**
-    * Gets the square at the square specified in algebraic notation.
+    * Gets the square specified in algebraic notation.
     * @param column to use
     * @param row to use
     */
@@ -30,7 +30,7 @@ class Chessboard {
   }
 
   /**
-    * Gets the square at the square specified by row and column.
+    * Gets the square specified by row and column.
     * @param row to use
     * @param column to use
     */
@@ -39,7 +39,7 @@ class Chessboard {
   }
 
   /**
-    * Returns all the squares.
+    * Returns all the squares in an ArrayBuffer.
     */
   def getSquares(): ArrayBuffer[ChessSquare] = {
     val squares = ArrayBuffer[ChessSquare]()
@@ -52,7 +52,7 @@ class Chessboard {
   }
 
   /**
-    * Clears all the squares. Results in an empty board.
+    * Clears all the squares. Results in a board with no pieces.
     */
   def clearBoard() = {
     for(row <- 1 to rows) {
@@ -85,7 +85,7 @@ class Chessboard {
   }
 
   /**
-    * Checks the piece at the given algebraic coordinates.
+    * Checks the color of the piece at the given algebraic coordinates.
     * @param column to use
     * @param row to use
     * @return true if piece is white
@@ -96,7 +96,7 @@ class Chessboard {
   }
 
   /**
-    * Checks the piece at the given algebraic coordinates.
+    * Checks the color of the piece at the given algebraic coordinates.
     * @param column to use
     * @param row to use
     * @return true if piece is black
@@ -110,7 +110,7 @@ class Chessboard {
     * Translates the given algebraic coordinates into row and column coordinates.
     * @param column
     * @param row
-    * @return
+    * @return pair of (row, column)
     */
   def translateAlgebraicCoor(column: String, row: Int) = {
     if(column.isEmpty) {
@@ -132,7 +132,7 @@ class Chessboard {
     * Translates the given row, col coordinates to algebraic coordinates.
     * @param row
     * @param column
-    * @return
+    * @return a pair of (colstr, row)
     */
   def translateMatrixCoor(row: Int, column: Int) = {
     if(row < 1 || row > 8) {
@@ -146,9 +146,10 @@ class Chessboard {
   }
 
   /**
-    * Initialize the board to the starting position.
+    * Initialize the board to the starting game position.
     */
   def setStartPosition() = {
+    clearBoard()
     board(1)(1).piece = "r"
     board(1)(2).piece = "n"
     board(1)(3).piece = "b"
