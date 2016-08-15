@@ -25,12 +25,9 @@ object ChessboardFinder {
       return None
     }
 
-    val bbox = findBoard(inImg)
+    val bbox = findChessboard(inImg)
     bbox match {
       case Some(bbox) => {
-        val copyImg = inImg.clone()
-        Imgproc.rectangle(copyImg, bbox.tl, bbox.br, new Scalar(0.0, 255.0, 0.0), 3)
-        CVExperimenter.tabManager.addDebugImageTab("Found chessboard", ImageTools.convertCVtoFX(copyImg))
         Some(new Mat(inImg, bbox))
       }
       case None => {
@@ -46,7 +43,7 @@ object ChessboardFinder {
     * @param inImg that contains a chessboard
     * @return Option rectangle coordinates of the chessboard
     */
-  def findBoard(inImg: Mat): Option[Rect] = {
+  def findChessboard(inImg: Mat): Option[Rect] = {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)

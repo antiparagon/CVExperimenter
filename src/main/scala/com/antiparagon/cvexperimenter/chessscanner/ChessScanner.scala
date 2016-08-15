@@ -14,6 +14,7 @@ import scala.collection.mutable.ArrayBuffer
 class ChessScanner {
 
   var fullImage: Mat = null
+  var chessboardBBox: Rect = null
   var boardImage: Mat = null
   var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
   val chessboard: Chessboard = new Chessboard
@@ -26,7 +27,16 @@ class ChessScanner {
   def findChessboard(inImg: Mat): Option[Mat] = {
     reset()
     fullImage = inImg.clone()
-    boardImage = ChessboardFinder.getChessboard(fullImage).getOrElse(null)
+    val bbox = ChessboardFinder.findChessboard(fullImage)
+    bbox match {
+      case Some(bbox) => {
+        chessboardBBox = bbox
+        boardImage = new Mat(inImg, bbox)
+      }
+      case None => {
+        println("No chessboard found")
+      }
+    }
     if(boardImage != null)
       Some(boardImage)
     else
