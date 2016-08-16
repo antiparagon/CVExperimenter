@@ -45,4 +45,10 @@ class ChessSquare(val row: Int, val column: Int) {
     if(piece.isEmpty) return false
     return piece == piece.toLowerCase()
   }
+
+  override def clone(): ChessSquare = {
+    val square = new ChessSquare(row, column)
+    square.rect = rect.clone()
+    square
+  }
 }

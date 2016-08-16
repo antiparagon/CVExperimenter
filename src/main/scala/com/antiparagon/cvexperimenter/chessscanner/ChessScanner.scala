@@ -20,6 +20,17 @@ class ChessScanner {
   val chessboard: Chessboard = new Chessboard
 
   /**
+    * Clears the state of ChessScanner.
+    */
+  def reset(): Unit = {
+    fullImage = null
+    chessboardBBox = null
+    boardImage = null
+    squares = ArrayBuffer.empty[Rect]
+    chessboard.clearBoard()
+  }
+
+  /**
     * Finds a chessboard in an image.
     * @param inImg that contains a chessboard to find
     * @return the chessboard in the image or None if not found
@@ -83,16 +94,6 @@ class ChessScanner {
   }
 
   /**
-    * Clears the state of ChessScanner.
-    */
-  def reset(): Unit = {
-    fullImage = null
-    boardImage = null
-    squares = ArrayBuffer.empty[Rect]
-    chessboard.clearBoard()
-  }
-
-  /**
     * Draws the squares on the boardImage chessboard.
     */
   def drawSquares(): Unit = {
@@ -132,14 +133,36 @@ class ChessScanner {
 
 
   /**
-    * Draws the squares in the squares array on the provided Mat.
-    *
-    * @param board image to draw
-    * @param squares ArrayBuffer of Rect to draw
+    * Draws the squares on the fullImage chessboard.
     */
-  def drawSquares(board: Mat, squares: ArrayBuffer[Rect]): Unit = {
-    squares.foreach(square => Imgproc.rectangle(board, square.tl, square.br, new Scalar(0.0, 255.0, 0.0), 3))
+  def drawSquaresFull(): Unit = {
+    if(fullImage == null) return
+    if(boardImage == null) return
+    if(chessboardBBox == null) return
+    val squares = chessboard.getSquares()
+    squares.foreach(square => {
+      val offsetSquare = new Rect(square.rect.x + chessboardBBox.x, square.rect.y + chessboardBBox.y,
+                                square.rect.width, square.rect.height)
+      Imgproc.rectangle(fullImage, offsetSquare.tl, offsetSquare.br, new Scalar(0.0, 255.0, 0.0), 3)
+    })
   }
 
+  /**
+    * Draws the algebraic coordinates on the fullImage chessboard square.
+    */
+  def drawSquaresCoorFull(): Unit = {
+    if(fullImage == null) return
+    if(boardImage == null) return
+    if(chessboardBBox == null) return
+    val squares = chessboard.getSquares()
+    squares.foreach(square => {
+      val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
+      val coorStr = col + row.toString
+      val offsetSquare = new Rect(square.rect.x + chessboardBBox.x, square.rect.y + chessboardBBox.y,
+        square.rect.width, square.rect.height)
+      val point = new Point(offsetSquare.tl.x + 5.0, offsetSquare.br.y - 5.0)
+      Imgproc.putText(fullImage, coorStr, point, Core.FONT_HERSHEY_PLAIN, 1.2, new Scalar(0.0, 0.0, 255.0))
+    })
+  }
 
 }

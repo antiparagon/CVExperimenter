@@ -27,16 +27,13 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
   val chessScanner = new ChessScanner
 
   val startButton = new Button {
-    var boardImg: Option[Mat] = None
-    var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
-    var board: Option[Chessboard] = None
     text = STEP1_TEXT
     style = BUTTON_STYLE
     onAction = handle {
       text.value match {
         case STEP1_TEXT => {
           println(STEP1_TEXT)
-          boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
+          val boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
           if(!boardImg.isEmpty) {
             text = STEP2_TEXT
             imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
@@ -46,16 +43,16 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP2_TEXT => {
           println(STEP2_TEXT)
-          squares = chessScanner.findSquares()
+          val squares = chessScanner.findSquares()
           if(!squares.isEmpty) {
-            chessScanner.drawSquares()
-            chessScanner.drawSquaresCoor()
+            chessScanner.drawSquaresFull()
+            chessScanner.drawSquaresCoorFull()
             //ChessSquareFinder.drawGrid(board.get)
             //val squareH7 = chessScanner.chessboard.getSquare("h", 7)
             //val squareH6 = chessScanner.chessboard.getSquare("h", 6)
             //chessScanner.drawSquare(squareH7)
             //chessScanner.drawSquare(squareH6)
-            imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
+            imgView.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
             text = STEP3_TEXT
           } else {
             println("Unable to find squares")
@@ -64,7 +61,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP3_TEXT => {
           println(STEP3_TEXT)
-          board = chessScanner.findPieces()
+          val board = chessScanner.findPieces()
           if(!board.isEmpty) {
             text = STEP4_TEXT
           } else {
