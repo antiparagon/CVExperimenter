@@ -93,8 +93,10 @@ object ChessboardFinder {
     val bbox = new Rect
     bbox.x = (minX - avgWidth).toInt
     bbox.y = (minY - avgHeight).toInt
-    bbox.width = (8.0 * avgWidth).toInt
-    bbox.height = (8.0 * avgHeight).toInt
+
+    bbox.width = (maxX - minX + 2.0 * avgWidth).toInt
+    bbox.height = (maxY - minY + 2.0 * avgHeight).toInt
+    
     Option(bbox)
   }
 
