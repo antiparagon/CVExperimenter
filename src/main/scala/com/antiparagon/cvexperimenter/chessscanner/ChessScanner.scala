@@ -42,6 +42,7 @@ class ChessScanner {
     bbox match {
       case Some(bbox) => {
         chessboardBBox = bbox
+        println(bbox)
         boardImage = new Mat(inImg, bbox)
       }
       case None => {
