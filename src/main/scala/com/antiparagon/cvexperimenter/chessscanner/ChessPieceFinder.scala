@@ -32,7 +32,12 @@ object ChessPieceFinder {
   // Find king coordinates
 
   // Determine color
+  def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
+    var piecesFound = 0
 
+
+    return piecesFound
+  }
 
 
 }

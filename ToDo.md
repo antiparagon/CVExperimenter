@@ -8,7 +8,6 @@
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
 * Work on ChessPieceFinder
-* Work on ChessPositionFinder
 * Hook ChessScanner up to video image
 
 # Object Detection

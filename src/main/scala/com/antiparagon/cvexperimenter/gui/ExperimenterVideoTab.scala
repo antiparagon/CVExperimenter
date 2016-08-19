@@ -2,7 +2,7 @@ package com.antiparagon.cvexperimenter.gui
 
 import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessboardFinder}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessboardFinder}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.Mat
 import org.opencv.videoio.{VideoCapture, Videoio}
@@ -86,8 +86,16 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       val frameGrabber = new Runnable {
         def run {
           // Apply algorithm to image
-          val image = ChessboardFinder.getChessboard(grabMatFrame)
-          currentFrame.setImage(ImageTools.convertCVtoFX(image.get))
+          val chessScanner = new ChessScanner
+          val boardImg = chessScanner.findChessboard(grabMatFrame)
+          if(!boardImg.isEmpty) {
+            val squares = chessScanner.findSquares()
+            if(!squares.isEmpty) {
+              chessScanner.drawSquaresFull()
+              chessScanner.drawSquaresCoorFull()
+            }
+          }
+          currentFrame.setImage(ImageTools.convertCVtoFX(grabMatFrame))
         }
       }
       timer = Executors.newSingleThreadScheduledExecutor()

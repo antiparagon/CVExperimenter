@@ -46,13 +46,11 @@ class ChessScanner {
         boardImage = new Mat(inImg, bbox)
       }
       case None => {
+        reset()
         println("No chessboard found")
       }
     }
-    if(boardImage != null)
-      Some(boardImage)
-    else
-      None
+    Option(boardImage)
   }
 
   /**
@@ -82,6 +80,7 @@ class ChessScanner {
     * @return the Chessboard with all the pieces on the correct squares
     */
   def findPieces(): Option[Chessboard] = {
+
     None
   }
 
