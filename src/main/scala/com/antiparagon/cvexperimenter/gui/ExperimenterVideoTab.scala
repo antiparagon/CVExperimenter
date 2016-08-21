@@ -88,14 +88,19 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
           // Apply algorithm to image
           val chessScanner = new ChessScanner
           val boardImg = chessScanner.findChessboard(grabMatFrame)
-          if(!boardImg.isEmpty) {
-            val squares = chessScanner.findSquares()
-            if(!squares.isEmpty) {
-              chessScanner.drawSquaresFull()
-              chessScanner.drawSquaresCoorFull()
+          boardImg match {
+            case Some(boardImg) => {
+              val squares = chessScanner.findSquares()
+              if(!squares.isEmpty) {
+                chessScanner.drawSquaresFull()
+                chessScanner.drawSquaresCoorFull()
+                currentFrame.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
+              }
+            }
+            case None => {
+              currentFrame.setImage(ImageTools.convertCVtoFX(grabMatFrame))
             }
           }
-          currentFrame.setImage(ImageTools.convertCVtoFX(grabMatFrame))
         }
       }
       timer = Executors.newSingleThreadScheduledExecutor()
