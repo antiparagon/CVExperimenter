@@ -34,11 +34,12 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         case STEP1_TEXT => {
           println(STEP1_TEXT)
           val boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
-          if(!boardImg.isEmpty) {
-            text = STEP2_TEXT
-            imgView.setImage(ImageTools.convertCVtoFX(boardImg.get))
-          } else {
-            println("Unable to find chessboard")
+          boardImg match {
+            case Some(boardImg) => {
+              text = STEP2_TEXT
+              imgView.setImage(ImageTools.convertCVtoFX(boardImg))
+            }
+            case None => println("Unable to find chessboard")
           }
         }
         case STEP2_TEXT => {
@@ -62,22 +63,28 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         case STEP3_TEXT => {
           println(STEP3_TEXT)
           val board = chessScanner.findPieces()
-          if(!board.isEmpty) {
-            text = STEP4_TEXT
-          } else {
-            println("Unable to find pieces")
-            text = "Done"
+          board match {
+            case Some(board) => {
+              text = STEP4_TEXT
+            }
+            case None => {
+              println("Unable to find pieces")
+              text = "Done"
+            }
           }
         }
         case STEP4_TEXT => {
           println(STEP4_TEXT)
           val position = chessScanner.getFenPosition()
-          if(!position.isEmpty) {
-            println(position.get)
-            text = "Done"
-          } else {
-            println("Unable to get position")
-            text = "Done"
+          position match {
+            case Some(position) => {
+              println(position)
+              text = "Done"
+            }
+            case None => {
+              println("Unable to get position")
+              text = "Done"
+            }
           }
         }
         case _ =>
