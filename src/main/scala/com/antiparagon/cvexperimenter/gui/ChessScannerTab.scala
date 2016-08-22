@@ -62,30 +62,14 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP3_TEXT => {
           println(STEP3_TEXT)
-          val board = chessScanner.findPieces()
-          board match {
-            case Some(board) => {
-              text = STEP4_TEXT
-            }
-            case None => {
-              println("Unable to find pieces")
-              text = "Done"
-            }
-          }
+          val piecesFound = chessScanner.findPieces()
+          println(s"Found $piecesFound pieces")
+          text = STEP4_TEXT
         }
         case STEP4_TEXT => {
           println(STEP4_TEXT)
           val position = chessScanner.getFenPosition()
-          position match {
-            case Some(position) => {
-              println(position)
-              text = "Done"
-            }
-            case None => {
-              println("Unable to get position")
-              text = "Done"
-            }
-          }
+          println(s"$position")
         }
         case _ =>
       }

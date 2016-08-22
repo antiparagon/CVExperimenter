@@ -79,9 +79,14 @@ class ChessScanner {
     * found by findSquares().
     * @return the Chessboard with all the pieces on the correct squares
     */
-  def findPieces(): Option[Chessboard] = {
-
-    None
+  def findPieces(): Int = {
+    if(boardImage != null) {
+      if(squares.size == 64) {
+        val piecesFound = ChessPieceFinder.findChessPieces(chessboard, boardImage)
+        return piecesFound
+      }
+    }
+    return 0
   }
 
   /**
@@ -89,7 +94,7 @@ class ChessScanner {
     *
     * @return Option string FEN postion of chess pieces
     */
-  def getFenPosition(): Option[String] = {
+  def getFenPosition(): String = {
     chessboard.getFenPosition()
   }
 
