@@ -26,6 +26,7 @@ object CVExperimenter extends JFXApp {
   val BACKGROUND_STYLE = "-fx-background-color: black"
   //val START_UP_PIC = "CVExperimenterLogo.png"
   val START_UP_PIC = "twic.png"
+  val USE_CHESSSCANNER = true
 
   val controlPane = new ScrollPane {
     fitToHeight = true

@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.gui
 
 import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
+import com.antiparagon.cvexperimenter.CVExperimenter
 import com.antiparagon.cvexperimenter.chessscanner.{ChessScanner, ChessboardFinder}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.Mat
@@ -25,7 +26,6 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
   var cameraActive = false
   val VIDEO_WIDTH = 720
   val VIDEO_HEIGHT = 405
-  val USE_CHESSSCANNER = false
 
   val currentFrame =  new ImageView(new WritableImage(VIDEO_WIDTH, VIDEO_HEIGHT))
   //currentFrame.fitWidth = 640
@@ -86,11 +86,11 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       // grab a frame every 33 ms (30 frames/sec)
       val frameGrabber = new Runnable {
         def run {
-          if(!USE_CHESSSCANNER) {
+          if(!CVExperimenter.USE_CHESSSCANNER) { // If not using ChessScanner then just output the image
             currentFrame.setImage(ImageTools.convertCVtoFX(grabMatFrame))
             return
           }
-          // Apply algorithm to image
+          // Use ChessScanner to find a chessboard in the image
           val chessScanner = new ChessScanner
           val boardImg = chessScanner.findChessboard(grabMatFrame)
           boardImg match {
