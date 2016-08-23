@@ -1,6 +1,8 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import org.opencv.core.{Mat, Rect}
+import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.imgproc.Imgproc
 
 /**
   * Created by wmckay on 6/12/16.
@@ -35,6 +37,14 @@ object ChessPieceFinder {
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
     var piecesFound = 0
 
+    chessboard.getSquares().foreach(square => {
+      val squareImg = new Mat(boardImg, square.rect)
+      val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
+      val coorStr = col + row.toString
+      val imgPath = "ChessSquares/" + coorStr + ".png"
+      println(imgPath)
+      Imgcodecs.imwrite(imgPath, squareImg)
+    })
 
     return piecesFound
   }
