@@ -32,3 +32,6 @@ org.scala-ide.sdt.update-site/site.xml
 
 # OS X
 .DS_Store
+
+# Chess square images
+ChessSquares
