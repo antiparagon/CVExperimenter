@@ -1,7 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.{Mat, MatOfKeyPoint, Rect}
-import org.opencv.features2d.FeatureDetector
+import org.opencv.core.{Mat, MatOfKeyPoint, Rect, Scalar}
+import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 
@@ -44,6 +44,7 @@ object ChessPieceFinder {
 
       val keyPoints = new MatOfKeyPoint()
       features.detect(squareImg, keyPoints)
+      Features2d.drawKeypoints(squareImg, keyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
 
       val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
       val coorStr = col + row.toString
