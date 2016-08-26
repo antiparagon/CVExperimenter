@@ -51,6 +51,11 @@ object ChessPieceFinder {
 
       println(s"$coorStr: ${keyPoints.size()}")
 
+      if(keyPoints.size().height > 5) {
+        square.piece = "p"
+        piecesFound += 1
+      }
+
 
       val imgPath = "ChessSquares/" + coorStr + ".png"
       Imgcodecs.imwrite(imgPath, squareImg)
