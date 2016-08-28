@@ -56,7 +56,7 @@ object ChessboardFinder {
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       println("Chessboard not found")
-      if(!CVExperimenter.USE_CHESSSCANNER) { // Create debug tab if not using the webcam
+      if(!CVExperimenter.USE_CHESSSCANNER_VIDEOTAB) { // Create debug tab if not using the webcam
         CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
       }
       return None
@@ -100,9 +100,13 @@ object ChessboardFinder {
     if(bbox.y < 0) bbox.y = 0
 
     bbox.width = (maxX - minX + 2.0 * avgWidth).toInt
-    if(bbox.width > inImg.width) bbox.width = inImg.width
+    if((bbox.x + bbox.width) > inImg.width) {
+      bbox.width = inImg.width - bbox.x
+    }
     bbox.height = (maxY - minY + 2.0 * avgHeight).toInt
-    if(bbox.height > inImg.height) bbox.height = inImg.height
+    if((bbox.y + bbox.height) > inImg.height) {
+      bbox.height = inImg.height - bbox.y
+    }
     Option(bbox)
   }
 

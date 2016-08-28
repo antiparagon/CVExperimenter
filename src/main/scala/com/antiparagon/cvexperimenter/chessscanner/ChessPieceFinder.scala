@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.{File, PrintStream}
 
+import com.antiparagon.cvexperimenter.CVExperimenter
 import org.opencv.core.{Mat, MatOfKeyPoint, Rect, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
@@ -40,8 +41,12 @@ object ChessPieceFinder {
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
     var piecesFound = 0
     val NL = System.getProperty("line.separator")
-    val output = new PrintStream(new File("foundpieces.csv"))
-    output.append("Square").append(",").append("X").append(",").append("Y").append(",").append("Response").append(",").append("Piece").append(NL)
+    var output: PrintStream = null
+
+    if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
+      output = new PrintStream(new File("foundpieces.csv"))
+      output.append("Square").append(",").append("X").append(",").append("Y").append(",").append("Response").append(",").append("Piece").append(NL)
+    }
 
     val features = FeatureDetector.create(FeatureDetector.FAST)
     chessboard.getSquares().foreach(square => {
@@ -61,17 +66,21 @@ object ChessPieceFinder {
         //square.piece = "P"
         piecesFound += 1
 
-        keyPoints.toArray.foreach(kp => {
-          println(s"${kp}")
-          output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(",").append(square.piece).append(NL)
-        })
+        if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
+          keyPoints.toArray.foreach(kp => {
+            println(s"${kp}")
+            output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(",").append(square.piece).append(NL)
+          })
+        }
       }
 
       val imgPath = "ChessSquares/" + coorStr + ".png"
       Imgcodecs.imwrite(imgPath, squareImg)
     })
 
-    output.close()
+    if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
+      output.close()
+    }
 
     return piecesFound
   }
