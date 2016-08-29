@@ -5,7 +5,7 @@ import com.antiparagon.cvexperimenter.gui.{CommandPanel, TabManager}
 import scalafx.Includes._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.geometry.{Insets, Pos}
+import scalafx.geometry.Insets
 import scalafx.scene.Scene
 import scalafx.scene.control.ScrollPane
 import scalafx.scene.image._

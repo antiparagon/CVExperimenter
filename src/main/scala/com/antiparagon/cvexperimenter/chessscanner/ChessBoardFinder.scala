@@ -1,7 +1,5 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.util
-
 import com.antiparagon.cvexperimenter.CVExperimenter
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.calib3d.Calib3d

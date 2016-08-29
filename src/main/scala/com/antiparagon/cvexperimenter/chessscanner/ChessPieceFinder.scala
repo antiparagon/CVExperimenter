@@ -6,7 +6,6 @@ import com.antiparagon.cvexperimenter.CVExperimenter
 import org.opencv.core.{Mat, MatOfKeyPoint, Rect, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
-import org.opencv.imgproc.Imgproc
 
 /**
   * Created by wmckay on 6/12/16.

@@ -3,7 +3,6 @@ package com.antiparagon.cvexperimenter.gui
 import java.io.IOException
 import javax.imageio.ImageIO
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessboardFinder, ChessScanner}
 import com.antiparagon.cvexperimenter.tools.{ImageDft, ImageTools}
 import org.opencv.core.{Mat, Size}
 import org.opencv.imgproc.Imgproc
