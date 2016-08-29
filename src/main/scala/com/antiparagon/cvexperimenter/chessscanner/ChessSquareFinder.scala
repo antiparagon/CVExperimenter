@@ -1,7 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import org.opencv.calib3d.Calib3d
-import org.opencv.core.{MatOfPoint2f, _}
+import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 
 import scala.collection.mutable

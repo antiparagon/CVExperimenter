@@ -62,7 +62,7 @@ object ChessPieceFinder {
       //println(s"${keyPoints}")
 
       if(keyPoints.size().height > 5) {
-        //square.piece = "P"
+        square.piece = "P"
         piecesFound += 1
 
         if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {

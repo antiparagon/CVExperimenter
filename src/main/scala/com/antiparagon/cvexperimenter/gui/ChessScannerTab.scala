@@ -2,7 +2,6 @@ package com.antiparagon.cvexperimenter.gui
 
 import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
 import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.{Mat, Rect}
 
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
