@@ -45,16 +45,18 @@ object ChessboardFinder {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
-    //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    //CVExperimenter.tabManager.addDebugImageTab("Blurred image", ImageTools.convertCVtoFX(tempImg))
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
-    //CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
+    //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, 40)
+    //CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
 
     val boardSize = new Size(7, 7)
     val squareCorners = new MatOfPoint2f()
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       println("Chessboard not found")
-      if(!CVExperimenter.USE_CHESSSCANNER_VIDEOTAB) { // Create debug tab if not using the webcam
+      if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // Create debug tab if not using the webcam
         CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
       }
       return None

@@ -86,7 +86,7 @@ class ExperimenterVideoTab() extends Tab with ExperimenterTab {
       // grab a frame every 33 ms (30 frames/sec)
       val frameGrabber = new Runnable {
         def run {
-          if(!CVExperimenter.USE_CHESSSCANNER_VIDEOTAB) { // If not using ChessScanner then just output the image
+          if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // If not using ChessScanner then just output the image
             currentFrame.setImage(ImageTools.convertCVtoFX(grabMatFrame))
             return
           }
