@@ -8,6 +8,7 @@
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
 * Work on ChessPieceFinder
+* Set up logging framework
 
 # Object Detection
 * RANSAC

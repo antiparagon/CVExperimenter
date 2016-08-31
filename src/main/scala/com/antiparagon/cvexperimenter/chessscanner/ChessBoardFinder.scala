@@ -43,6 +43,9 @@ object ChessboardFinder {
     */
   def findChessboard(inImg: Mat): Option[Rect] = {
 
+    if(inImg == null || inImg.empty()) {
+      return None
+    }
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
