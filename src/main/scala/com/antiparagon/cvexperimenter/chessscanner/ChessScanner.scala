@@ -37,6 +37,9 @@ class ChessScanner {
     */
   def findChessboard(inImg: Mat): Option[Mat] = {
     reset()
+    if(inImg == null || inImg.empty()) {
+      return None
+    }
     fullImage = inImg.clone()
     val bbox = ChessboardFinder.findChessboard(fullImage)
     bbox match {
