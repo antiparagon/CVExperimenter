@@ -42,6 +42,11 @@ object ChessPieceFinder {
     val NL = System.getProperty("line.separator")
     var output: PrintStream = null
 
+    if(chessboard == null || boardImg == null || boardImg.empty()) {
+      return 0
+    }
+
+
     if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
       output = new PrintStream(new File("foundpieces.csv"))
       output.append("Square").append(",").append("X").append(",").append("Y").append(",").append("Response").append(",").append("Piece").append(NL)
