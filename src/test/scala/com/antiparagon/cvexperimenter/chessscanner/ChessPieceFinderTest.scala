@@ -17,5 +17,11 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
   }
 
 
+  "ChessPieceFinder" should "return 0 when given an empty chessboard and a empty Mat to findChessPieces()" in {
+    val chessboard = new Chessboard()
+    val img = new Mat()
+    val pieces = ChessPieceFinder.findChessPieces(chessboard, img)
+    pieces should be (0)
+  }
 
 }
