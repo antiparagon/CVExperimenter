@@ -46,7 +46,6 @@ object ChessPieceFinder {
       return 0
     }
 
-
     if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
       output = new PrintStream(new File("foundpieces.csv"))
       output.append("Square").append(",").append("X").append(",").append("Y").append(",").append("Response").append(",").append("Piece").append(NL)
@@ -78,8 +77,10 @@ object ChessPieceFinder {
         }
       }
 
-      val imgPath = "ChessSquares/" + coorStr + ".png"
-      Imgcodecs.imwrite(imgPath, squareImg)
+      if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
+        val imgPath = "ChessSquares/" + coorStr + ".png"
+        Imgcodecs.imwrite(imgPath, squareImg)
+      }
     })
 
     if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
