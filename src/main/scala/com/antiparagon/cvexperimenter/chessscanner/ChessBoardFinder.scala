@@ -91,7 +91,7 @@ object ChessboardFinder {
         }
       }
     }
-
+    
     val squares = 42
     avgWidth = avgWidth / squares
     avgHeight = avgHeight / squares

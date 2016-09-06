@@ -27,7 +27,7 @@ object CVExperimenter extends JFXApp {
   //val START_UP_PIC = "CVExperimenterLogo.png"
   val START_UP_PIC = "twic.png"
   val USE_CHESSSCANNER_ON_VIDEOTAB = false
-  val OUTPUT_PIECE_FEATURES = false
+  val OUTPUT_PIECE_FEATURES = true
 
   val controlPane = new ScrollPane {
     fitToHeight = true

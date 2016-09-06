@@ -6,6 +6,7 @@ import com.antiparagon.cvexperimenter.CVExperimenter
 import org.opencv.core.{Mat, MatOfKeyPoint, Rect, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.imgproc.Imgproc
 
 /**
   * Created by wmckay on 6/12/16.
@@ -57,7 +58,6 @@ object ChessPieceFinder {
 
       val keyPoints = new MatOfKeyPoint()
       features.detect(squareImg, keyPoints)
-      Features2d.drawKeypoints(squareImg, keyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
 
       val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
       val coorStr = col + row.toString
@@ -78,6 +78,9 @@ object ChessPieceFinder {
       }
 
       if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
+        //Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
+        //Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+        Features2d.drawKeypoints(squareImg, keyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
         val imgPath = "ChessSquares/" + coorStr + ".png"
         Imgcodecs.imwrite(imgPath, squareImg)
       }
