@@ -65,16 +65,18 @@ object ChessPieceFinder {
       println(s"$coorStr: ${keyPoints.size()}")
       //println(s"${keyPoints}")
 
-      if(keyPoints.size().height > 5) {
-        square.piece = "P"
-        piecesFound += 1
-
-        if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
-          keyPoints.toArray.foreach(kp => {
-            println(s"${kp}")
-            output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(",").append(square.piece).append(NL)
-          })
+      determinePiece(keyPoints) match {
+        case Some(piece) => {
+          square.piece = piece
+          piecesFound += 1
+          if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
+            keyPoints.toArray.foreach(kp => {
+              println(s"${kp}")
+              output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(",").append(square.piece).append(NL)
+            })
+          }
         }
+        case None =>
       }
 
       if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
@@ -93,5 +95,33 @@ object ChessPieceFinder {
     return piecesFound
   }
 
+  def determinePiece(keyPoints: MatOfKeyPoint): Option[String] = {
+    if(keyPoints.size().height > 5) {
+      val points = keyPoints.size().height
+      var piece = "P"
+      if(points == 19) {
+        piece = "p"
+      } else if(points == 51) {
+        piece = "k"
+      } else if(points == 35) {
+        piece = "b"
+      } else if(points == 34) {
+        piece = "N"
+      } else if(points == 26) {
+        piece = "P"
+      } else if(points == 32) {
+        piece = "P"
+      } else if(points == 27) {
+        piece = "r"
+      } else if(points == 52) {
+        piece = "K"
+      } else if(points == 17) {
+        piece = "R"
+      }
+      Some(piece)
+    } else {
+      None
+    }
+  }
 
 }
