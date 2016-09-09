@@ -2,8 +2,10 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.typesafe.scalalogging.Logger
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
+import org.slf4j.LoggerFactory
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -13,6 +15,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 class ChessScanner {
 
+  val log = Logger(LoggerFactory.getLogger("ChessScanner"))
   var fullImage: Mat = null
   var chessboardBBox: Rect = null
   var boardImage: Mat = null
@@ -23,6 +26,7 @@ class ChessScanner {
     * Clears the state of ChessScanner.
     */
   def reset(): Unit = {
+    log.debug("Reseting ChessScanner")
     fullImage = null
     chessboardBBox = null
     boardImage = null

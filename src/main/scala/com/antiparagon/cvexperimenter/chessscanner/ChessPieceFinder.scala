@@ -99,6 +99,8 @@ object ChessPieceFinder {
     if(keyPoints.size().height > 5) {
       val points = keyPoints.size().height
       var piece = "P"
+
+      // Black pieces
       if(points == 27) {
         piece = "r"
       } else if(points == 24) {
@@ -120,7 +122,7 @@ object ChessPieceFinder {
       } else if(points == 19) {
         piece = "p"
       }
-
+      // White pieces
       else if(points == 15) {
         piece = "R"
       } else if(points == 38) {
