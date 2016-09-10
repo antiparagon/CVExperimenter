@@ -2,15 +2,18 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import com.antiparagon.cvexperimenter.CVExperimenter
 import com.antiparagon.cvexperimenter.tools.ImageTools
+import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
+import org.slf4j.LoggerFactory
 
 /**
   * Created by wmckay on 6/12/16.
   */
 object ChessboardFinder {
 
+  val log = Logger(LoggerFactory.getLogger("ChessboardFinder"))
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.
@@ -29,7 +32,7 @@ object ChessboardFinder {
         Some(new Mat(inImg, bbox))
       }
       case None => {
-        println("No chessboard found")
+        log.debug("No chessboard found")
         None
       }
     }
@@ -58,7 +61,7 @@ object ChessboardFinder {
     val squareCorners = new MatOfPoint2f()
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
-      println("Chessboard not found")
+      log.debug("Chessboard not found")
       if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // Create debug tab if not using the webcam
         CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
       }

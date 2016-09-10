@@ -1,6 +1,8 @@
 package com.antiparagon.cvexperimenter
 
 import com.antiparagon.cvexperimenter.gui.{CommandPanel, TabManager}
+import com.typesafe.scalalogging.Logger
+import org.slf4j.LoggerFactory
 
 import scalafx.Includes._
 import scalafx.application.JFXApp
@@ -20,6 +22,7 @@ import scalafx.scene.paint.Color._
 object CVExperimenter extends JFXApp {
 
   System.loadLibrary("opencv_java300")
+  val log = Logger(LoggerFactory.getLogger("CVExperimenter"))
 
   val tabManager: TabManager = new TabManager
   val BUTTON_STYLE = "-fx-font-size: 14pt"
@@ -68,7 +71,7 @@ object CVExperimenter extends JFXApp {
     * This is to insure the webcam is released.
     */
   override def stopApp(): Unit = {
-    println("Stopping")
+    log.debug("Stopping")
     tabManager.stopVideoTab
     super.stopApp
   }
