@@ -1,7 +1,5 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.util
-
 import com.typesafe.scalalogging.Logger
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
@@ -19,7 +17,7 @@ class ChessScanner {
   var fullImage: Mat = null
   var chessboardBBox: Rect = null
   var boardImage: Mat = null
-  var squares: ArrayBuffer[Rect] = ArrayBuffer.empty[Rect]
+  var squares: Array[Rect] = Array.empty[Rect]
   val chessboard: Chessboard = new Chessboard
 
   /**
@@ -30,7 +28,7 @@ class ChessScanner {
     fullImage = null
     chessboardBBox = null
     boardImage = null
-    squares = ArrayBuffer.empty[Rect]
+    squares = Array.empty[Rect]
     chessboard.clearBoard()
   }
 
@@ -64,7 +62,7 @@ class ChessScanner {
     * Finds the Rect of the squares of the chessboard image returned by findChessboard() above.
     * @return ArrayBuffer of Rect for the chessboard squares
     */
-  def findSquares(): ArrayBuffer[Rect] = {
+  def findSquares(): Array[Rect] = {
     if(boardImage != null) {
       squares = ChessSquareFinder.getChessboardSquares(boardImage)
       println(s"Squares found: ${squares.size}")

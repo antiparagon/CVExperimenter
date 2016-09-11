@@ -95,7 +95,7 @@ object ChessboardFinder {
       }
     }
 
-    val squares = 42
+    val squares = 42 // Number of interations in double for loop above
     avgWidth = avgWidth / squares
     avgHeight = avgHeight / squares
 

@@ -1,8 +1,10 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
+import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -13,6 +15,7 @@ import scala.collection.mutable.ArrayBuffer
 object ChessSquareFinder {
 
   import scala.collection.JavaConversions._
+  val log = Logger(LoggerFactory.getLogger("ChessSquareFinder"))
 
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function
@@ -21,7 +24,7 @@ object ChessSquareFinder {
     * @param inImg of a chessboard
     * @return ArrayBuffer of Rect of the found squares or empty if unable to find the squares
     */
-  def getChessboardSquares(inImg: Mat): ArrayBuffer[Rect] = {
+  def getChessboardSquares(inImg: Mat): Array[Rect] = {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
@@ -34,7 +37,8 @@ object ChessSquareFinder {
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       println("Chessboard not found")
-      return squares
+      log.debug("Chessboard not found")
+      return squares.toArray
     }
     val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
     Imgproc.cornerSubPix(tempImg, squareCorners, new Size(11, 11), new Size(-1, -1), term)
@@ -163,6 +167,6 @@ object ChessSquareFinder {
       }
     }
 
-    squares
+    squares.toArray
   }
 }

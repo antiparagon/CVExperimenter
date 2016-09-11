@@ -2,13 +2,11 @@
 * Add functions from imutils (https://github.com/jrosebr1/imutils) to ImageTools
 * Check to see if the OpenCV 3.0 lib used is a debug build (exceptions point to source files in my Downloads folder)
 * Insure comments are correct on functions, comment code
-* Draw on full image
 
 # Things to learn
 * Building a string in Scala
 * How to use case classes/remove loops with combinators
 * Work on ChessPieceFinder
-* Set up logging framework
 
 # Object Detection
 * RANSAC
