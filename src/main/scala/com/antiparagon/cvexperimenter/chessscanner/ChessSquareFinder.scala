@@ -7,7 +7,6 @@ import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
 
 /**
   * Created by wmckay on 7/10/16.

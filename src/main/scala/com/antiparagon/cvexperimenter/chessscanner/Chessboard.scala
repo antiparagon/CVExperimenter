@@ -41,14 +41,14 @@ class Chessboard {
   /**
     * Returns all the squares in an ArrayBuffer.
     */
-  def getSquares(): ArrayBuffer[ChessSquare] = {
+  def getSquares(): Array[ChessSquare] = {
     val squares = ArrayBuffer[ChessSquare]()
     for(row <- 1 to rows) {
       for(column <- 1 to columns) {
         squares += board(row)(column)
       }
     }
-    squares
+    squares.toArray
   }
 
   /**

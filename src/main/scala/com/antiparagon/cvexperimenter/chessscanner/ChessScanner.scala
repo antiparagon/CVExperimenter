@@ -5,8 +5,6 @@ import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
-import scala.collection.mutable.ArrayBuffer
-
 
 /**
   * Created by wmckay on 6/16/16.
@@ -47,7 +45,7 @@ class ChessScanner {
     bbox match {
       case Some(bbox) => {
         chessboardBBox = bbox
-        println(bbox)
+        log.debug(bbox.toString)
         boardImage = new Mat(inImg, bbox)
       }
       case None => {
@@ -65,7 +63,7 @@ class ChessScanner {
   def findSquares(): Array[Rect] = {
     if(boardImage != null) {
       squares = ChessSquareFinder.getChessboardSquares(boardImage)
-      println(s"Squares found: ${squares.size}")
+      log.debug(s"Squares found: ${squares.size}")
       if(squares.size == 64) {
         var index = 0
         for(row <- 1 to 8) {
