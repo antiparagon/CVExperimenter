@@ -106,8 +106,7 @@ class ChessScanner {
     */
   def drawSquares(): Unit = {
     if(boardImage == null) return
-    val squares = chessboard.getSquares()
-    squares.foreach(square => drawSquare(square))
+    chessboard.getSquares().foreach(square => drawSquare(square))
   }
 
   /**
@@ -123,8 +122,7 @@ class ChessScanner {
     */
   def drawSquaresCoor(): Unit = {
     if(boardImage == null) return
-    val squares = chessboard.getSquares()
-    squares.foreach(square => drawSquareCoor(square))
+    chessboard.getSquares().foreach(square => drawSquareCoor(square))
   }
 
   /**
@@ -137,6 +135,17 @@ class ChessScanner {
     val coorStr = col + row.toString
     val point = new Point(square.rect.tl.x + 5.0, square.rect.br.y - 5.0)
     Imgproc.putText(boardImage, coorStr, point, Core.FONT_HERSHEY_PLAIN, 1.2, new Scalar(0.0, 0.0, 255.0))
+  }
+
+  /**
+    * Draws the symbol for the piece on the boardImage chessboard square.
+    */
+  def drawPieceSymbols(): Unit = {
+    if(boardImage == null) return
+    chessboard.getSquares().foreach(square => {
+      val point = new Point(square.rect.tl.x + 5.0, square.rect.br.y - 5.0)
+      Imgproc.putText(boardImage, square.piece, point, Core.FONT_HERSHEY_PLAIN, 1.2, new Scalar(0.0, 0.0, 255.0))
+    })
   }
 
 
