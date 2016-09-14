@@ -62,6 +62,10 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           println(STEP3_TEXT)
           val piecesFound = chessScanner.findPieces()
           println(s"Found $piecesFound pieces")
+          if(piecesFound > 0) {
+            chessScanner.drawPieceSymbolsFull()
+            imgView.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
+          }
           text = STEP4_TEXT
         }
         case STEP4_TEXT => {
