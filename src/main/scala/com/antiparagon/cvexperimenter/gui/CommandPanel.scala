@@ -146,27 +146,6 @@ class CommandPanel(tabManager: TabManager) {
       },
 
       new Button {
-        text = "Apply Outline"
-        style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
-        onAction = handle {
-          if(tabManager.isTabSelected) {
-            val image: Mat = tabManager.getSelectedMat
-            val imageHSV = new Mat(image.size, 1)
-            val imageBlurr = new Mat(image.size, 1)
-            val imageA = new Mat(image.size, 127)
-            //val imageB = new Mat(image.size(), 1)
-            //imageB.setTo(new Scalar(255,255,255))
-            Imgproc.cvtColor(image, imageHSV, Imgproc.COLOR_BGR2GRAY)
-            Imgproc.GaussianBlur(imageHSV, imageBlurr, new Size(5, 5), 0)
-            Imgproc.adaptiveThreshold(imageBlurr, imageA, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 7, 5)
-
-            tabManager.addImageTab(tabManager.getSelectedText + " - mod", ImageTools.convertCVtoFX(imageA))
-          }
-        }
-      },
-
-      new Button {
         text = "Image Editor"
         style = BUTTON_STYLE
         maxWidth = Double.MaxValue
