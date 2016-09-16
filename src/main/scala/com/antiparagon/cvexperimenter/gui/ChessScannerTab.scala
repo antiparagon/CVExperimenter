@@ -2,6 +2,8 @@ package com.antiparagon.cvexperimenter.gui
 
 import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
 import com.antiparagon.cvexperimenter.tools.ImageTools
+import com.typesafe.scalalogging.Logger
+import org.slf4j.LoggerFactory
 
 import scalafx.Includes._
 import scalafx.geometry.{Insets, Pos}
@@ -15,6 +17,8 @@ import scalafx.scene.layout.{HBox, VBox}
   * Created by wmckay on 5/5/16.
   */
 class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
+
+  val log = Logger(LoggerFactory.getLogger("ChessScannerTab"))
 
   val STEP1_TEXT = "Find Chessboard"
   val STEP2_TEXT = "Find Squares"
@@ -30,7 +34,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
     onAction = handle {
       text.value match {
         case STEP1_TEXT => {
-          println(STEP1_TEXT)
+          log.info(STEP1_TEXT)
           val boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
           boardImg match {
             case Some(boardImg) => {
@@ -41,16 +45,11 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           }
         }
         case STEP2_TEXT => {
-          println(STEP2_TEXT)
+          log.info(STEP2_TEXT)
           val squares = chessScanner.findSquares()
           if(!squares.isEmpty) {
             chessScanner.drawSquaresFull()
             chessScanner.drawSquaresCoorFull()
-            //ChessSquareFinder.drawGrid(board.get)
-            //val squareH7 = chessScanner.chessboard.getSquare("h", 7)
-            //val squareH6 = chessScanner.chessboard.getSquare("h", 6)
-            //chessScanner.drawSquare(squareH7)
-            //chessScanner.drawSquare(squareH6)
             imgView.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
             text = STEP3_TEXT
           } else {
@@ -59,7 +58,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           }
         }
         case STEP3_TEXT => {
-          println(STEP3_TEXT)
+          log.info(STEP3_TEXT)
           val piecesFound = chessScanner.findPieces()
           println(s"Found $piecesFound pieces")
           if(piecesFound > 0) {
@@ -69,7 +68,7 @@ class ChessScannerTab(val img : Image) extends Tab with ExperimenterTab {
           text = STEP4_TEXT
         }
         case STEP4_TEXT => {
-          println(STEP4_TEXT)
+          log.info(STEP4_TEXT)
           val position = chessScanner.getFenPosition()
           println(s"$position")
         }
