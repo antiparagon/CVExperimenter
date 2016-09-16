@@ -39,7 +39,7 @@ class Chessboard {
   }
 
   /**
-    * Returns all the squares in an ArrayBuffer.
+    * Returns all the squares in an Array.
     */
   def getSquares(): Array[ChessSquare] = {
     val squares = ArrayBuffer[ChessSquare]()
@@ -77,7 +77,7 @@ class Chessboard {
     * Gets the piece at the given algebraic coordinates.
     * @param column to use
     * @param row to use
-    * @return piece at the square
+    * @return symbol for the piece at the square
     */
   def getPiece(column: String, row: Int): String = {
     val (r, c) = translateAlgebraicCoor(column, row)
@@ -108,8 +108,8 @@ class Chessboard {
 
   /**
     * Translates the given algebraic coordinates into row and column coordinates.
-    * @param column
-    * @param row
+    * @param column string
+    * @param row int
     * @return pair of (row, column)
     */
   def translateAlgebraicCoor(column: String, row: Int) = {
@@ -130,8 +130,8 @@ class Chessboard {
 
   /**
     * Translates the given row, col coordinates to algebraic coordinates.
-    * @param row
-    * @param column
+    * @param row int
+    * @param column int
     * @return a pair of (colstr, row)
     */
   def translateMatrixCoor(row: Int, column: Int) = {

@@ -21,7 +21,7 @@ object ChessSquareFinder {
     * assumes that the inImg is just of a cropped chessboard and nothing else.
     *
     * @param inImg of a chessboard
-    * @return ArrayBuffer of Rect of the found squares or empty if unable to find the squares
+    * @return Array of Rect of the found squares or empty if unable to find the squares
     */
   def getChessboardSquares(inImg: Mat): Array[Rect] = {
 

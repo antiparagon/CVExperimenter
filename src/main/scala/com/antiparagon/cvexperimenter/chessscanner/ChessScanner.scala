@@ -58,7 +58,7 @@ class ChessScanner {
 
   /**
     * Finds the Rect of the squares of the chessboard image returned by findChessboard() above.
-    * @return ArrayBuffer of Rect for the chessboard squares
+    * @return Array of Rect for the chessboard squares
     */
   def findSquares(): Array[Rect] = {
     if(boardImage != null) {
@@ -95,7 +95,7 @@ class ChessScanner {
   /**
     * Returns the chess piece postion in FEN notation.
     *
-    * @return Option string FEN postion of chess pieces
+    * @return string FEN postion of chess pieces
     */
   def getFenPosition(): String = {
     chessboard.getFenPosition()
@@ -183,7 +183,7 @@ class ChessScanner {
   }
 
   /**
-    * Draws the symbol for the piece on the boardImage chessboard square.
+    * Draws the symbol for the piece on the fullImage chessboard square.
     */
   def drawPieceSymbolsFull(): Unit = {
     if(fullImage == null) return
