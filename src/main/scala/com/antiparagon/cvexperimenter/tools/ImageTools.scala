@@ -42,14 +42,13 @@ object ImageTools {
 
   def convertFXtoCV(img: Image): Mat = {
     val bImage = SwingFXUtils.fromFXImage(img, null)
-    val s = new ByteArrayOutputStream()
-    ImageIO.write(bImage, "png", s);
-    val res  = s.toByteArray()
-
+    val s = new ByteArrayOutputStream
+    ImageIO.write(bImage, "png", s)
+    val res  = s.toByteArray
     val rawData  =  new Mat(res.length, 1, CvType.CV_8UC1)
     rawData.put(0, 0, res)
     val mat = Imgcodecs.imdecode(rawData, Imgcodecs.CV_LOAD_IMAGE_COLOR)
-    return mat
+    mat
   }
 
   def getVideoCaptureProperties(capture: VideoCapture): Map[String, Double] = {
@@ -74,7 +73,7 @@ object ImageTools {
       "Rectification" -> capture.get(Videoio.CAP_PROP_RECTIFICATION)
     )
 
-    return prop
+    prop
   }
 
   def getMatProperties(mat: Mat): Map[String, Int] = {
@@ -82,7 +81,7 @@ object ImageTools {
       "Channels" -> mat.channels,
       "Depth" -> mat.depth
     )
-    return prop
+    prop
   }
 
   def outputMatProperties(mat: Mat): Unit = {
@@ -128,7 +127,7 @@ object ImageTools {
     trans.put(1, 2, y)
     val shifted = image.clone
     Imgproc.warpAffine(image, shifted, trans, shifted.size)
-    return shifted
+    shifted
   }
 
 
@@ -136,7 +135,7 @@ object ImageTools {
     val rot = Imgproc.getRotationMatrix2D(center, angle, scale)
     val rotated = new Mat
     Imgproc.warpAffine(image, rotated, rot, rotated.size)
-    return rotated
+    rotated
   }
 
 

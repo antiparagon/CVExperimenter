@@ -55,21 +55,21 @@ object ImageHistogram {
 
     // effectively draw the histogram(s)
     var i = 0
-    for (i <- 1 until (histSize.get(0, 0)(0)).toInt) {
+    for (i <- 1 until histSize.get(0, 0)(0).toInt) {
 
       // B component or gray image
       Imgproc.line(histImage, new Point(bin_w * (i - 1), hist_h - Math.round(hist_b.get(i - 1, 0)(0))),
-      new Point(bin_w * (i), hist_h - Math.round(hist_b.get(i, 0)(0))), new Scalar(255, 0, 0), 2, 8, 0);
+      new Point(bin_w * i, hist_h - Math.round(hist_b.get(i, 0)(0))), new Scalar(255, 0, 0), 2, 8, 0)
       // G and R components (if the image is not in gray scale)
       if (!gray) {
         Imgproc.line(histImage, new Point(bin_w * (i - 1), hist_h - Math.round(hist_g.get(i - 1, 0)(0))),
-        new Point(bin_w * (i), hist_h - Math.round(hist_g.get(i, 0)(0))), new Scalar(0, 255, 0), 2, 8, 0);
+        new Point(bin_w * i, hist_h - Math.round(hist_g.get(i, 0)(0))), new Scalar(0, 255, 0), 2, 8, 0)
         Imgproc.line(histImage, new Point(bin_w * (i - 1), hist_h - Math.round(hist_r.get(i - 1, 0)(0))),
-        new Point(bin_w * (i), hist_h - Math.round(hist_r.get(i, 0)(0))), new Scalar(0, 0, 255), 2, 8, 0);
+        new Point(bin_w * i, hist_h - Math.round(hist_r.get(i, 0)(0))), new Scalar(0, 0, 255), 2, 8, 0)
       }
     }
 
-    return histImage
+    histImage
 
   }
 

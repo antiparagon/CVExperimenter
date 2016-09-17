@@ -63,7 +63,6 @@ object ChessPieceFinder {
       val coorStr = col + row.toString
 
       println(s"$coorStr: ${keyPoints.size()}")
-      //println(s"${keyPoints}")
 
       determinePiece(keyPoints) match {
         case Some(piece) => {

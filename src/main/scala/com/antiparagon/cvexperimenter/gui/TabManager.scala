@@ -34,7 +34,7 @@ class TabManager {
     if(index >= 0 && index < tabs.length) {
       return true
     }
-    return false
+    false
   }
 
   def getSelectedIndex() : Int = {
@@ -45,21 +45,21 @@ class TabManager {
     if (isTabSelected) {
       return tabs(getSelectedIndex).getImg
     }
-    return null
+    null
   }
 
   def getSelectedMat(): Mat = {
     if (isTabSelected) {
       return tabs(getSelectedIndex).getMat
     }
-    return null
+    null
   }
 
   def getSelectedText(): String = {
     if (getSelectedIndex >= 0) {
       return tabs(getSelectedIndex).getTabText
     }
-    return ""
+    ""
   }
 
   def hasVideoTab(): Boolean = {
@@ -68,7 +68,7 @@ class TabManager {
         return true
       }
     })
-    return false
+    false
   }
 
   def showVideoTab(): Unit = {
