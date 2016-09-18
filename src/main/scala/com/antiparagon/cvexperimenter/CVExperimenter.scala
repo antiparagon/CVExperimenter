@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter
 
 import com.antiparagon.cvexperimenter.gui.{CommandPanel, TabManager}
 import com.typesafe.scalalogging.Logger
+import org.opencv.core.Core
 import org.slf4j.LoggerFactory
 
 import scalafx.Includes._
@@ -21,16 +22,17 @@ import scalafx.scene.paint.Color._
   */
 object CVExperimenter extends JFXApp {
 
-  System.loadLibrary("opencv_java300")
+  System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
+
   val log = Logger(LoggerFactory.getLogger("CVExperimenter"))
 
   val tabManager: TabManager = new TabManager
   val BUTTON_STYLE = "-fx-font-size: 14pt"
   val BACKGROUND_STYLE = "-fx-background-color: black"
   //val START_UP_PIC = "CVExperimenterLogo.png"
-  val START_UP_PIC = "twic.png"
+  val START_UP_PIC = "StartingPosition.png"
   val USE_CHESSSCANNER_ON_VIDEOTAB = false
-  val OUTPUT_PIECE_FEATURES = false
+  val OUTPUT_PIECE_FEATURES = true
 
   val controlPane = new ScrollPane {
     fitToHeight = true
