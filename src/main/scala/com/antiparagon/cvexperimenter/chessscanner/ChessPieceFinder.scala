@@ -48,7 +48,7 @@ object ChessPieceFinder {
 
       println(s"$coorStr: ${keyPointsArray.length}")
 
-      ChessPieceClassifier.determinePiece(keyPointsArray) match {
+      ChessPieceClassifier.classifyPiece(keyPointsArray) match {
         case Some(piece) => {
 
           if(minKp > keyPointsArray.length) minKp = keyPointsArray.length

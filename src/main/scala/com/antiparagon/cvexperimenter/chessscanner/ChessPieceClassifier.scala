@@ -1,12 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.io.{File, PrintStream}
+import org.opencv.core.KeyPoint
 
-import com.antiparagon.cvexperimenter.CVExperimenter
-import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core._
-import org.opencv.features2d.{FeatureDetector, Features2d}
-import org.opencv.imgcodecs.Imgcodecs
 
 /**
   * Created by wmckay on 9/20/16.
@@ -15,7 +10,7 @@ object ChessPieceClassifier {
 
 
 
-  def determinePiece(keyPoints: Array[KeyPoint]): Option[String] = {
+  def classifyPiece(keyPoints: Array[KeyPoint]): Option[String] = {
     if(keyPoints.length >= 5) {
       val points = keyPoints.length
       var piece = "P"
