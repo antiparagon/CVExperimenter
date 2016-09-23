@@ -1,47 +1,23 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import com.antiparagon.cvexperimenter.CVExperimenter
-import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.{KeyPoint, Mat, MatOfKeyPoint, Scalar}
-import org.opencv.features2d.Features2d
-import org.opencv.imgcodecs.Imgcodecs
-
+import org.opencv.core.{Mat, MatOfKeyPoint}
 
 /**
   * Created by wmckay on 9/20/16.
   */
 object ChessPieceClassifier {
 
-
-
-  def classifyPiece(squareImg: Mat, keyPointsMat: MatOfKeyPoint): Option[String] = {
+  /**
+    * Classifies the chess piece using FAST image detection features.
+    *
+    * @param keyPointsMat
+    * @return Some(Piece symbol) or None
+    */
+  def classifyPieceFast(keyPointsMat: MatOfKeyPoint): Option[String] = {
 
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(10)
 
-
     if(keyPoints.length >= 5) {
-
-//      if(CVExperimenter.OUTPUT_PIECE_FEATURES && output != null) {
-//        keyPoints.foreach(kp => {
-//          println(s"${kp}")
-//          output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(",").append(square.piece).append(NL)
-//        })
-//      }
-//
-//      if(CVExperimenter.OUTPUT_PIECE_FEATURES) {
-//        val matOfKeyPoints = new MatOfKeyPoint()
-//        matOfKeyPoints.fromList(keyPointsArray.toList.asJava)
-//        Features2d.drawKeypoints(squareImg, matOfKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
-//
-//        val result = ImageTools.resize(squareImg, 3.0)
-//
-//        val imgPath = "ChessSquares/" + coorStr + ".png"
-//        Imgcodecs.imwrite(imgPath, result)
-//
-//        println(s"Min keypoints: $minKp")
-//        println(s"Max keypoints: $maxKp")
-//      }
-
 
       val points = keyPoints.length
       var piece = "P"
