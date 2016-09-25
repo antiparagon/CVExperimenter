@@ -1,7 +1,8 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.{Mat, MatOfKeyPoint}
-import org.opencv.features2d.FeatureDetector
+import org.opencv.core.{Mat, MatOfKeyPoint, Scalar}
+import org.opencv.features2d.{FeatureDetector, Features2d}
+import org.opencv.imgcodecs.Imgcodecs
 
 /**
   * Created by wmckay on 9/20/16.
@@ -16,10 +17,14 @@ object ChessPieceClassifierFast {
     * @param squareImg
     * @return Some(Piece symbol) or None
     */
-  def classifyPiece(squareImg: Mat): Option[String] = {
+  def classifyPiece(squareImg: Mat, coorStr: String): Option[String] = {
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
+
+    Features2d.drawKeypoints(squareImg, keyPointsMat, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
+    val imgPath = "ChessSquares/" + coorStr + ".png"
+    Imgcodecs.imwrite(imgPath, squareImg)
 
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(10)
 

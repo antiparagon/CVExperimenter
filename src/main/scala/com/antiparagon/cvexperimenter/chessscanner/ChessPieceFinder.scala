@@ -19,7 +19,10 @@ object ChessPieceFinder {
     chessboard.getSquares().foreach(square => {
       val squareImg = new Mat(boardImg, square.rect)
 
-      ChessPieceClassifierFast.classifyPiece(squareImg) match {
+      val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
+      val coorStr = col + row.toString
+
+      ChessPieceClassifierFast.classifyPiece(squareImg, coorStr) match {
         case Some(piece) => {
           square.piece = piece
           piecesFound += 1
