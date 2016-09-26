@@ -1,5 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import java.io.PrintStream
+
 import org.opencv.core.{Mat, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
@@ -17,7 +19,7 @@ object ChessPieceClassifierFast {
     * @param squareImg
     * @return Some(Piece symbol) or None
     */
-  def classifyPiece(squareImg: Mat, coorStr: String): Option[String] = {
+  def classifyPiece(squareImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
@@ -27,6 +29,12 @@ object ChessPieceClassifierFast {
     Imgcodecs.imwrite(imgPath, squareImg)
 
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(10)
+
+    val NL = System.lineSeparator()
+    keyPoints.toArray.foreach(kp => {
+      println(s"${kp}")
+      output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(NL)
+    })
 
     if(keyPoints.length >= 5) {
 
