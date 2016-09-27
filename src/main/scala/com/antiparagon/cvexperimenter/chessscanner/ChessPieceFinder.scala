@@ -20,7 +20,7 @@ object ChessPieceFinder {
 
     val NL = System.lineSeparator()
     val output = new PrintStream(new File("foundpieces.csv"))
-    output.append("Square").append(",").append("X").append(",").append("Y").append(",").append("Response").append(",").append(NL)
+    output.append("Square").append(",").append("X").append(",").append("Y").append(NL)
 
 
     chessboard.getSquares().foreach(square => {

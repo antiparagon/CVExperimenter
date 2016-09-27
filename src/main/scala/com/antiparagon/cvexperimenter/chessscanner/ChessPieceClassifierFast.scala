@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.PrintStream
 
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
@@ -16,10 +17,12 @@ object ChessPieceClassifierFast {
   /**
     * Classifies the chess piece using FAST image detection features.
     *
-    * @param squareImg
+    * @param inputImg
     * @return Some(Piece symbol) or None
     */
-  def classifyPiece(squareImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
+  def classifyPiece(inputImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
+
+    val squareImg = ImageTools.resize(inputImg, 50, 50)
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
@@ -30,13 +33,20 @@ object ChessPieceClassifierFast {
 
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(10)
 
+    var x = 0.0
+    var y = 0.0
     val NL = System.lineSeparator()
     keyPoints.toArray.foreach(kp => {
       println(s"${kp}")
-      output.append(coorStr).append(",").append(kp.pt.x.toString).append(",").append(kp.pt.y.toString).append(",").append(kp.response.toString).append(NL)
+      x += kp.pt.x
+      y += kp.pt.y
     })
 
     if(keyPoints.length >= 5) {
+
+      x = x / keyPoints.length.toDouble
+      y = y / keyPoints.length.toDouble
+      output.append(coorStr).append(",").append(x.toString).append(",").append(y.toString).append(NL)
 
       val points = keyPoints.length
       var piece = "P"
