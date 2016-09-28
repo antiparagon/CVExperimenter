@@ -31,12 +31,12 @@ object ChessPieceClassifierFast {
     val imgPath = "ChessSquares/" + coorStr + ".png"
     Imgcodecs.imwrite(imgPath, squareImg)
 
-    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(10)
+    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response) //.take(10)
 
     var x = 0.0
     var y = 0.0
     val NL = System.lineSeparator()
-    keyPoints.toArray.foreach(kp => {
+    keyPoints.foreach(kp => {
       println(s"${kp}")
       x += kp.pt.x
       y += kp.pt.y
