@@ -6,6 +6,7 @@ import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.imgproc.Imgproc
 
 /**
   * Created by wmckay on 9/20/16.
@@ -23,6 +24,8 @@ object ChessPieceClassifierFast {
   def classifyPiece(inputImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
 
     val squareImg = ImageTools.resize(inputImg, 50, 50)
+    Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
+    Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
@@ -31,7 +34,7 @@ object ChessPieceClassifierFast {
     val imgPath = "ChessSquares/" + coorStr + ".png"
     Imgcodecs.imwrite(imgPath, squareImg)
 
-    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response) //.take(10)
+    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response)//.take(15)
 
     var x = 0.0
     var y = 0.0
@@ -42,7 +45,7 @@ object ChessPieceClassifierFast {
       y += kp.pt.y
     })
 
-    if(keyPoints.length >= 5) {
+    if(keyPoints.length >= 2) {
 
       x = x / keyPoints.length.toDouble
       y = y / keyPoints.length.toDouble
