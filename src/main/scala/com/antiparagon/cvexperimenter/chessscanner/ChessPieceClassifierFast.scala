@@ -1,19 +1,22 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.io.PrintStream
+import java.io.{File, PrintStream}
 
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfDMatch, MatOfKeyPoint, Scalar}
-import org.opencv.features2d.{FeatureDetector, Features2d}
+import org.opencv.features2d.{DescriptorExtractor, FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
-import org.opencv.imgproc.Imgproc
+
 
 /**
   * Created by wmckay on 9/20/16.
   */
 object ChessPieceClassifierFast {
 
-  val features = FeatureDetector.create(FeatureDetector.DYNAMIC_ORB)
+  val features = FeatureDetector.create(FeatureDetector.ORB)
+  //val outputFile = new PrintStream("orbDetectorParams.YAML")
+  //outputFile.println("%YAML:1.0\nscaleFactor: 1.2\nnLevels: 8\nfirstLevel: 0 \nedgeThreshold: 31\npatchSize: 31\nWTA_K: 2\nscoreType: 1\nnFeatures: 500\n");
+  features.read("orbDetectorParams.YAML");
 
   /**
     * Classifies the chess piece using FAST image detection features.
@@ -48,6 +51,15 @@ object ChessPieceClassifierFast {
     })
 
     if(keyPoints.length >= 2) {
+
+      val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
+
+      // We're using the ORB descriptor.
+      val extractor = DescriptorExtractor.create(DescriptorExtractor.ORB)
+      val descriptors = new Mat
+      extractor.compute(inputImg, bestKeyPoints, descriptors)
+
+      println(s"${descriptors.rows} descriptors were extracted, each with dimension ${descriptors.cols}")
 
       x = x / keyPoints.length.toDouble
       y = y / keyPoints.length.toDouble
