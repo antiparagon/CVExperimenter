@@ -6,6 +6,7 @@ import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfDMatch, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{DescriptorExtractor, FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
+import org.opencv.imgproc.Imgproc
 
 
 /**
@@ -13,10 +14,7 @@ import org.opencv.imgcodecs.Imgcodecs
   */
 object ChessPieceClassifierFast {
 
-  val features = FeatureDetector.create(FeatureDetector.ORB)
-  //val outputFile = new PrintStream("orbDetectorParams.YAML")
-  //outputFile.println("%YAML:1.0\nscaleFactor: 1.2\nnLevels: 8\nfirstLevel: 0 \nedgeThreshold: 31\npatchSize: 31\nWTA_K: 2\nscoreType: 1\nnFeatures: 500\n");
-  features.read("orbDetectorParams.YAML");
+  val features = FeatureDetector.create(FeatureDetector.BRISK)
 
   /**
     * Classifies the chess piece using FAST image detection features.
@@ -27,8 +25,8 @@ object ChessPieceClassifierFast {
   def classifyPiece(inputImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
 
     val squareImg = ImageTools.resize(inputImg, 50, 50)
-    //Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
-    //Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+    Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
+    Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
@@ -55,7 +53,7 @@ object ChessPieceClassifierFast {
       val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
 
       // We're using the ORB descriptor.
-      val extractor = DescriptorExtractor.create(DescriptorExtractor.ORB)
+      val extractor = DescriptorExtractor.create(DescriptorExtractor.BRISK)
       val descriptors = new Mat
       extractor.compute(inputImg, bestKeyPoints, descriptors)
 

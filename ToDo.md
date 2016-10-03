@@ -4,3 +4,5 @@
 * Insure comments are correct on functions, comment code
 * Work on ChessPieceFinder
 * Get DFT and IDFT working correctly
+* Learn what the OpenCV BRISK feature detector does
+* Learn about OpenCV descriptor extractors
