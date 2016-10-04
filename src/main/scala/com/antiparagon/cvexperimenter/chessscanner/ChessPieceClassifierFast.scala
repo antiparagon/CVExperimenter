@@ -14,7 +14,7 @@ import org.opencv.imgproc.Imgproc
   */
 object ChessPieceClassifierFast {
 
-  val features = FeatureDetector.create(FeatureDetector.BRISK)
+  val features = FeatureDetector.create(FeatureDetector.FAST)
 
   /**
     * Classifies the chess piece using FAST image detection features.
@@ -25,43 +25,40 @@ object ChessPieceClassifierFast {
   def classifyPiece(inputImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
 
     val squareImg = ImageTools.resize(inputImg, 50, 50)
-    Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
-    Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+    //Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
+    //Imgproc.threshold(squareImg, squareImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
 
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
 
     println(s"There were ${keyPointsMat.toArray.size} KeyPoints detected")
 
-    Features2d.drawKeypoints(squareImg, keyPointsMat, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
-    val imgPath = "ChessSquares/" + coorStr + ".png"
-    Imgcodecs.imwrite(imgPath, squareImg)
-
-    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response)//.take(15)
+    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(15)
 
     var x = 0.0
+    var maxX = 0.0
     var y = 0.0
+    var maxY = 0.0
     val NL = System.lineSeparator()
     keyPoints.foreach(kp => {
       println(s"${kp}")
       x += kp.pt.x
+      if(kp.pt.x > maxX) maxX = kp.pt.x
       y += kp.pt.y
+      if(kp.pt.y > maxY) maxY = kp.pt.y
     })
 
-    if(keyPoints.length >= 2) {
+    if(keyPoints.length >= 5) {
 
       val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
 
-      // We're using the ORB descriptor.
-      val extractor = DescriptorExtractor.create(DescriptorExtractor.BRISK)
-      val descriptors = new Mat
-      extractor.compute(inputImg, bestKeyPoints, descriptors)
-
-      println(s"${descriptors.rows} descriptors were extracted, each with dimension ${descriptors.cols}")
+      Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
+      val imgPath = "ChessSquares/" + coorStr + ".png"
+      Imgcodecs.imwrite(imgPath, squareImg)
 
       x = x / keyPoints.length.toDouble
       y = y / keyPoints.length.toDouble
-      output.append(coorStr).append(",").append(x.toString).append(",").append(y.toString).append(NL)
+      output.append(coorStr).append(",").append(x.toString).append(",").append(maxX.toString).append(",").append(y.toString).append(",").append(maxY.toString).append(NL)
 
       val points = keyPoints.length
       var piece = "P"
