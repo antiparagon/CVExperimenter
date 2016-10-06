@@ -20,8 +20,9 @@ object ChessPieceFinder {
 
     val NL = System.lineSeparator()
     val output = new PrintStream(new File("foundpieces.csv"))
-    output.append("Square").append(",").append("X").append(",").append("MaxX").append(",").append("Y").append(",").append("MaxY").append(NL)
+    output.append("Square").append(",").append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(NL)
 
+    val classifier = new ChessPieceClassifierFast();
 
     chessboard.getSquares().foreach(square => {
       val squareImg = new Mat(boardImg, square.rect)
@@ -29,7 +30,7 @@ object ChessPieceFinder {
       val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
       val coorStr = col + row.toString
 
-      ChessPieceClassifierFast.classifyPiece(squareImg, coorStr, output) match {
+      classifier.classifyPiece(squareImg, coorStr) match {
         case Some(piece) => {
           square.piece = piece
           piecesFound += 1
@@ -37,6 +38,10 @@ object ChessPieceFinder {
         case None =>
       }
     })
+
+    classifier.scores.foreach {
+      case(coord, score) => output.append(coord).append(",").append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(NL)
+    }
 
     piecesFound
   }

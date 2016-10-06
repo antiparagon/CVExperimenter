@@ -4,17 +4,20 @@ import java.io.{File, PrintStream}
 
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfDMatch, MatOfKeyPoint, Scalar}
-import org.opencv.features2d.{DescriptorExtractor, FeatureDetector, Features2d}
+import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 
 
+case class FeatureScore(avgX: Double, avgY: Double, avgResp: Double)
+
 /**
   * Created by wmckay on 9/20/16.
   */
-object ChessPieceClassifierFast {
+class ChessPieceClassifierFast {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
+  val scores = scala.collection.mutable.Map[String, FeatureScore]()
 
   /**
     * Classifies the chess piece using FAST image detection features.
@@ -22,7 +25,7 @@ object ChessPieceClassifierFast {
     * @param inputImg
     * @return Some(Piece symbol) or None
     */
-  def classifyPiece(inputImg: Mat, coorStr: String, output: PrintStream): Option[String] = {
+  def classifyPiece(inputImg: Mat, coorStr: String): Option[String] = {
 
     val squareImg = ImageTools.resize(inputImg, 50, 50)
     //Imgproc.cvtColor(squareImg, squareImg, Imgproc.COLOR_BGR2GRAY)
@@ -36,16 +39,14 @@ object ChessPieceClassifierFast {
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(15)
 
     var x = 0.0
-    var maxX = 0.0
     var y = 0.0
-    var maxY = 0.0
+    var resp = 0.0
     val NL = System.lineSeparator()
     keyPoints.foreach(kp => {
       println(s"${kp}")
       x += kp.pt.x
-      if(kp.pt.x > maxX) maxX = kp.pt.x
       y += kp.pt.y
-      if(kp.pt.y > maxY) maxY = kp.pt.y
+      resp += kp.response.toDouble
     })
 
     if(keyPoints.length >= 5) {
@@ -58,7 +59,9 @@ object ChessPieceClassifierFast {
 
       x = x / keyPoints.length.toDouble
       y = y / keyPoints.length.toDouble
-      output.append(coorStr).append(",").append(x.toString).append(",").append(maxX.toString).append(",").append(y.toString).append(",").append(maxY.toString).append(NL)
+      resp = resp / keyPoints.length.toDouble
+
+      scores += (coorStr -> FeatureScore(x, y, resp))
 
       val points = keyPoints.length
       var piece = "P"
