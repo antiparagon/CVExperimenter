@@ -9,7 +9,7 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 
 
-case class FeatureScore(avgX: Double, avgY: Double, avgResp: Double)
+case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double)
 
 /**
   * Created by wmckay on 9/20/16.
@@ -17,7 +17,7 @@ case class FeatureScore(avgX: Double, avgY: Double, avgResp: Double)
 class ChessPieceClassifierFast {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
-  val scores = scala.collection.mutable.Map[String, FeatureScore]()
+  val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
 
   /**
     * Classifies the chess piece using FAST image detection features.
@@ -61,7 +61,7 @@ class ChessPieceClassifierFast {
       y = y / keyPoints.length.toDouble
       resp = resp / keyPoints.length.toDouble
 
-      scores += (coorStr -> FeatureScore(x, y, resp))
+      scores += (coorStr -> FeatureScoreFast(x, y, resp))
 
       val points = keyPoints.length
       var piece = "P"
