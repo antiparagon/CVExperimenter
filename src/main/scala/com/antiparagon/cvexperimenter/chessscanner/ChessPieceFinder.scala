@@ -20,7 +20,7 @@ object ChessPieceFinder {
 
     val NL = System.lineSeparator()
     val output = new PrintStream(new File("foundpieces.csv"))
-    output.append("Square").append(",").append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(NL)
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
     val classifier = new ChessPieceClassifierFast();
 
@@ -40,10 +40,51 @@ object ChessPieceFinder {
     })
 
     classifier.scores.foreach {
-      case(coord, score) => output.append(coord).append(",").append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(NL)
+      case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
     }
 
     piecesFound
+  }
+
+
+  def getSymbol(coord: String): String = {
+    coord match {
+      case ("a8") => "r"
+      case ("b8") => "n"
+      case ("c8") => "b"
+      case ("d8") => "q"
+      case ("e8") => "k"
+      case ("f8") => "b"
+      case ("g8") => "n"
+      case ("h8") => "r"
+      case ("a7") => "p"
+      case ("b7") => "p"
+      case ("c7") => "p"
+      case ("d7") => "p"
+      case ("e7") => "p"
+      case ("f7") => "p"
+      case ("g7") => "p"
+      case ("h7") => "p"
+
+      case ("a1") => "R"
+      case ("b1") => "N"
+      case ("c1") => "B"
+      case ("d1") => "Q"
+      case ("e1") => "K"
+      case ("f1") => "B"
+      case ("g1") => "N"
+      case ("h1") => "R"
+      case ("a2") => "P"
+      case ("b2") => "P"
+      case ("c2") => "P"
+      case ("d2") => "P"
+      case ("e2") => "P"
+      case ("f2") => "P"
+      case ("g2") => "P"
+      case ("h2") => "P"
+
+      case (_) => "Unknown"
+    }
   }
 
 }
