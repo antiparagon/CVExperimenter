@@ -27,7 +27,7 @@ object ChessSquareFinder {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
-    Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
 
     val boardSize = new Size(7, 7)
@@ -35,7 +35,6 @@ object ChessSquareFinder {
     val squares = mutable.ArrayBuffer[Rect]()
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
-      println("Chessboard not found")
       log.debug("Chessboard not found")
       return squares.toArray
     }

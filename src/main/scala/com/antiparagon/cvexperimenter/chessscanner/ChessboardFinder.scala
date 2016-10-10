@@ -51,7 +51,7 @@ object ChessboardFinder {
     }
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
-    Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
+    //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     //CVExperimenter.tabManager.addDebugImageTab("Blurred image", ImageTools.convertCVtoFX(tempImg))
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, 40)
