@@ -1,12 +1,9 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.io.{File, PrintStream}
-
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{Mat, MatOfDMatch, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
-import org.opencv.imgproc.Imgproc
 
 
 case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double)

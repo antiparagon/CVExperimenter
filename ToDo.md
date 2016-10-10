@@ -5,3 +5,4 @@
 * Get DFT and IDFT working correctly
 * Learn what the OpenCV BRISK feature detector does
 * Learn about OpenCV descriptor extractors
+* Get ChessScanner finding all the boards in Starting Position folder

@@ -4,7 +4,6 @@ import java.io.{File, PrintStream}
 
 import org.opencv.core.Mat
 
-
 /**
   * Created by wmckay on 6/12/16.
   */
@@ -22,7 +21,7 @@ object ChessPieceFinder {
     val output = new PrintStream(new File("foundpieces.csv"))
     output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
-    val classifier = new ChessPieceClassifierFast();
+    val classifier = new ChessPieceClassifierFast()
 
     chessboard.getSquares().foreach(square => {
       val squareImg = new Mat(boardImg, square.rect)
