@@ -101,6 +101,13 @@ class TabManager {
     addTab(tab)
   }
 
+  def addChessScannerTestTab(name : String, img : Image): Unit = {
+    val tab = new ChessScannerTestTab(img)
+    tab.text = name
+    tab.onClosed = handle { tabs.remove(tabs.indexOf(tab)) }
+    addTab(tab)
+  }
+
   def addImageTab(name : String, img : Image): Unit = {
     val tab = new ExperimenterImageTab(img)
     tab.text = name
