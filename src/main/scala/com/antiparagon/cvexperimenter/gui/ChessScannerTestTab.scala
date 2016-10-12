@@ -20,13 +20,44 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
 
   val log = Logger(LoggerFactory.getLogger("ChessScannerTestTab"))
 
+  val STEP1_TEXT = "Find Chessboard"
+  val STEP2_TEXT = "Find Squares"
+
   val imgView =  new ImageView(img)
+  val chessScanner = new ChessScanner // TODO: Remove and use ChessboardTestFinder
 
   val startButton = new Button {
     text = "Test"
     style = BUTTON_STYLE
     onAction = handle {
+      text.value match {
+        case STEP1_TEXT => {
+          log.info(STEP1_TEXT)
+          val boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
+          boardImg match {
+            case Some(boardImg) => {
+              text = STEP2_TEXT
+              imgView.setImage(ImageTools.convertCVtoFX(boardImg))
+            }
+            case None => println("Unable to find chessboard")
+          }
+        }
+        case STEP2_TEXT => {
+          log.info(STEP2_TEXT)
+          val squares = chessScanner.findSquares()
+          if(!squares.isEmpty) {
+            chessScanner.drawSquaresFull()
+            chessScanner.drawSquaresCoorFull()
+            imgView.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
+            text = "Done"
+          } else {
+            println("Unable to find squares")
+            text = "Done"
+          }
+        }
 
+        case _ =>
+      }
     }
   }
 
