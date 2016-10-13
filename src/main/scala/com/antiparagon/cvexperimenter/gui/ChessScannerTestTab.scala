@@ -1,7 +1,5 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.ChessScanner
-import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.slf4j.LoggerFactory
 
@@ -12,7 +10,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.{HBox, VBox}
 
 /**
-  * GUI element for ChessScanner code.
+  * GUI element for ChessScanner test code.
   *
   * Created by wmckay on 10/11/16.
   */
@@ -24,36 +22,19 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
   val STEP2_TEXT = "Find Squares"
 
   val imgView =  new ImageView(img)
-  val chessScanner = new ChessScanner // TODO: Remove and use ChessboardTestFinder
 
   val startButton = new Button {
-    text = "Test"
+    text = STEP1_TEXT
     style = BUTTON_STYLE
     onAction = handle {
       text.value match {
         case STEP1_TEXT => {
           log.info(STEP1_TEXT)
-          val boardImg = chessScanner.findChessboard(ImageTools.convertFXtoCV(img))
-          boardImg match {
-            case Some(boardImg) => {
-              text = STEP2_TEXT
-              imgView.setImage(ImageTools.convertCVtoFX(boardImg))
-            }
-            case None => println("Unable to find chessboard")
-          }
+          text = STEP2_TEXT
         }
         case STEP2_TEXT => {
           log.info(STEP2_TEXT)
-          val squares = chessScanner.findSquares()
-          if(!squares.isEmpty) {
-            chessScanner.drawSquaresFull()
-            chessScanner.drawSquaresCoorFull()
-            imgView.setImage(ImageTools.convertCVtoFX(chessScanner.fullImage))
-            text = "Done"
-          } else {
-            println("Unable to find squares")
-            text = "Done"
-          }
+          text = "Done"
         }
 
         case _ =>
