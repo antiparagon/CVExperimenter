@@ -45,9 +45,7 @@ object ChessboardTestFinder {
     */
   def findChessboard(inImg: Mat): Option[Rect] = {
 
-
     import scala.collection.JavaConversions._
-    import scala.collection.JavaConversions.asScalaIterator
 
     if (inImg == null || inImg.empty()) {
       return None

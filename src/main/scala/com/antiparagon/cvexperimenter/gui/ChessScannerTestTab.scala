@@ -3,7 +3,8 @@ package com.antiparagon.cvexperimenter.gui
 import com.antiparagon.cvexperimenter.chessscanner.{ChessSquareTestFinder, ChessboardTestFinder}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
-import org.opencv.core.Mat
+import org.opencv.core.{Mat, Scalar}
+import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
 import scalafx.Includes._
@@ -34,12 +35,13 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
       text.value match {
         case STEP1_TEXT => {
           log.info(STEP1_TEXT)
-          val boardImg = ChessboardTestFinder.getChessboard(ImageTools.convertFXtoCV(img))
-          boardImg match {
-            case Some(boardImg) => {
+          boardImage = ImageTools.convertFXtoCV(img)
+          val boardRect = ChessboardTestFinder.findChessboard(boardImage)
+          boardRect match {
+            case Some(rect) => {
               text = STEP2_TEXT
-              imgView.setImage(ImageTools.convertCVtoFX(boardImg))
-              boardImage = boardImg
+              Imgproc.rectangle(boardImage, rect.tl, rect.br, new Scalar(0.0, 255.0, 0.0), 3)
+              imgView.setImage(ImageTools.convertCVtoFX(boardImage))
             }
             case None => {
               println("Unable to find chessboard")
