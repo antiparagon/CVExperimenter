@@ -2,6 +2,8 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.util
 
+import com.antiparagon.cvexperimenter.CVExperimenter
+import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.core._
 import org.opencv.imgproc.Imgproc
@@ -53,6 +55,8 @@ object ChessboardTestFinder {
 
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
+    Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+    CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
 
     var biggest = new MatOfPoint2f
     var maxArea = 0.0
@@ -72,18 +76,25 @@ object ChessboardTestFinder {
         val approx = new MatOfPoint2f
         Imgproc.approxPolyDP(contour2f, approx, 0.02 * peri, true)
         //println(s"Size: ${approx.size()}")
-        if (area > maxArea && approx.rows == 4) {
-          biggest = approx
-          maxArea = area
-          println(s"Found rectangle: $contour")
-
-          //return outImg
+        if(approx.rows == 4) {
+          val rectPoints = new MatOfPoint
+          approx.convertTo(rectPoints, CvType.CV_32S)
+          val rect = getBoundingRect(rectPoints)
+          Imgproc.rectangle(inImg, rect.tl, rect.br, new Scalar(0.0, 255.0, 0.0), 3)
+          if (area > maxArea) {
+            biggest = approx
+            maxArea = area
+            println(s"Found rectangle: $contour")
+            Imgproc.rectangle(inImg, rect.tl, rect.br, new Scalar(0.0, 0.0, 255.0), 3)
+            //return outImg
+          }
         }
+
       }
     }
-
+    CVExperimenter.tabManager.addDebugImageTab("Rectangles found", ImageTools.convertCVtoFX(inImg))
     contours.clear()
-    biggest.convertTo(biggest, CvType.CV_32S)
+    //biggest.convertTo(biggest, CvType.CV_32S)
     val maxRect = new MatOfPoint
     biggest.convertTo(maxRect, CvType.CV_32S)
     contours.add(maxRect)
