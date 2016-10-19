@@ -54,6 +54,7 @@ object ChessboardTestFinder {
     }
 
     val tempImg = new Mat
+    val debugImg = inImg.clone()
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
@@ -80,19 +81,19 @@ object ChessboardTestFinder {
           val rectPoints = new MatOfPoint
           approx.convertTo(rectPoints, CvType.CV_32S)
           val rect = getBoundingRect(rectPoints)
-          Imgproc.rectangle(inImg, rect.tl, rect.br, new Scalar(0.0, 255.0, 0.0), 3)
+          Imgproc.rectangle(debugImg, rect.tl, rect.br, new Scalar(0.0, 255.0, 0.0), 3)
           if (area > maxArea) {
             biggest = approx
             maxArea = area
             println(s"Found rectangle: $contour")
-            Imgproc.rectangle(inImg, rect.tl, rect.br, new Scalar(0.0, 0.0, 255.0), 3)
+            Imgproc.rectangle(debugImg, rect.tl, rect.br, new Scalar(0.0, 0.0, 255.0), 3)
             //return outImg
           }
         }
 
       }
     }
-    CVExperimenter.tabManager.addDebugImageTab("Rectangles found", ImageTools.convertCVtoFX(inImg))
+    CVExperimenter.tabManager.addDebugImageTab("Rectangles found", ImageTools.convertCVtoFX(debugImg))
     contours.clear()
     //biggest.convertTo(biggest, CvType.CV_32S)
     val maxRect = new MatOfPoint
