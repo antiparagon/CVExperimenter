@@ -9,6 +9,9 @@ import org.opencv.core._
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by wmckay on 10/12/16.
   */
@@ -100,6 +103,39 @@ object ChessboardTestFinder {
     biggest.convertTo(maxRect, CvType.CV_32S)
     contours.add(maxRect)
     Some(getBoundingRect(maxRect))
+  }
+
+  /**
+    * Checks to see if a square is about 1/64 the area of the overall chessbaord.
+    *
+    * @param chessboard
+    * @param squares
+    * @return array of squares hat are close to the correct area
+    */
+  def filterSquares(chessboard: Mat, squares: ArrayBuffer[Rect]): ArrayBuffer[Rect] = {
+    val filteredSquares = mutable.ArrayBuffer[Rect]()
+    val chessboardArea = chessboard.width * chessboard.height
+    squares.foreach(square => {
+      val area = square.area().toInt
+      if(area * 50 > chessboardArea) {
+        println(s"FAIL Square area of $area is to big for chessboard area of $chessboardArea")
+      } else {
+        println(s"PASS Square area of $area is OK for chessboard area of $chessboardArea")
+        filteredSquares += square
+      }
+    })
+
+    return filteredSquares
+  }
+
+  def outputSquareStats(coordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
+    var map = mutable.ListMap(coordsRect.toSeq.sortBy(_._1):_*)
+    var max = 0
+    for ((k,v) <- map) {
+      println(s"Start coordinate: ${k}, value: ${v}")
+      if(v.size > max) max = v.size
+    }
+    println(s"Max squares: $max")
   }
 
   def getBoundingRect(rect: MatOfPoint): Rect = {
