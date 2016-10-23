@@ -16,7 +16,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
   * Created by wmckay on 10/12/16.
   */
-object ChessboardTestFinder {
+object ChessboardFinderContoursAlgorithm {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardTestFinder"))
   /**
@@ -60,6 +60,8 @@ object ChessboardTestFinder {
     val tempImg = new Mat
     val debugImg = inImg.clone()
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
+    //Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
+    Imgproc.Canny(tempImg, tempImg, 0, 0)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
 
