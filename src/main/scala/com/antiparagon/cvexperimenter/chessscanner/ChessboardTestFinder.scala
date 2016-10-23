@@ -1,5 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import java.awt.Rectangle
 import java.util
 
 import com.antiparagon.cvexperimenter.CVExperimenter
@@ -62,10 +63,8 @@ object ChessboardTestFinder {
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
 
-    var biggest = new MatOfPoint2f
-    var maxArea = 0.0
-
     val contours = new util.ArrayList[MatOfPoint]()
+    val rectangles = ArrayBuffer[Rect]()
     val hierarchy = new Mat
     Imgproc.findContours(tempImg, contours, hierarchy, Imgproc.RETR_TREE, Imgproc.CHAIN_APPROX_SIMPLE)
 
@@ -84,58 +83,56 @@ object ChessboardTestFinder {
           val rectPoints = new MatOfPoint
           approx.convertTo(rectPoints, CvType.CV_32S)
           val rect = getBoundingRect(rectPoints)
+          rectangles += rect
           Imgproc.rectangle(debugImg, rect.tl, rect.br, new Scalar(0.0, 255.0, 0.0), 3)
-          if (area > maxArea) {
-            biggest = approx
-            maxArea = area
-            println(s"Found rectangle: $contour")
-            Imgproc.rectangle(debugImg, rect.tl, rect.br, new Scalar(0.0, 0.0, 255.0), 3)
-            //return outImg
-          }
         }
-
       }
     }
-    CVExperimenter.tabManager.addDebugImageTab("Rectangles found", ImageTools.convertCVtoFX(debugImg))
-    contours.clear()
-    //biggest.convertTo(biggest, CvType.CV_32S)
-    val maxRect = new MatOfPoint
-    biggest.convertTo(maxRect, CvType.CV_32S)
-    contours.add(maxRect)
-    Some(getBoundingRect(maxRect))
+
+    return scanRectList(rectangles)
+
   }
 
-  /**
-    * Checks to see if a square is about 1/64 the area of the overall chessbaord.
-    *
-    * @param chessboard
-    * @param squares
-    * @return array of squares hat are close to the correct area
-    */
-  def filterSquares(chessboard: Mat, squares: ArrayBuffer[Rect]): ArrayBuffer[Rect] = {
-    val filteredSquares = mutable.ArrayBuffer[Rect]()
-    val chessboardArea = chessboard.width * chessboard.height
-    squares.foreach(square => {
-      val area = square.area().toInt
-      if(area * 50 > chessboardArea) {
-        println(s"FAIL Square area of $area is to big for chessboard area of $chessboardArea")
-      } else {
-        println(s"PASS Square area of $area is OK for chessboard area of $chessboardArea")
-        filteredSquares += square
+
+  def scanRectList(rectList: ArrayBuffer[Rect]): Option[Rect] = {
+
+    println(s"Number of rectangles: ${rectList.size}")
+    val rectMap = mutable.Map[Rectangle, ArrayBuffer[Rectangle]]()
+    for (rect <- rectList) {
+      val rectangle = rect2Rectangle(rect)
+      if(!rectMap.contains(rectangle)) {
+        rectMap.put(rectangle, ArrayBuffer[Rectangle]())
       }
-    })
+      val area = rectangle.width * rectangle.height
+      for((jRect, rList) <- rectMap) {
+        val ja = jRect.width * jRect.height
+        val multiple = ja / area
+        if(multiple < 75 && multiple > 63) {
+          rectMap(jRect) += rectangle
+        }
+      }
+    }
 
-    return filteredSquares
+    var board: Rectangle = null
+    var max = 0;
+    for((jRect, rList) <- rectMap) {
+      var squaresInside = rectMap(jRect).size
+      if(squaresInside > 3) {
+        if(squaresInside > max) {
+          board = jRect
+          max = squaresInside
+        }
+      }
+    }
+    if(board == null)
+      return None
+    else
+      return Some(new Rect(board.x, board.y, board.width, board.height))
   }
 
-  def outputSquareStats(coordsRect: mutable.Map[Int, mutable.ArrayBuffer[Rect]]): Unit = {
-    var map = mutable.ListMap(coordsRect.toSeq.sortBy(_._1):_*)
-    var max = 0
-    for ((k,v) <- map) {
-      println(s"Start coordinate: ${k}, value: ${v}")
-      if(v.size > max) max = v.size
-    }
-    println(s"Max squares: $max")
+  def rect2Rectangle(rect: Rect): Rectangle = {
+    val rectangle = new Rectangle(rect.x, rect.y, rect.width, rect.height)
+    rectangle
   }
 
   def getBoundingRect(rect: MatOfPoint): Rect = {

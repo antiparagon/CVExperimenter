@@ -31,7 +31,8 @@ object CVExperimenter extends JFXApp {
   val BACKGROUND_STYLE = "-fx-background-color: black"
   //val START_UP_PIC = "CVExperimenterLogo.png"
   //val START_UP_PIC = "StartingPosition.png"
-  val START_UP_PIC = "BookChessboard.jpg"
+  //val START_UP_PIC = "BookChessboard.jpg"
+  val START_UP_PIC = "algebraic_notation.gif"
   val USE_CHESSSCANNER_ON_VIDEOTAB = false
   val OUTPUT_PIECE_FEATURES = true
 
