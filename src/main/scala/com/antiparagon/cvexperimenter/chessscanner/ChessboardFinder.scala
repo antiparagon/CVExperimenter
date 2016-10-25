@@ -26,7 +26,14 @@ object ChessboardFinder {
       return None
     }
 
-    return ChessboardFinderCornerAlgorithm.getChessboard(inImg)
+    val cornerBoard = ChessboardFinderCornerAlgorithm.getChessboard(inImg)
+    cornerBoard match {
+      case Some(board) => return cornerBoard
+      case None => log.info("Corner Algorithm didn't find a chessboard")
+    }
+    val contoursBoard = ChessboardFinderContoursAlgorithm.getChessboard(inImg)
+
+    return contoursBoard
 
   }
 
@@ -42,6 +49,13 @@ object ChessboardFinder {
       return None
     }
 
-    return ChessboardFinderCornerAlgorithm.findChessboard(inImg)
+    val cornerRect = ChessboardFinderCornerAlgorithm.findChessboard(inImg)
+    cornerRect match {
+      case Some(rect) => return cornerRect
+      case None => log.info("Corner Algorithm didn't find a chessboard rectangle")
+    }
+    val contoursRect = ChessboardFinderContoursAlgorithm.findChessboard(inImg)
+
+    return contoursRect
   }
 }
