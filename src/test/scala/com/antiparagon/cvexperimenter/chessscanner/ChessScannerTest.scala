@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.Mat
+import org.opencv.core.{Core, Mat}
 import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 
@@ -9,7 +9,7 @@ import org.scalatest._
   */
 class ChessScannerTest extends FlatSpec with Matchers {
 
-  System.loadLibrary("opencv_java300")
+  System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
 
   "ChessboardScanner" should "return None when given null to findChessboard()" in {
     val chessScanner = new ChessScanner

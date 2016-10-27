@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessSquareTestFinder, ChessboardFinderContoursAlgorithm}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessSquareFinder, ChessboardFinderContoursAlgorithm}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.core.{Mat, Scalar}
@@ -50,7 +50,7 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP2_TEXT => {
           log.info(STEP2_TEXT)
-          val squares = ChessSquareTestFinder.getChessboardSquares(boardImage)
+          val squares = ChessSquareFinder.getChessboardSquares(boardImage)
           if(!squares.isEmpty) {
             log.info(s"Found ${squares.length} squares")
             text = "Done"
