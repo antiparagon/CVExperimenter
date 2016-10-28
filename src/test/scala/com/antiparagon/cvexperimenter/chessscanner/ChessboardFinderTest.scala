@@ -10,6 +10,7 @@ import org.scalatest._
 class ChessboardFinderTest extends FlatSpec with Matchers {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
+  val TWIC_PIC = "images/Chess Scanner/Game Positions/twic.png"
 
   "ChessboardFinder" should "return None when given null to getChessboard()" in {
     val rect = ChessboardFinder.getChessboard(null)
@@ -22,10 +23,10 @@ class ChessboardFinderTest extends FlatSpec with Matchers {
   }
 
   "ChessboardFinder" should "return a Mat when given image to getChessboard()" in {
-    val img = Imgcodecs.imread("images/twic.png")
+    val img = Imgcodecs.imread(TWIC_PIC)
     val board = ChessboardFinder.getChessboard(img)
     assert(board.isDefined)
-    board.get.width should be (323)
+    board.get.width should be (322)
     board.get.height should be (319)
   }
 
@@ -40,10 +41,10 @@ class ChessboardFinderTest extends FlatSpec with Matchers {
   }
 
   "ChessboardFinder" should "return Rect when given image to findChessboard()" in {
-    val img = Imgcodecs.imread("images/twic.png")
+    val img = Imgcodecs.imread(TWIC_PIC)
     val rect = ChessboardFinder.findChessboard(img)
     assert(rect.isDefined)
-    rect.get should be (new Rect(216, 140, 323, 319))
+    rect.get should be (new Rect(217, 140, 322, 319))
   }
 
 }
