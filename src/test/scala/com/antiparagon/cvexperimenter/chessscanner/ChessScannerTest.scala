@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.{Core, Mat}
+import org.opencv.core.Core
 import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 

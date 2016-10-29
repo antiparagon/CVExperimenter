@@ -63,7 +63,6 @@ object ChessboardFinderContoursAlgorithm {
     //Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     Imgproc.Canny(tempImg, tempImg, 0, 0)
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
-    CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
 
     val contours = new util.ArrayList[MatOfPoint]()
     val rectangles = ArrayBuffer[Rect]()
