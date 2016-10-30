@@ -18,7 +18,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 object ChessboardFinderContoursAlgorithm {
 
-  val log = Logger(LoggerFactory.getLogger("ChessboardTestFinder"))
+  val log = Logger(LoggerFactory.getLogger("ChessboardFinderContoursAlgorithm"))
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.

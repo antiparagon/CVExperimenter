@@ -7,10 +7,10 @@ import org.scalatest._
 /**
   * Created by wmckay on 10/29/16.
   */
-class ChessboardFinderContoursAlgorithmContoursAlgorithmTest extends FlatSpec with Matchers {
+class ChessboardFinderContoursAlgorithmTest extends FlatSpec with Matchers {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
-  val TWIC_PIC = "images/Chess Scanner/Game Positions/twic.png"
+  val BOARD_PIC = "images/Chess Scanner/Starting Position/purple.png"
 
   "ChessboardFinderContoursAlgorithm" should "return None when given null to getChessboard()" in {
     val rect = ChessboardFinderContoursAlgorithm.getChessboard(null)
@@ -23,11 +23,11 @@ class ChessboardFinderContoursAlgorithmContoursAlgorithmTest extends FlatSpec wi
   }
 
   "ChessboardFinderContoursAlgorithm" should "return a Mat when given image to getChessboard()" in {
-    val img = Imgcodecs.imread(TWIC_PIC)
+    val img = Imgcodecs.imread(BOARD_PIC)
     val board = ChessboardFinderContoursAlgorithm.getChessboard(img)
     assert(board.isDefined)
-    board.get.width should be (322)
-    board.get.height should be (319)
+    board.get.width should be (251)
+    board.get.height should be (252)
   }
 
   "ChessboardFinderContoursAlgorithm" should "return None when given null to findChessboard()" in {
@@ -41,10 +41,10 @@ class ChessboardFinderContoursAlgorithmContoursAlgorithmTest extends FlatSpec wi
   }
 
   "ChessboardFinderContoursAlgorithm" should "return Rect when given image to findChessboard()" in {
-    val img = Imgcodecs.imread(TWIC_PIC)
+    val img = Imgcodecs.imread(BOARD_PIC)
     val rect = ChessboardFinderContoursAlgorithm.findChessboard(img)
     assert(rect.isDefined)
-    rect.get should be (new Rect(217, 140, 322, 319))
+    rect.get should be (new Rect(111, 6, 251, 252))
   }
 
 }

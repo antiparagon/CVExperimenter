@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory
   */
 object ChessboardFinderCornerAlgorithm {
 
-  val log = Logger(LoggerFactory.getLogger("ChessboardFinder"))
+  val log = Logger(LoggerFactory.getLogger("ChessboardFinderCornerAlgorithm"))
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.
@@ -64,9 +64,9 @@ object ChessboardFinderCornerAlgorithm {
     if(!found) {
       log.debug("Chessboard not found")
       if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // Create debug tab if not using the webcam
-        CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
+        //CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
         Calib3d.drawChessboardCorners(tempImg, boardSize, squareCorners, false)
-        CVExperimenter.tabManager.addDebugImageTab("Found squares", ImageTools.convertCVtoFX(tempImg))
+        //CVExperimenter.tabManager.addDebugImageTab("Found squares", ImageTools.convertCVtoFX(tempImg))
       }
       return None
     }
