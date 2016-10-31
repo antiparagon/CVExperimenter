@@ -1,6 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.{Core, Mat}
+import org.opencv.core.{Core, Mat, Rect}
+import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 
 /**
@@ -9,12 +10,12 @@ import org.scalatest._
 class ChessPieceFinderTest extends FlatSpec with Matchers {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
+  val BOARD_PIC = "images/Chess Scanner/Game Positions/twic.png"
 
   "ChessPieceFinder" should "return 0 when given nulls to findChessPieces()" in {
     val pieces = ChessPieceFinder.findChessPieces(null, null)
     pieces should be (0)
   }
-
 
   "ChessPieceFinder" should "return 0 when given an empty chessboard and a empty Mat to findChessPieces()" in {
     val chessboard = new Chessboard()
@@ -22,5 +23,13 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
     val pieces = ChessPieceFinder.findChessPieces(chessboard, img)
     pieces should be (0)
   }
+
+//  "ChessPieceFinder" should "find 32 pieces when given a Mat of a chessbaord set to the starting position" in {
+//    val img = Imgcodecs.imread(BOARD_PIC)
+//    val chessboard = new Chessboard()
+//    val board = new Mat(img, new Rect(217, 140, 322, 319))
+//    val pieces = ChessPieceFinder.findChessPieces(chessboard, board)
+//    pieces should be (0)
+//  }
 
 }
