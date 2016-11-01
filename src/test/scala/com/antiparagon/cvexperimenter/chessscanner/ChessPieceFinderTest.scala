@@ -24,12 +24,12 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
     pieces should be (0)
   }
 
-//  "ChessPieceFinder" should "find 32 pieces when given a Mat of a chessbaord set to the starting position" in {
-//    val img = Imgcodecs.imread(BOARD_PIC)
-//    val chessboard = new Chessboard()
-//    val board = new Mat(img, new Rect(217, 140, 322, 319))
-//    val pieces = ChessPieceFinder.findChessPieces(chessboard, board)
-//    pieces should be (0)
-//  }
+  "ChessPieceFinder" should "find 0 pieces when given a Mat of a chessbaord and an empty Chessboard object" in {
+    val img = Imgcodecs.imread(BOARD_PIC)
+    val chessboard = new Chessboard()
+    val board = new Mat(img, new Rect(217, 140, 322, 319))
+    val pieces = ChessPieceFinder.findChessPieces(chessboard, board)
+    pieces should be (0)
+  }
 
 }

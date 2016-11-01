@@ -25,6 +25,16 @@ object ChessSquareFinder {
     */
   def getChessboardSquares(inImg: Mat): Array[Rect] = {
 
+    val squares = mutable.ArrayBuffer[Rect]()
+    if(inImg == null) {
+      log.debug("Chessboard image null")
+      return squares.toArray
+    }
+    if(inImg.empty()) {
+      log.debug("Chessboard image empty")
+      return squares.toArray
+    }
+
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
@@ -32,7 +42,7 @@ object ChessSquareFinder {
 
     val boardSize = new Size(7, 7)
     val squareCorners = new MatOfPoint2f()
-    val squares = mutable.ArrayBuffer[Rect]()
+
     val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_ADAPTIVE_THRESH + Calib3d.CALIB_CB_NORMALIZE_IMAGE +
                                                                                  Calib3d.CALIB_CB_FILTER_QUADS + Calib3d.CALIB_CB_FAST_CHECK)
     //val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FILTER_QUADS + Calib3d.CALIB_CB_FAST_CHECK)

@@ -2,7 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.{File, PrintStream}
 
-import org.opencv.core.Mat
+import org.opencv.core.{Mat, Rect}
 
 /**
   * Created by wmckay on 6/12/16.
@@ -17,24 +17,28 @@ object ChessPieceFinder {
       return 0
     }
 
-    val NL = System.lineSeparator()
-    val output = new PrintStream(new File("foundpieces.csv"))
-    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
+    //val NL = System.lineSeparator()
+    //val output = new PrintStream(new File("foundpieces.csv"))
+    //output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
     val classifier = new ChessPieceClassifierFast()
+    val emptyRect = new Rect
 
     chessboard.getSquares().foreach(square => {
-      val squareImg = new Mat(boardImg, square.rect)
 
-      val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
-      val coorStr = col + row.toString
+      if(square.rect != emptyRect) {
+        val squareImg = new Mat(boardImg, square.rect)
 
-      classifier.classifyPiece(squareImg, coorStr) match {
-        case Some(piece) => {
-          square.piece = piece
-          piecesFound += 1
+        val (col, row) = chessboard.translateMatrixCoor(square.row, square.column)
+        val coorStr = col + row.toString
+
+        classifier.classifyPiece(squareImg, coorStr) match {
+          case Some(piece) => {
+            square.piece = piece
+            piecesFound += 1
+          }
+          case None =>
         }
-        case None =>
       }
     })
 
@@ -112,10 +116,10 @@ object ChessPieceFinder {
     scores += ("a2" -> FeatureScoreFast(halfWP1AvgX, halfWP1AvgY, halfWP1AvgResp))
     scores += ("e2" -> FeatureScoreFast(halfWP2AvgX, halfWP2AvgY, halfWP2AvgResp))
 
-    scores.foreach {
-      case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
-        .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
-    }
+    //scores.foreach {
+    //  case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
+    //    .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
+    //}
 
     piecesFound
   }

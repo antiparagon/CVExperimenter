@@ -28,6 +28,11 @@ object ChessboardFinderContoursAlgorithm {
     */
   def getChessboard(inImg: Mat): Option[Mat] = {
     if(inImg == null) {
+      log.debug("Input image null")
+      return None
+    }
+    if(inImg.empty()) {
+      log.debug("Input image empty")
       return None
     }
 
