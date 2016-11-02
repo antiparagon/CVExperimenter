@@ -1,7 +1,29 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import org.opencv.core.Rect
+
 import scala.collection.mutable.ArrayBuffer
 
+/**
+  * Created by wmckay on 11/2/16.
+  */
+object Chessboard {
+  def create(chessboardSquares: Array[Rect]): Chessboard = {
+    val chessboard = new Chessboard()
+    if(chessboardSquares.size == 64) {
+      var index = 0
+      for(row <- 1 to 8) {
+        for(col <- 1 to 8) {
+          chessboard.getSquare(row, col).rect = chessboardSquares(index)
+          index += 1
+        }
+      }
+      return chessboard
+    } else {
+      throw new IllegalArgumentException("Number of squares must be 64")
+    }
+  }
+}
 
 /**
   * Created by wmckay on 6/21/16.

@@ -29,5 +29,5 @@ class ChessSquareFinderTest extends FlatSpec with Matchers {
     val squares = ChessSquareFinder.getChessboardSquares(board)
     squares.length should be (64)
   }
-  
+
 }
