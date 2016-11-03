@@ -32,9 +32,9 @@ object ChessboardFinder {
     }
 
     log.info("Trying Corner Algorithm in getChessboard()")
-    val cornerBoard = ChessboardFinderCornerAlgorithm.getChessboard(inImg)
-    cornerBoard match {
-      case Some(board) => return cornerBoard
+    val cornersBoard = ChessboardFinderCornersAlgorithm.getChessboard(inImg)
+    cornersBoard match {
+      case Some(board) => return cornersBoard
       case None => log.info("Corner Algorithm didn't find a chessboard")
     }
     log.info("Trying Countors Algorithm in getChessboard()")
@@ -57,9 +57,9 @@ object ChessboardFinder {
     }
 
     log.info("Trying Corner Algorithm in findChessboard()")
-    val cornerRect = ChessboardFinderCornerAlgorithm.findChessboard(inImg)
-    cornerRect match {
-      case Some(rect) => return cornerRect
+    val cornersRect = ChessboardFinderCornersAlgorithm.findChessboard(inImg)
+    cornersRect match {
+      case Some(rect) => return cornersRect
       case None => log.info("Corner Algorithm didn't find a chessboard rectangle")
     }
     log.info("Trying Countors Algorithm in findChessboard()")

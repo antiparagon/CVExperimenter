@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 /**
   * Created by wmckay on 6/12/16.
   */
-object ChessboardFinderCornerAlgorithm {
+object ChessboardFinderCornersAlgorithm {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderCornerAlgorithm"))
   /**
