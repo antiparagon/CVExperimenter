@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.gui
 
-import com.antiparagon.cvexperimenter.chessscanner.{ChessSquareFinder, ChessboardFinderContoursAlgorithm}
+import com.antiparagon.cvexperimenter.chessscanner.{ChessSquareFinder, ChessboardFinder}
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.core.{Mat, Scalar}
@@ -36,7 +36,7 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
         case STEP1_TEXT => {
           log.info(STEP1_TEXT)
           boardImage = ImageTools.convertFXtoCV(img)
-          val boardRect = ChessboardFinderContoursAlgorithm.findChessboard(boardImage)
+          val boardRect = ChessboardFinder.findChessboard(boardImage)
           boardRect match {
             case Some(rect) => {
               text = STEP2_TEXT

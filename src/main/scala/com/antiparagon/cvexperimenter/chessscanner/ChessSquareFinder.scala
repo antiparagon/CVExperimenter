@@ -13,7 +13,6 @@ import scala.collection.mutable
   */
 object ChessSquareFinder {
 
-  import scala.collection.JavaConversions._
   val log = Logger(LoggerFactory.getLogger("ChessSquareFinder"))
 
   /**
