@@ -31,6 +31,9 @@ class ChessboardFinderContoursAlgorithm {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderContoursAlgorithm"))
 
+  /*
+    For debugging of the algorithm
+   */
   var outputDebugImgs = false
   var debugImgPrefix = "ChessboardFinderContoursAlgorithm"
   /**
