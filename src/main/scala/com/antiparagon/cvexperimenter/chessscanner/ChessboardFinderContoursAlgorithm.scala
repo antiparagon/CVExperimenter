@@ -15,13 +15,23 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
-  * Created by wmckay on 10/12/16.
+  * Created by wmckay on 11/7/16.
   */
 object ChessboardFinderContoursAlgorithm {
 
+  def apply(): ChessboardFinderContoursAlgorithm = {
+    new ChessboardFinderContoursAlgorithm()
+  }
+}
+
+/**
+  * Created by wmckay on 10/12/16.
+  */
+class ChessboardFinderContoursAlgorithm {
+
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderContoursAlgorithm"))
 
-  var outputDebugImgs = true
+  var outputDebugImgs = false
   var debugImgPrefix = "ChessboardFinderContoursAlgorithm"
   /**
     * Finds a chessboard in an image and returns a cropped image of

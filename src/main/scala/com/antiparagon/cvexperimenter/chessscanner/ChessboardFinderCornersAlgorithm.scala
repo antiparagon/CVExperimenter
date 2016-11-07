@@ -10,13 +10,24 @@ import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
 /**
-  * Created by wmckay on 6/12/16.
+  * Created by wmckay on 11/7/16.
   */
 object ChessboardFinderCornersAlgorithm {
 
+  def apply(): ChessboardFinderCornersAlgorithm = {
+    new ChessboardFinderCornersAlgorithm()
+  }
+}
+
+
+/**
+  * Created by wmckay on 6/12/16.
+  */
+class ChessboardFinderCornersAlgorithm {
+
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderCornerAlgorithm"))
 
-  var outputDebugImgs = true
+  var outputDebugImgs = false
   var debugImgPrefix = "ChessboardFinderCornersAlgorithm"
   /**
     * Finds a chessboard in an image and returns a cropped image of
