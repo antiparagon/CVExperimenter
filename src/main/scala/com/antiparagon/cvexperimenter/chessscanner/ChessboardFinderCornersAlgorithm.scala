@@ -28,7 +28,7 @@ class ChessboardFinderCornersAlgorithm {
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderCornerAlgorithm"))
 
   /*
-    For debugging of the algorithm
+    For debugging of the algorithm. Outputs intermediate stage images.
    */
   var outputDebugImgs = false
   var debugImgPrefix = "ChessboardFinderCornersAlgorithm"
