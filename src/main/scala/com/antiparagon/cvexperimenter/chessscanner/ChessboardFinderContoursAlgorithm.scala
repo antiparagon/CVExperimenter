@@ -7,6 +7,7 @@ import com.antiparagon.cvexperimenter.CVExperimenter
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.core._
+import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
@@ -19,6 +20,9 @@ import scala.collection.mutable.ArrayBuffer
 object ChessboardFinderContoursAlgorithm {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderContoursAlgorithm"))
+
+  var outputDebugImgs = true
+  var debugImgPrefix = "ChessboardFinderContoursAlgorithm"
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.
@@ -95,6 +99,9 @@ object ChessboardFinderContoursAlgorithm {
       }
     }
 
+    if(outputDebugImgs) {
+      Imgcodecs.imwrite(debugImgPrefix + "_Rectangles.png", debugImg)
+    }
     return scanRectList(rectangles)
 
   }

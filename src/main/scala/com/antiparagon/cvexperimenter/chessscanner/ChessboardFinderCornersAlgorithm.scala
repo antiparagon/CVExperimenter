@@ -5,6 +5,7 @@ import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
+import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
@@ -14,6 +15,9 @@ import org.slf4j.LoggerFactory
 object ChessboardFinderCornersAlgorithm {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardFinderCornerAlgorithm"))
+
+  var outputDebugImgs = true
+  var debugImgPrefix = "ChessboardFinderCornersAlgorithm"
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.
@@ -57,10 +61,17 @@ object ChessboardFinderCornersAlgorithm {
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
-    //CVExperimenter.tabManager.addDebugImageTab("Blurred image", ImageTools.convertCVtoFX(tempImg))
+    if(outputDebugImgs) {
+      //CVExperimenter.tabManager.addDebugImageTab("Blurred image", ImageTools.convertCVtoFX(tempImg))
+      Imgcodecs.imwrite(debugImgPrefix + "_BlurredImg.png", tempImg)
+    }
+
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, 40)
-    //CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
+    if(outputDebugImgs) {
+      //CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
+      Imgcodecs.imwrite(debugImgPrefix + "_AdaptiveThreshold.png", tempImg)
+    }
 
     val boardSize = new Size(7, 7)
     val squareCorners = new MatOfPoint2f()
@@ -71,7 +82,10 @@ object ChessboardFinderCornersAlgorithm {
       if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // Create debug tab if not using the webcam
         //CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
         Calib3d.drawChessboardCorners(tempImg, boardSize, squareCorners, false)
-        //CVExperimenter.tabManager.addDebugImageTab("Found squares", ImageTools.convertCVtoFX(tempImg))
+        if(outputDebugImgs) {
+          //CVExperimenter.tabManager.addDebugImageTab("Found squares", ImageTools.convertCVtoFX(tempImg))
+          Imgcodecs.imwrite(debugImgPrefix + "_FoundSquares.png", tempImg)
+        }
       }
       return None
     }
