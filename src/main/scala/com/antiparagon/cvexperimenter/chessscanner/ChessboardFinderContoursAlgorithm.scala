@@ -35,6 +35,7 @@ class ChessboardFinderContoursAlgorithm {
     For debugging of the algorithm. Outputs intermediate stage images.
    */
   var outputDebugImgs = false
+  // Prefix for debug images
   var debugImgPrefix = "ChessboardFinderContoursAlgorithm"
   /**
     * Finds a chessboard in an image and returns a cropped image of
