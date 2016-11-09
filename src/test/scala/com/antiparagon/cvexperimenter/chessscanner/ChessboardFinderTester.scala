@@ -5,6 +5,11 @@ import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 
 /**
+  * This test file is meant to test all the eample chessboarf images saved in the
+  * 'CVExperimenter\images\Chess Scanner\Starting Position\Failures' folder. Those images
+  * are the ones that the current algorithms do not work on. If these images are made to work
+  * then all saved images will have the algorithms find the chessboards.
+  *
   * Created by wmckay on 11/5/16.
   */
 class ChessboardFinderTester extends FlatSpec with Matchers {
