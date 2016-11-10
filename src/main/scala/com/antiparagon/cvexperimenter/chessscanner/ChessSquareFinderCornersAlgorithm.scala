@@ -9,6 +9,11 @@ import org.slf4j.LoggerFactory
 import scala.collection.mutable
 
 /**
+  * Uses the OpenCV library function Calib3d.findChessboardCorners() that is
+  * suppoesed to be used for calibrate cameras. The function is perfect for
+  * finding the chessboard in an image and for getting the coordinates of the
+  * individual squares.
+  *
   * Created by wmckay on 10/3/16.
   */
 object ChessSquareFinderCornersAlgorithm {

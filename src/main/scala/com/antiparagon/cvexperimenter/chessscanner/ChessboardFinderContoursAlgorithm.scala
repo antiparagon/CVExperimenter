@@ -25,6 +25,10 @@ object ChessboardFinderContoursAlgorithm {
 }
 
 /**
+  * Uses the OpenCV Imgproc.findContours() function to find rectangles. It looks
+  * for a rectangle that contains more than the rectangles inside it that are
+  * about 1/64 the area of the inclosing rectangle.
+  *
   * Created by wmckay on 10/12/16.
   */
 class ChessboardFinderContoursAlgorithm {
