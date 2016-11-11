@@ -9,6 +9,11 @@ import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
 /**
+  * This class handles choosing the different algorithms to use to find
+  * chessboard in an image. The input image could be a 'raw' image straight from
+  * a webcam or a screen grab. This class tries the algorithms to try and find
+  * a chessboard in an image.
+  *
   * Created by wmckay on 6/12/16.
   */
 object ChessboardFinder {
