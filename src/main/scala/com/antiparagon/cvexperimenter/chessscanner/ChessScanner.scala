@@ -7,6 +7,15 @@ import org.slf4j.LoggerFactory
 
 
 /**
+  * Main class that contains all the state and functions needed to find
+  * a chessboard and pieces in an image.
+  *
+  * The steps to get the chess position:
+  * 1. findChessboard()
+  * 2. findSquares()
+  * 3. findPieces()
+  * 4. getFenPosition
+  *
   * Created by wmckay on 6/16/16.
   */
 class ChessScanner {
