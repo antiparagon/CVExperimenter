@@ -9,7 +9,7 @@ import scalafx.scene.image.Image
 import scalafx.scene.layout.Priority
 
 /**
-  * Controls all the visible tabs.
+  * Holds and controls all the visible tabs.
   *
   * Created by wmckay on 3/16/16.
   */

@@ -3,6 +3,9 @@ package com.antiparagon.cvexperimenter.chessscanner
 import org.opencv.core.Rect
 
 /**
+  * Class to hold the piece symbol and image rectangle for
+  * a chess square.
+  *
   * Created by wmckay on 6/22/16.
   */
 class ChessSquare(val row: Int, val column: Int) {

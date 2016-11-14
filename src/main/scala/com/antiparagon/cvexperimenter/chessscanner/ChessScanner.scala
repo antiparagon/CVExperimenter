@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory
   * 1. findChessboard()
   * 2. findSquares()
   * 3. findPieces()
-  * 4. getFenPosition
+  * 4. getFenPosition()
   *
   * Created by wmckay on 6/16/16.
   */
@@ -88,8 +88,8 @@ class ChessScanner {
 
   /**
     * Finds the pieces on the chessboard found by findChessboard() using the squares
-    * found by findSquares().
-    * @return the Chessboard with all the pieces on the correct squares
+    * found by findSquares(). Saves the information into Chessboard member variable.
+    * @return the number of pieces found
     */
   def findPieces(): Int = {
     if(boardImage != null) {
