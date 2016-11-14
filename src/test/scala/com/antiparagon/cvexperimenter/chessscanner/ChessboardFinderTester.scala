@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import org.opencv.core.{Core, Mat, Rect}
+import org.opencv.core.{Core, Rect}
 import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 
@@ -30,6 +30,7 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val STAGRAM_RECT = new Rect(95, 49, 322, 324)
   val VP_BLACKARRAY = "VP-Blackarray.png"
   val VP_BLACKARRAY_RECT = new Rect(95, 49, 322, 324)
+  val DEBUG_IMG_FOLDER = "Debug Images/"
 
   "ChessboardFinder" should "return Rect when given image " + BOARD_SETUP in {
     val img = Imgcodecs.imread(IMG_FOLDER + BOARD_SETUP)

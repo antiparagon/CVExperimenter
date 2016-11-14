@@ -1,7 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import com.antiparagon.cvexperimenter.CVExperimenter
-import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
@@ -15,10 +14,9 @@ import org.slf4j.LoggerFactory
 object ChessboardFinderCornersAlgorithm {
 
   def apply(): ChessboardFinderCornersAlgorithm = {
-    new ChessboardFinderCornersAlgorithm()
+    new ChessboardFinderCornersAlgorithm
   }
 }
-
 
 /**
   * Uses the OpenCV library function Calib3d.findChessboardCorners() that is

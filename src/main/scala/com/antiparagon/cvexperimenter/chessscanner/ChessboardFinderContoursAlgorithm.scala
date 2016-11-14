@@ -3,8 +3,6 @@ package com.antiparagon.cvexperimenter.chessscanner
 import java.awt.Rectangle
 import java.util
 
-import com.antiparagon.cvexperimenter.CVExperimenter
-import com.antiparagon.cvexperimenter.tools.ImageTools
 import com.typesafe.scalalogging.Logger
 import org.opencv.core._
 import org.opencv.imgcodecs.Imgcodecs
@@ -20,7 +18,7 @@ import scala.collection.mutable.ArrayBuffer
 object ChessboardFinderContoursAlgorithm {
 
   def apply(): ChessboardFinderContoursAlgorithm = {
-    new ChessboardFinderContoursAlgorithm()
+    new ChessboardFinderContoursAlgorithm
   }
 }
 
