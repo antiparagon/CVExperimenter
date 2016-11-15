@@ -50,7 +50,7 @@ class ChessScanner {
       return None
     }
     fullImage = inImg.clone()
-    val bbox = ChessboardFinder.findChessboard(fullImage)
+    val bbox = ChessboardFinder().findChessboard(fullImage)
     bbox match {
       case Some(bbox) => {
         chessboardBBox = bbox

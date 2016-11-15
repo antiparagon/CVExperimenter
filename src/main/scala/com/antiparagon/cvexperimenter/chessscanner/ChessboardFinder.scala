@@ -4,6 +4,26 @@ import com.typesafe.scalalogging.Logger
 import org.opencv.core._
 import org.slf4j.LoggerFactory
 
+
+/**
+  * Created by wmckay on 11/15/16.
+  */
+object ChessboardFinder {
+
+  def apply(): ChessboardFinder = {
+    new ChessboardFinder
+  }
+
+  def apply(debugImagePrefix: String): ChessboardFinder = {
+    val chessboardFinder = new ChessboardFinder
+    chessboardFinder.outputDebugImgs = true
+    chessboardFinder.debugImgPrefix = debugImagePrefix
+    chessboardFinder.cornersAlgorithm = ChessboardFinderCornersAlgorithm(chessboardFinder.debugImgPrefix)
+    chessboardFinder.contoursAlgorithm = ChessboardFinderContoursAlgorithm(chessboardFinder.debugImgPrefix)
+    chessboardFinder
+  }
+}
+
 /**
   * This class handles choosing the different algorithms to use to find
   * chessboard in an image. The input image could be a 'raw' image straight from
@@ -12,9 +32,19 @@ import org.slf4j.LoggerFactory
   *
   * Created by wmckay on 6/12/16.
   */
-object ChessboardFinder {
+class ChessboardFinder {
 
   val log = Logger(LoggerFactory.getLogger("ChessboardFinder"))
+
+  /*
+    For debugging of the algorithm. Outputs intermediate stage images.
+   */
+  var outputDebugImgs = false
+  // Prefix for debug images
+  var debugImgPrefix = "ChessboardFinder_"
+  var cornersAlgorithm = ChessboardFinderCornersAlgorithm()
+  var contoursAlgorithm = ChessboardFinderContoursAlgorithm()
+
   /**
     * Finds a chessboard in an image and returns a cropped image of
     * just the chessboard.
@@ -33,13 +63,13 @@ object ChessboardFinder {
     }
 
     log.info("Trying Corner Algorithm in getChessboard()")
-    val cornersBoard = ChessboardFinderCornersAlgorithm().getChessboard(inImg)
+    val cornersBoard = cornersAlgorithm.getChessboard(inImg)
     cornersBoard match {
       case Some(board) => return cornersBoard
       case None => log.info("Corner Algorithm didn't find a chessboard")
     }
     log.info("Trying Countors Algorithm in getChessboard()")
-    val contoursBoard = ChessboardFinderContoursAlgorithm().getChessboard(inImg)
+    val contoursBoard = contoursAlgorithm.getChessboard(inImg)
 
     return contoursBoard
 
@@ -58,13 +88,13 @@ object ChessboardFinder {
     }
 
     log.info("Trying Corner Algorithm in findChessboard()")
-    val cornersRect = ChessboardFinderCornersAlgorithm().findChessboard(inImg)
+    val cornersRect = cornersAlgorithm.findChessboard(inImg)
     cornersRect match {
       case Some(rect) => return cornersRect
       case None => log.info("Corner Algorithm didn't find a chessboard rectangle")
     }
     log.info("Trying Countors Algorithm in findChessboard()")
-    val contoursRect = ChessboardFinderContoursAlgorithm().findChessboard(inImg)
+    val contoursRect = contoursAlgorithm.findChessboard(inImg)
 
     return contoursRect
   }

@@ -36,7 +36,7 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
         case STEP1_TEXT => {
           log.info(STEP1_TEXT)
           boardImage = ImageTools.convertFXtoCV(img)
-          val boardRect = ChessboardFinder.findChessboard(boardImage)
+          val boardRect = ChessboardFinder().findChessboard(boardImage)
           boardRect match {
             case Some(rect) => {
               text = STEP2_TEXT

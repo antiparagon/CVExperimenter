@@ -16,11 +16,18 @@ object ChessboardFinderCornersAlgorithm {
   def apply(): ChessboardFinderCornersAlgorithm = {
     new ChessboardFinderCornersAlgorithm
   }
+
+  def apply(debugImagePrefix: String): ChessboardFinderCornersAlgorithm = {
+    val chessboardFinder = new ChessboardFinderCornersAlgorithm
+    chessboardFinder.outputDebugImgs = true
+    chessboardFinder.debugImgPrefix = debugImagePrefix + chessboardFinder.debugImgPrefix
+    chessboardFinder
+  }
 }
 
 /**
   * Uses the OpenCV library function Calib3d.findChessboardCorners() that is
-  * suppoesed to be used for calibrate cameras. The function is perfect for
+  * supposed to be used to calibrate cameras. The function is perfect for
   * finding the chessboard in an image and for getting the coordinates of the
   * individual squares.
   *

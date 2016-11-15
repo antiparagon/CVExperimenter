@@ -20,6 +20,13 @@ object ChessboardFinderContoursAlgorithm {
   def apply(): ChessboardFinderContoursAlgorithm = {
     new ChessboardFinderContoursAlgorithm
   }
+
+  def apply(debugImagePrefix: String): ChessboardFinderContoursAlgorithm = {
+    val chessboardFinder = new ChessboardFinderContoursAlgorithm
+    chessboardFinder.outputDebugImgs = true
+    chessboardFinder.debugImgPrefix = debugImagePrefix + chessboardFinder.debugImgPrefix
+    chessboardFinder
+  }
 }
 
 /**
