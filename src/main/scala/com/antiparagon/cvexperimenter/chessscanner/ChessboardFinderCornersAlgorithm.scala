@@ -142,7 +142,7 @@ class ChessboardFinderCornersAlgorithm {
       }
     }
 
-    val squares = 42 // Number of interations in double for loop above
+    val squares = 42 // Number of iterations in double for loop above
     avgWidth = avgWidth / squares
     avgHeight = avgHeight / squares
 

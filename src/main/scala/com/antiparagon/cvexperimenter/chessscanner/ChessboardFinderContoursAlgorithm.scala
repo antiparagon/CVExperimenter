@@ -130,30 +130,45 @@ class ChessboardFinderContoursAlgorithm {
   }
 
 
+  /**
+    * Scans the list of rectangles and returns a rectangle that contains
+    * a rectangle with multiple smaller rectangle inside. It looks for a rectangle
+    * that contains at least 3 smaller rectangles with 1/63 the area of the
+    * containing rectangle.
+    *
+    * @param rectList
+    * @return Option rectangle coordinates of the rectangle
+    */
   def scanRectList(rectList: ArrayBuffer[Rect]): Option[Rect] = {
 
     println(s"Number of rectangles: ${rectList.size}")
     val rectMap = mutable.Map[Rectangle, ArrayBuffer[Rectangle]]()
     for (rect <- rectList) {
+      // Convert to Java Rectangle
       val rectangle = rect2Rectangle(rect)
+      // Check if the lookup contains the Rectangle yet
       if(!rectMap.contains(rectangle)) {
         rectMap.put(rectangle, ArrayBuffer[Rectangle]())
       }
+      // Calculate the area of the rectangle
       val area = rectangle.width * rectangle.height
+      // Loop through the lookup of Rectangles
       for((jRect, rList) <- rectMap) {
-        val ja = jRect.width * jRect.height
-        val multiple = ja / area
-        if(multiple < 75 && multiple > 63) {
-          rectMap(jRect) += rectangle
+        if(jRect.contains(rectangle)) {
+          val ja = jRect.width * jRect.height
+          val multiple = ja / area
+          if(multiple < 75 && multiple > 63) {
+            rectMap(jRect) += rectangle
+          }
         }
       }
     }
 
     var board: Rectangle = null
-    var max = 0;
+    var max = 0
     for((jRect, rList) <- rectMap) {
       var squaresInside = rectMap(jRect).size
-      if(squaresInside > 3) {
+      if(squaresInside >= 3) {
         if(squaresInside > max) {
           board = jRect
           max = squaresInside
