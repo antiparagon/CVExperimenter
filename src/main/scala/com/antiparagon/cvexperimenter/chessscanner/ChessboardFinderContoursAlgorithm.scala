@@ -141,6 +141,10 @@ class ChessboardFinderContoursAlgorithm {
     */
   def scanRectList(rectList: ArrayBuffer[Rect]): Option[Rect] = {
 
+    if (rectList == null || rectList.size < 4) {
+      return None
+    }
+
     println(s"Number of rectangles: ${rectList.size}")
     val rectMap = mutable.Map[Rectangle, ArrayBuffer[Rectangle]]()
     for (rect <- rectList) {

@@ -4,6 +4,8 @@ import org.opencv.core.{Core, Mat, Rect}
 import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
 
+import scala.collection.mutable.ArrayBuffer
+
 /**
   * Created by wmckay on 10/29/16.
   */
@@ -45,6 +47,17 @@ class ChessboardFinderContoursAlgorithmTest extends FlatSpec with Matchers {
     val rect = ChessboardFinderContoursAlgorithm().findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (new Rect(111, 6, 251, 252))
+  }
+
+
+  "ChessboardFinderContoursAlgorithm.scanRectList()" should "return None given null Rect list" in {
+    val rect = ChessboardFinderContoursAlgorithm().scanRectList(null)
+    rect should be (None)
+  }
+
+  "ChessboardFinderContoursAlgorithm.scanRectList()" should "return None given empty Rect list" in {
+    val rect = ChessboardFinderContoursAlgorithm().scanRectList(ArrayBuffer[Rect]())
+    rect should be (None)
   }
 
 }
