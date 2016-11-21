@@ -75,9 +75,17 @@ class ChessboardFinderContoursAlgorithmTest extends FlatSpec with Matchers {
     rectList += new Rect(0, 0, 8, 8)
     rectList += new Rect(0, 8, 8, 8)
     rectList += new Rect(0, 16, 8, 8)
-    rectList += new Rect(0, 24, 8, 8)
     val rect = ChessboardFinderContoursAlgorithm().scanRectList(rectList)
     rect.get should be (new Rect(0, 0, 64, 64))
   }
 
+  "ChessboardFinderContoursAlgorithm.scanRectList()" should "return None given Rect list with 2 inner Rects and one intersecting" in {
+    val rectList = ArrayBuffer[Rect]()
+    rectList += new Rect(0, 0, 64, 64)
+    rectList += new Rect(0, 0, 8, 8)
+    rectList += new Rect(0, 8, 8, 8)
+    rectList += new Rect(-1, 16, 8, 8)
+    val rect = ChessboardFinderContoursAlgorithm().scanRectList(rectList)
+    rect should be (None)
+  }
 }
