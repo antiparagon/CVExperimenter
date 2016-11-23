@@ -62,9 +62,9 @@ class ChessboardFinderContoursAlgorithmTest extends FlatSpec with Matchers {
 
   "ChessboardFinderContoursAlgorithm.scanRectList()" should "return None given Rect list less then 4 Rect" in {
     val rectList = ArrayBuffer[Rect]()
-    rectList += new Rect(0, 0, 100, 100)
-    rectList += new Rect(0, 0, 10, 10)
-    rectList += new Rect(10, 0, 10, 10)
+    rectList += new Rect(0, 0, 64, 64)
+    rectList += new Rect(0, 0, 8, 8)
+    rectList += new Rect(0, 8, 8, 8)
     val rect = ChessboardFinderContoursAlgorithm().scanRectList(rectList)
     rect should be (None)
   }
