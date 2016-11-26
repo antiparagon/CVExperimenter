@@ -7,3 +7,4 @@
 * Get ChessScanner finding all the boards in Starting Position Faliure folder
     * Complete ChessboardFinderTester
 * Work on ChessPieceFinder
+* Test the webcam with ChessScanner

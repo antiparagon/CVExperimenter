@@ -154,6 +154,11 @@ class ChessboardFinderContoursAlgorithm {
       if(!rectMap.contains(rectangle)) {
         rectMap.put(rectangle, ArrayBuffer[Rectangle]())
       }
+    }
+
+    for (rect <- rectList) {
+      // Convert to Java Rectangle
+      val rectangle = rect2Rectangle(rect)
       // Calculate the area of the rectangle
       val area = rectangle.width * rectangle.height
       // Loop through the lookup of Rectangles
@@ -161,6 +166,7 @@ class ChessboardFinderContoursAlgorithm {
         if(jRect.contains(rectangle)) {
           val ja = jRect.width * jRect.height
           val multiple = ja / area
+          log.debug(s"Rectangle area $ja has rectangle with $multiple multiple inside")
           if(multiple < 75 && multiple > 63) {
             rectMap(jRect) += rectangle
           }
@@ -168,14 +174,17 @@ class ChessboardFinderContoursAlgorithm {
       }
     }
 
+
     var board: Rectangle = null
     var max = 0
     for((jRect, rList) <- rectMap) {
       var squaresInside = rectMap(jRect).size
+      log.debug(s"Rectangle $jRect has $squaresInside rectangles inside")
       if(squaresInside >= 3) {
         if(squaresInside > max) {
           board = jRect
           max = squaresInside
+          log.debug(s"Found a new rectangle with $max rectangles inside: $board")
         }
       }
     }
