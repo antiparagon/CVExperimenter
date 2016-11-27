@@ -160,16 +160,16 @@ class ChessboardFinderContoursAlgorithm {
       // Convert to Java Rectangle
       val rectangle = rect2Rectangle(rect)
       // Calculate the area of the rectangle
-      val area = rectangle.width * rectangle.height
+      val area = rectangle.width.toDouble * rectangle.height.toDouble
       // Loop through the lookup of Rectangles
       for((jRect, rList) <- rectMap) {
         if(jRect.contains(rectangle)) {
-          val ja = jRect.width * jRect.height
+          val ja = jRect.width.toDouble * jRect.height.toDouble
           val multiple = ja / area
           log.debug(s"Rectangle area $ja has rectangle with $multiple multiple inside")
-          if(multiple < 75 && multiple > 63) {
+          //if(multiple < 75.0 && multiple > 63.0) {
             rectMap(jRect) += rectangle
-          }
+          //}
         }
       }
     }

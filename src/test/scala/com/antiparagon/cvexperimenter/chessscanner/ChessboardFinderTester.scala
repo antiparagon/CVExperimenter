@@ -18,7 +18,7 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val IMG_FOLDER = "images/Chess Scanner/Starting Position/Failures/"
   val OUTPUT_FOLDER = "Debug Images/"
   val BOARD_SETUP = "BoardSetup.jpg"
-  val BOARD_SETUP_RECT = new Rect(95, 49, 322, 324)
+  val BOARD_SETUP_RECT = new Rect(13, 13, 223, 223)
   val CHESS_BOARD_SET_UP = "chess_board_set_up.jpg"
   val CHESS_BOARD_SET_UP_RECT = new Rect(95, 49, 322, 324)
   val CHESS = "chess.png"
