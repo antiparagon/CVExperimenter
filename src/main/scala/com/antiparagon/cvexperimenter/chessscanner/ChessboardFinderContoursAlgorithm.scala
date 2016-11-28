@@ -133,7 +133,7 @@ class ChessboardFinderContoursAlgorithm {
   /**
     * Scans the list of rectangles and returns a rectangle that contains
     * a rectangle with multiple smaller rectangle inside. It looks for a rectangle
-    * that contains at least 3 smaller rectangles with 1/63 the area of the
+    * that contains at least 3 smaller rectangles with 1/50th the area of the
     * containing rectangle.
     *
     * @param rectList
@@ -167,9 +167,9 @@ class ChessboardFinderContoursAlgorithm {
           val ja = jRect.width.toDouble * jRect.height.toDouble
           val multiple = ja / area
           log.debug(s"Rectangle area $ja has rectangle with $multiple multiple inside")
-          //if(multiple < 75.0 && multiple > 63.0) {
+          if(multiple > 50.0) {
             rectMap(jRect) += rectangle
-          //}
+          }
         }
       }
     }
