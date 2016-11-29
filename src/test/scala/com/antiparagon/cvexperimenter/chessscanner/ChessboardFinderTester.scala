@@ -40,6 +40,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     rect.get should be (BOARD_SETUP_RECT)
   }
 
+  /**
+    * This board is hard to find because the chessboard is the full image with no background.
+    */
   "ChessboardFinder" should "return Rect when given image " + CHESS_BOARD_SET_UP in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_SET_UP)
     assert(!img.empty())
