@@ -21,6 +21,8 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val BOARD_SETUP_RECT = new Rect(13, 13, 223, 223)
   val CHESS_BOARD_SET_UP = "chess_board_set_up.jpg"
   val CHESS_BOARD_SET_UP_RECT = new Rect(95, 49, 322, 324)
+  val CHESS_BOARD_SET_UP_MODIFIED = "chess_board_set_up_modified.jpg"
+  val CHESS_BOARD_SET_UP_MODIFIED_RECT = new Rect(9, 9, 350, 350)
   val CHESS = "chess.png"
   val CHESS_RECT = new Rect(95, 49, 322, 324)
   val CHESS_KID = "chesskid.png"
@@ -49,6 +51,13 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(CHESS_BOARD_SET_UP) + "_").findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (CHESS_BOARD_SET_UP_RECT)
+  }
+  "ChessboardFinder" should "return Rect when given image " + CHESS_BOARD_SET_UP_MODIFIED in {
+    val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_SET_UP_MODIFIED)
+    assert(!img.empty())
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(CHESS_BOARD_SET_UP_MODIFIED) + "_").findChessboard(img)
+    assert(rect.isDefined)
+    rect.get should be (CHESS_BOARD_SET_UP_MODIFIED_RECT)
   }
 
   "ChessboardFinder" should "return Rect when given image " + CHESS in {
