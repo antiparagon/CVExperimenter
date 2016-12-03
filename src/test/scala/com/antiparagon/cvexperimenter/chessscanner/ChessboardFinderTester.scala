@@ -28,7 +28,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val CHESS_MODIFIED = "chess_modified.png"
   val CHESS_MODIFIED_RECT = new Rect(95, 49, 322, 324)
   val CHESS_KID = "chesskid.png"
-  val CHESS_KID_RECT = new Rect(95, 49, 322, 324)
+  val CHESS_KID_RECT = new Rect(42, 10, 632, 632)
+  val CHESS_KID_MODIFIED = "chesskid_modified.png"
+  val CHESS_KID_MODIFIED_RECT = new Rect(42, 10, 632, 632)
   val DIAGRAM_OF_CHESS_BOARD_SETUP = "diagram-of-chess-board-setup.png"
   val DIAGRAM_OF_CHESS_BOARD_SETUP_RECT = new Rect(95, 49, 322, 324)
   val STAGRAM = "stagram.png"
@@ -76,6 +78,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     rect.get should be (CHESS_BOARD_SET_UP_MODIFIED_RECT)
   }
 
+  /**
+    * Still don't know what this isn't working...
+    */
   "ChessboardFinder" should "return Rect when given image " + CHESS in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS)
     assert(!img.empty())
@@ -91,12 +96,22 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     rect.get should be (CHESS_MODIFIED_RECT)
   }
 
+  /**
+    * This board was hard to find because the background was close to the dark square color.
+    */
   "ChessboardFinder" should "return Rect when given image " + CHESS_KID in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_KID)
     assert(!img.empty())
     val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(CHESS_KID) + "_").findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (CHESS_KID_RECT)
+  }
+  "ChessboardFinder" should "return Rect when given image " + CHESS_KID_MODIFIED in {
+    val img = Imgcodecs.imread(IMG_FOLDER + CHESS_KID_MODIFIED)
+    assert(!img.empty())
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(CHESS_KID_MODIFIED) + "_").findChessboard(img)
+    assert(rect.isDefined)
+    rect.get should be (CHESS_KID_MODIFIED_RECT)
   }
 
   "ChessboardFinder" should "return Rect when given image " + DIAGRAM_OF_CHESS_BOARD_SETUP in {
