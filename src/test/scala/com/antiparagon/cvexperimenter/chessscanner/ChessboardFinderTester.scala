@@ -17,24 +17,33 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
   val IMG_FOLDER = "images/Chess Scanner/Starting Position/Failures/"
   val OUTPUT_FOLDER = "Debug Images/"
+
   val BOARD_SETUP = "BoardSetup.jpg"
   val BOARD_SETUP_RECT = new Rect(13, 13, 223, 223)
+
   val CHESS_BOARD_SET_UP = "chess_board_set_up.jpg"
   val CHESS_BOARD_SET_UP_RECT = new Rect(0, 0, 350, 350)
   val CHESS_BOARD_SET_UP_MODIFIED = "chess_board_set_up_modified.jpg"
   val CHESS_BOARD_SET_UP_MODIFIED_RECT = new Rect(9, 9, 350, 350)
+
   val CHESS = "chess.png"
   val CHESS_RECT = new Rect(95, 49, 322, 324)
   val CHESS_MODIFIED = "chess_modified.png"
   val CHESS_MODIFIED_RECT = new Rect(95, 49, 322, 324)
+
   val CHESS_KID = "chesskid.png"
   val CHESS_KID_RECT = new Rect(42, 10, 632, 632)
   val CHESS_KID_MODIFIED = "chesskid_modified.png"
   val CHESS_KID_MODIFIED_RECT = new Rect(42, 10, 632, 632)
+
   val DIAGRAM_OF_CHESS_BOARD_SETUP = "diagram-of-chess-board-setup.png"
-  val DIAGRAM_OF_CHESS_BOARD_SETUP_RECT = new Rect(95, 49, 322, 324)
+  val DIAGRAM_OF_CHESS_BOARD_SETUP_RECT = new Rect(16, 11, 266, 274)
+  val DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED = "diagram-of-chess-board-setup_modified.png"
+  val DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED_RECT = new Rect(16, 11, 266, 274)
+
   val STAGRAM = "stagram.png"
   val STAGRAM_RECT = new Rect(95, 49, 322, 324)
+
   val VP_BLACKARRAY = "VP-Blackarray.png"
   val VP_BLACKARRAY_RECT = new Rect(95, 49, 322, 324)
 
@@ -114,12 +123,22 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     rect.get should be (CHESS_KID_MODIFIED_RECT)
   }
 
+  /**
+    * This board was hard to find because the background was close to the dark square color.
+    */
   "ChessboardFinder" should "return Rect when given image " + DIAGRAM_OF_CHESS_BOARD_SETUP in {
     val img = Imgcodecs.imread(IMG_FOLDER + DIAGRAM_OF_CHESS_BOARD_SETUP)
     assert(!img.empty())
     val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP) + "_").findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (DIAGRAM_OF_CHESS_BOARD_SETUP_RECT)
+  }
+  "ChessboardFinder" should "return Rect when given image " + DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED in {
+    val img = Imgcodecs.imread(IMG_FOLDER + DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)
+    assert(!img.empty())
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED) + "_").findChessboard(img)
+    assert(rect.isDefined)
+    rect.get should be (DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED_RECT)
   }
 
   "ChessboardFinder" should "return Rect when given image " + STAGRAM in {
