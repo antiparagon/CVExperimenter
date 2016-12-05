@@ -42,7 +42,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED_RECT = new Rect(16, 11, 266, 274)
 
   val STAGRAM = "stagram.png"
-  val STAGRAM_RECT = new Rect(95, 49, 322, 324)
+  val STAGRAM_RECT = new Rect(15, 13, 298, 300)
+  val STAGRAM_MODIFIED = "stagram_modified.png"
+  val STAGRAM_MODIFIED_RECT = new Rect(15, 13, 298, 300)
 
   val VP_BLACKARRAY = "VP-Blackarray.png"
   val VP_BLACKARRAY_RECT = new Rect(95, 49, 322, 324)
@@ -141,6 +143,10 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     rect.get should be (DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED_RECT)
   }
 
+  /**
+    * The contrast between light and dark squares was not enough. The adaptive
+    * thresholding was making all the squares white.
+    */
   "ChessboardFinder" should "return Rect when given image " + STAGRAM in {
     val img = Imgcodecs.imread(IMG_FOLDER + STAGRAM)
     assert(!img.empty())
@@ -148,6 +154,14 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (STAGRAM_RECT)
   }
+  "ChessboardFinder" should "return Rect when given image " + STAGRAM_MODIFIED in {
+    val img = Imgcodecs.imread(IMG_FOLDER + STAGRAM_MODIFIED)
+    assert(!img.empty())
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(STAGRAM_MODIFIED) + "_").findChessboard(img)
+    assert(rect.isDefined)
+    rect.get should be (STAGRAM_MODIFIED_RECT)
+  }
+
 
   "ChessboardFinder" should "return Rect when given image " + VP_BLACKARRAY in {
     val img = Imgcodecs.imread(IMG_FOLDER + VP_BLACKARRAY)
