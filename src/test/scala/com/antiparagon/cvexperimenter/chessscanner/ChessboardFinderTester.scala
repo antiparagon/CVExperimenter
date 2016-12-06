@@ -48,6 +48,8 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
 
   val VP_BLACKARRAY = "VP-Blackarray.png"
   val VP_BLACKARRAY_RECT = new Rect(95, 49, 322, 324)
+  val VP_BLACKARRAY_MODIFIED = "VP-Blackarray_modified.png"
+  val VP_BLACKARRAY_MODIFIED_RECT = new Rect(95, 49, 322, 324)
 
 
   /**
@@ -169,6 +171,13 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
     val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(VP_BLACKARRAY) + "_").findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (VP_BLACKARRAY_RECT)
+  }
+  "ChessboardFinder" should "return Rect when given image " + VP_BLACKARRAY_MODIFIED in {
+    val img = Imgcodecs.imread(IMG_FOLDER + VP_BLACKARRAY_MODIFIED)
+    assert(!img.empty())
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(VP_BLACKARRAY_MODIFIED) + "_").findChessboard(img)
+    assert(rect.isDefined)
+    rect.get should be (VP_BLACKARRAY_MODIFIED_RECT)
   }
 
   def removeExt(filename: String): String = {
