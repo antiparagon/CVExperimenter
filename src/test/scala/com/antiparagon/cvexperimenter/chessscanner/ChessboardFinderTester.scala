@@ -47,10 +47,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   val STAGRAM_MODIFIED_RECT = new Rect(15, 13, 298, 300)
 
   val VP_BLACKARRAY = "VP-Blackarray.png"
-  val VP_BLACKARRAY_RECT = new Rect(95, 49, 322, 324)
+  val VP_BLACKARRAY_RECT = new Rect(6, 8, 280, 279)
   val VP_BLACKARRAY_MODIFIED = "VP-Blackarray_modified.png"
-  val VP_BLACKARRAY_MODIFIED_RECT = new Rect(95, 49, 322, 324)
-
+  val VP_BLACKARRAY_MODIFIED_RECT = new Rect(6, 8, 280, 279)
 
   /**
     * This board only has a few squares found using contours. The fix was to
@@ -165,6 +164,9 @@ class ChessboardFinderTester extends FlatSpec with Matchers {
   }
 
 
+  /**
+    * The chessboard image was too small. Resizing the image made the test pass.
+    */
   "ChessboardFinder" should "return Rect when given image " + VP_BLACKARRAY in {
     val img = Imgcodecs.imread(IMG_FOLDER + VP_BLACKARRAY)
     assert(!img.empty())
