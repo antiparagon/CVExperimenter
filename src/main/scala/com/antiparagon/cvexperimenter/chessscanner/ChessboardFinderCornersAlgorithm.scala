@@ -87,14 +87,12 @@ class ChessboardFinderCornersAlgorithm {
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)
     if(outputDebugImgs) {
-      //CVExperimenter.tabManager.addDebugImageTab("Blurred image", ImageTools.convertCVtoFX(tempImg))
       Imgcodecs.imwrite(debugImgPrefix + "_BlurredImg.png", tempImg)
     }
 
     Imgproc.threshold(tempImg, tempImg, 0, 255, Imgproc.THRESH_BINARY + Imgproc.THRESH_OTSU)
     //Imgproc.adaptiveThreshold(tempImg, tempImg, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, 40)
     if(outputDebugImgs) {
-      //CVExperimenter.tabManager.addDebugImageTab("Adaptive Threshold image", ImageTools.convertCVtoFX(tempImg))
       Imgcodecs.imwrite(debugImgPrefix + "_AdaptiveThreshold.png", tempImg)
     }
 
@@ -104,13 +102,9 @@ class ChessboardFinderCornersAlgorithm {
                                                                                  Calib3d.CALIB_CB_FILTER_QUADS + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       log.debug("Chessboard not found")
-      if(!CVExperimenter.USE_CHESSSCANNER_ON_VIDEOTAB) { // Create debug tab if not using the webcam
-        //CVExperimenter.tabManager.addDebugImageTab("Threshold image", ImageTools.convertCVtoFX(tempImg))
+      if(outputDebugImgs) {
         Calib3d.drawChessboardCorners(tempImg, boardSize, squareCorners, false)
-        if(outputDebugImgs) {
-          //CVExperimenter.tabManager.addDebugImageTab("Found squares", ImageTools.convertCVtoFX(tempImg))
-          Imgcodecs.imwrite(debugImgPrefix + "_FoundSquares.png", tempImg)
-        }
+        Imgcodecs.imwrite(debugImgPrefix + "_FoundSquares.png", tempImg)
       }
       return None
     }
