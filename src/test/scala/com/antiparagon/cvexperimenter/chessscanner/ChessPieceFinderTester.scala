@@ -1,5 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import java.io.File
+
 import org.opencv.core.{Core, Rect}
 import org.opencv.imgcodecs.Imgcodecs
 import org.scalatest._
@@ -24,6 +26,14 @@ class ChessPieceFinderTester extends FlatSpec with Matchers {
   }
 
 
+  def getListOfFiles(dir: String): List[File] = {
+    val d = new File(dir)
+    if (d.exists && d.isDirectory) {
+      d.listFiles.filter(_.isFile).toList
+    } else {
+      List[File]()
+    }
+  }
 
   def removeExt(filename: String): String = {
     if(filename.contains(".")) filename.substring(0, filename.lastIndexOf('.'))
