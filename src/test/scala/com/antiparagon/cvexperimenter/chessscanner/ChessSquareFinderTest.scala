@@ -13,12 +13,12 @@ class ChessSquareFinderTest extends FlatSpec with Matchers {
   val BOARD_PIC = "images/Chess Scanner/Game Positions/twic.png"
 
   "ChessSquareFinder" should "return an empty array when given null to getChessboardSquares()" in {
-    val rect = ChessSquareFinder.getChessboardSquares(null)
+    val rect = ChessSquareFinder().getChessboardSquares(null)
     rect.length should be (0)
   }
 
   "ChessSquareFinder" should "return an empty array when given an empty image to getChessboardSquares()" in {
-    val rect = ChessSquareFinder.getChessboardSquares(new Mat())
+    val rect = ChessSquareFinder().getChessboardSquares(new Mat())
     rect.length should be (0)
   }
 
@@ -26,7 +26,7 @@ class ChessSquareFinderTest extends FlatSpec with Matchers {
     val img = Imgcodecs.imread(BOARD_PIC)
     val board = new Mat(img, new Rect(217, 140, 322, 319))
 
-    val squares = ChessSquareFinder.getChessboardSquares(board)
+    val squares = ChessSquareFinder().getChessboardSquares(board)
     squares.length should be (64)
   }
 

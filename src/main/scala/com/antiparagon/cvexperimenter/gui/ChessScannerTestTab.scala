@@ -50,7 +50,7 @@ class ChessScannerTestTab(val img : Image) extends Tab with ExperimenterTab {
         }
         case STEP2_TEXT => {
           log.info(STEP2_TEXT)
-          val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+          val squares = ChessSquareFinder().getChessboardSquares(boardImage)
           if(!squares.isEmpty) {
             log.info(s"Found ${squares.length} squares")
             text = "Done"

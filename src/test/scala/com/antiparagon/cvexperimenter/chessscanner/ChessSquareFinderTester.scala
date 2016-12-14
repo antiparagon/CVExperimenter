@@ -78,7 +78,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (ALGEBRAIC_NOTATION_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -99,7 +99,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (BOARD_SETUP_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -111,7 +111,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (CHESS_BOARD_SET_UP_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -123,7 +123,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (CHESS_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -135,7 +135,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (CHESS_BOARD_NEW_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -147,7 +147,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (CHESS_BOARD_2_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -159,7 +159,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (CHESS_KID_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -171,7 +171,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -183,7 +183,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (FENBOARD_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -195,7 +195,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (FRITZBSMALL_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -207,7 +207,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (KID_CHESS_SETUP_BOARD_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -219,7 +219,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (NUMBER_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -231,7 +231,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (POSITION_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -243,7 +243,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (PURPLE_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -255,7 +255,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (STAGRAM_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -267,7 +267,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (STARTING_POSITION_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 
@@ -279,7 +279,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
     assert(rect.isDefined)
     rect.get should be (VP_BLACKARRAY_MODIFIED_RECT)
     val boardImage = new Mat(img, rect.get)
-    val squares = ChessSquareFinder.getChessboardSquares(boardImage)
+    val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     squares.length should be (64)
   }
 

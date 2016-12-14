@@ -8,6 +8,27 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
 
+
+/**
+  * Created by wmckay on 12/14/16.
+  */
+object ChessSquareFinder {
+
+  def apply(): ChessSquareFinder = {
+    new ChessSquareFinder
+  }
+
+  def apply(debugImagePrefix: String): ChessSquareFinder = {
+    val chessSquareFinder = new ChessSquareFinder
+    chessSquareFinder.outputDebugImgs = true
+    chessSquareFinder.debugImgPrefix = debugImagePrefix
+    //chessSquareFinder.cornersAlgorithm = ChessSquareFinderCornersAlgorithm(chessSquareFinder.debugImgPrefix)
+    //chessSquareFinder.contoursAlgorithm = ChessSquareFinderContoursAlgorithm(chessSquareFinder.debugImgPrefix)
+    chessSquareFinder
+  }
+}
+
+
 /**
   * This class handles choosing the different algorithms to use to find
   * chess squares in a chessboard image. It assumes that the
@@ -17,9 +38,18 @@ import scala.collection.mutable
   *
   * Created by wmckay on 7/10/16.
   */
-object ChessSquareFinder {
+class ChessSquareFinder {
 
   val log = Logger(LoggerFactory.getLogger("ChessSquareFinder"))
+
+  /*
+    For debugging of the algorithm. Outputs intermediate stage images.
+   */
+  var outputDebugImgs = false
+  // Prefix for debug images
+  var debugImgPrefix = "ChessboardFinder_"
+  var cornersAlgorithm = ChessboardFinderCornersAlgorithm()
+  var contoursAlgorithm = ChessboardFinderContoursAlgorithm()
 
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function

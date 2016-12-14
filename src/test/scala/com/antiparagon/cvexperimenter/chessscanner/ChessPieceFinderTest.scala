@@ -37,7 +37,7 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
     val img = Imgcodecs.imread(BOARD_PIC)
     val board = new Mat(img, new Rect(95, 49, 323, 324))
 
-    val squares = ChessSquareFinder.getChessboardSquares(board)
+    val squares = ChessSquareFinder().getChessboardSquares(board)
     squares.length should be (64)
     val chessboard = Chessboard.create(squares)
     val pieces = ChessPieceFinder.findChessPieces(chessboard, board)

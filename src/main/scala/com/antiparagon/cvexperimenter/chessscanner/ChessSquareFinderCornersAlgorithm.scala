@@ -19,7 +19,7 @@ import scala.collection.mutable
 object ChessSquareFinderCornersAlgorithm {
 
   import scala.collection.JavaConversions._
-  val log = Logger(LoggerFactory.getLogger("ChessSquareFinder"))
+  val log = Logger(LoggerFactory.getLogger("ChessSquareFinderCornersAlgorithm"))
 
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function

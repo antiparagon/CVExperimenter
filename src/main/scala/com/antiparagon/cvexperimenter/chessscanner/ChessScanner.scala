@@ -71,7 +71,7 @@ class ChessScanner {
     */
   def findSquares(): Array[Rect] = {
     if(boardImage != null) {
-      squares = ChessSquareFinder.getChessboardSquares(boardImage)
+      squares = ChessSquareFinder().getChessboardSquares(boardImage)
       log.debug(s"Squares found: ${squares.size}")
       if(squares.size == 64) {
         var index = 0
