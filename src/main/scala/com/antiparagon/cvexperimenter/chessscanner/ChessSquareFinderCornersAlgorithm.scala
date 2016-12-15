@@ -8,6 +8,25 @@ import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
 
+
+/**
+  * Created by wmckay on 12/15/16.
+  */
+object ChessSquareFinderCornersAlgorithm {
+
+  def apply(): ChessSquareFinderCornersAlgorithm = {
+    new ChessSquareFinderCornersAlgorithm
+  }
+
+  def apply(debugImagePrefix: String): ChessSquareFinderCornersAlgorithm = {
+    val chessSquareFinder = new ChessSquareFinderCornersAlgorithm
+    chessSquareFinder.outputDebugImgs = true
+    chessSquareFinder.debugImgPrefix = debugImagePrefix + chessSquareFinder.debugImgPrefix
+    chessSquareFinder
+  }
+}
+
+
 /**
   * Uses the OpenCV library function Calib3d.findChessboardCorners() that is
   * suppoesed to be used for calibrate cameras. The function is perfect for
@@ -16,11 +35,17 @@ import scala.collection.mutable
   *
   * Created by wmckay on 10/3/16.
   */
-object ChessSquareFinderCornersAlgorithm {
+class ChessSquareFinderCornersAlgorithm {
 
   import scala.collection.JavaConversions._
   val log = Logger(LoggerFactory.getLogger("ChessSquareFinderCornersAlgorithm"))
 
+  /*
+    For debugging of the algorithm. Outputs intermediate stage images.
+   */
+  var outputDebugImgs = false
+  // Prefix for debug images
+  var debugImgPrefix = "ChessSquareFinderCornersAlgorithm"
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function
     * assumes that the inImg is just of a cropped chessboard and nothing else.

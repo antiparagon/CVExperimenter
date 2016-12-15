@@ -48,8 +48,7 @@ class ChessSquareFinder {
   var outputDebugImgs = false
   // Prefix for debug images
   var debugImgPrefix = "ChessboardFinder_"
-  var cornersAlgorithm = ChessboardFinderCornersAlgorithm()
-  var contoursAlgorithm = ChessboardFinderContoursAlgorithm()
+  var cornersAlgorithm = ChessSquareFinderCornersAlgorithm()
 
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function
@@ -69,7 +68,7 @@ class ChessSquareFinder {
       return Array[Rect]()
     }
 
-    val squares = ChessSquareFinderCornersAlgorithm.getChessboardSquares(inImg)
+    val squares = cornersAlgorithm.getChessboardSquares(inImg)
     return squares
   }
 }
