@@ -22,7 +22,7 @@ object ChessSquareFinder {
     val chessSquareFinder = new ChessSquareFinder
     chessSquareFinder.outputDebugImgs = true
     chessSquareFinder.debugImgPrefix = debugImagePrefix
-    //chessSquareFinder.cornersAlgorithm = ChessSquareFinderCornersAlgorithm(chessSquareFinder.debugImgPrefix)
+    chessSquareFinder.cornersAlgorithm = ChessSquareFinderCornersAlgorithm(chessSquareFinder.debugImgPrefix)
     //chessSquareFinder.contoursAlgorithm = ChessSquareFinderContoursAlgorithm(chessSquareFinder.debugImgPrefix)
     chessSquareFinder
   }
