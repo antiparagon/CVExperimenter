@@ -3,6 +3,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
+import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
@@ -78,6 +79,9 @@ class ChessSquareFinderCornersAlgorithm {
     //val found = Calib3d.findChessboardCorners(tempImg, boardSize, squareCorners, Calib3d.CALIB_CB_NORMALIZE_IMAGE + Calib3d.CALIB_CB_FILTER_QUADS + Calib3d.CALIB_CB_FAST_CHECK)
     if(!found) {
       log.debug("Chessboard not found")
+      if(outputDebugImgs) {
+        Imgcodecs.imwrite(debugImgPrefix + "_Threshold.png", tempImg)
+      }
       return squares.toArray
     }
     val term = new TermCriteria(TermCriteria.EPS | TermCriteria.MAX_ITER, 30, 0.1)
