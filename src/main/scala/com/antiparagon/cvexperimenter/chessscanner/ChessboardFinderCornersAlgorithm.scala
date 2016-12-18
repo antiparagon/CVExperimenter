@@ -1,6 +1,5 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import com.antiparagon.cvexperimenter.CVExperimenter
 import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._

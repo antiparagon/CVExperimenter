@@ -38,7 +38,7 @@ object ChessSquareFinderCornersAlgorithm {
   */
 class ChessSquareFinderCornersAlgorithm {
 
-  import scala.collection.JavaConversions._
+  import scala.collection.JavaConverters._
   val log = Logger(LoggerFactory.getLogger("ChessSquareFinderCornersAlgorithm"))
 
   /*
@@ -154,7 +154,7 @@ class ChessSquareFinderCornersAlgorithm {
         val index = col + row * 7
         val point = points.get(index)
         val nextPoint = points.get(index + 1)
-        val nextRowPoint = points(col + (row + 1) * 7)
+        val nextRowPoint = points.get(col + (row + 1) * 7)
         if(col == 0) {
           val square = new Rect
           square.x = (point.x - avgWidth).toInt
