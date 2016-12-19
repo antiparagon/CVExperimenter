@@ -10,6 +10,8 @@ import scala.collection.mutable
 
 
 /**
+  * Factory methods to create ChessSquareFinder.
+  *
   * Created by wmckay on 12/14/16.
   */
 object ChessSquareFinder {
@@ -32,7 +34,7 @@ object ChessSquareFinder {
 /**
   * This class handles choosing the different algorithms to use to find
   * chess squares in a chessboard image. It assumes that the
-  * ChessboardFineder code has already been run and that the image
+  * ChessboardFinder code has already been run and that the image
   * is a cropped chessboard image. Currently there is only one
   * algorithm being used (11/11/16).
   *

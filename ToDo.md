@@ -4,7 +4,6 @@
 * Get DFT and IDFT working correctly
 * Learn what the OpenCV BRISK feature detector does
 * Learn about OpenCV descriptor extractors
-* Get ChessScanner finding all the boards in Starting Position Faliure folder
-    * Complete ChessboardFinderTester
-* Work on ChessPieceFinder
+* Work on ChessSquareFinderTester
+* Work on ChessPieceFinderTester
 * Test the webcam with ChessScanner

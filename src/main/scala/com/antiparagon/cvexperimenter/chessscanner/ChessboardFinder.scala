@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory
 
 
 /**
+  * Factory methods to create ChessboardFinder.
+  *
   * Created by wmckay on 11/15/16.
   */
 object ChessboardFinder {
