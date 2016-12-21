@@ -65,6 +65,10 @@ class ChessSquareFinderCornersAlgorithm {
       return squares.toArray
     }
 
+    if(outputDebugImgs) {
+      Imgcodecs.imwrite(debugImgPrefix + "_InputImg.png", inImg)
+    }
+
     val tempImg = new Mat
     Imgproc.cvtColor(inImg, tempImg, Imgproc.COLOR_BGR2GRAY)
     //Imgproc.GaussianBlur(tempImg, tempImg, new Size(5, 5), 0)

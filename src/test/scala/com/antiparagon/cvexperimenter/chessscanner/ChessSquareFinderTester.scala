@@ -74,7 +74,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + ALGEBRAIC_NOTATION in {
     val img = Imgcodecs.imread(IMG_FOLDER + ALGEBRAIC_NOTATION)
     assert(!img.empty())
-    val rect = ChessboardFinder().findChessboard(img)
+    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(ALGEBRAIC_NOTATION) + "_").findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (ALGEBRAIC_NOTATION_RECT)
     val boardImage = new Mat(img, rect.get)
