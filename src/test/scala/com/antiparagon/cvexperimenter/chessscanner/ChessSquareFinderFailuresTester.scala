@@ -13,7 +13,7 @@ import org.scalatest._
 class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
-  val IMG_FOLDER = "images/Chess Scanner/Starting Position/"
+  val IMG_FOLDER = "images/Chess Scanner/Starting Position/Chess Square Failures/"
   val OUTPUT_FOLDER = "Debug Images/"
 
   val ALGEBRAIC_NOTATION = "algebraic_notation.png"

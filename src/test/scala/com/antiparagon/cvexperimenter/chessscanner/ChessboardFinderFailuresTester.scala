@@ -15,7 +15,7 @@ import org.scalatest._
 class ChessboardFinderFailuresTester extends FlatSpec with Matchers {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
-  val IMG_FOLDER = "images/Chess Scanner/Starting Position/Failures/"
+  val IMG_FOLDER = "images/Chess Scanner/Starting Position/Chessboard Failures/"
   val OUTPUT_FOLDER = "Debug Images/"
 
   val BOARD_SETUP = "BoardSetup.jpg"
