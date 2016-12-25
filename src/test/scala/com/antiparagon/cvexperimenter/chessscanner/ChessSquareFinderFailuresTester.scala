@@ -40,7 +40,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
   val PURPLE = "purple.png"
   val PURPLE_RECT = new Rect(2, 2, 466, 260)
 
-
+  /**
+    * This board is too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + ALGEBRAIC_NOTATION in {
     val img = Imgcodecs.imread(IMG_FOLDER + ALGEBRAIC_NOTATION)
     assert(!img.empty())
@@ -52,7 +54,6 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
 //  "ChessSquareFinder" should "return Array with 64 Rects when given image " + BEGINN1 in {
 //    val img = Imgcodecs.imread(IMG_FOLDER + BEGINN1)
 //    assert(!img.empty())
@@ -61,7 +62,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
 //    rect.get should be (BEGINN1_RECT)
 //  }
 
-
+  /**
+    * This board is too
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + BOARD_SETUP in {
     val img = Imgcodecs.imread(IMG_FOLDER + BOARD_SETUP)
     assert(!img.empty())
@@ -73,7 +76,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This board is too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + CHESS_BOARD_SET_UP_MODIFIED in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_SET_UP_MODIFIED)
     assert(!img.empty())
@@ -85,7 +90,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This board if too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + CHESS_MODIFIED in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_MODIFIED)
     assert(!img.empty())
@@ -97,7 +104,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This board is too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + CHESS_BOARD_2 in {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_2)
     assert(!img.empty())
@@ -109,7 +118,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This board is too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + FENBOARD in {
     val img = Imgcodecs.imread(IMG_FOLDER + FENBOARD)
     assert(!img.empty())
@@ -121,7 +132,9 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This board is too...
+    */
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + PURPLE in {
     val img = Imgcodecs.imread(IMG_FOLDER + PURPLE)
     assert(!img.empty())
@@ -133,7 +146,12 @@ class ChessSquareFinderFailuresTester extends FlatSpec with Matchers {
     squares.length should be (64)
   }
 
-
+  /**
+    * This is a helper function to remove the file extension from a filename.
+    *
+    * @param filename
+    * @return file name sans extenstion
+    */
   def removeExt(filename: String): String = {
     if(filename.contains(".")) filename.substring(0, filename.lastIndexOf('.'))
     else filename
