@@ -6,9 +6,9 @@ import org.scalatest._
 
 /**
   * This test file is meant to test all the example chessboard images saved in the
-  * 'CVExperimenter\images\Chess Scanner\Starting Position\Failures' folder. Those images
-  * are the ones that the current algorithms do not work on. If these images are made to work
-  * then all saved images will have the algorithms find the chessboards.
+  * 'CVExperimenter/images/Chess Scanner/Starting Position/Chessboard Failures' folder.
+  * These images are the ones that the current algorithms do not work on. If these images
+  * are made to work then all saved images will have the algorithms find the chessboards.
   *
   * Created by wmckay on 11/5/16.
   */

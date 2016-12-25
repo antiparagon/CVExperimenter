@@ -6,7 +6,7 @@ import org.scalatest._
 
 /**
   * This test file is meant to test all the example chessboard images saved in the
-  * 'CVExperimenter/images/Chess Scanner/Starting Position' folder.
+  * 'CVExperimenter/images/Chess Scanner/Starting Position/Chess Square Failures' folder.
   *
   * Created by wmckay on 12/22/16.
   */
