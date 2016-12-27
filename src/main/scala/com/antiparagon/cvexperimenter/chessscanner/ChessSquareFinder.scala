@@ -3,6 +3,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 import com.typesafe.scalalogging.Logger
 import org.opencv.calib3d.Calib3d
 import org.opencv.core._
+import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
@@ -68,6 +69,10 @@ class ChessSquareFinder {
     if(inImg.empty()) {
       log.debug("Chessboard image empty")
       return Array[Rect]()
+    }
+
+    if(outputDebugImgs) {
+      Imgcodecs.imwrite(debugImgPrefix + "_InputImg.png", inImg)
     }
 
     val squares = cornersAlgorithm.getChessboardSquares(inImg)
