@@ -74,7 +74,7 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + ALGEBRAIC_NOTATION in {
     val img = Imgcodecs.imread(IMG_FOLDER + ALGEBRAIC_NOTATION)
     assert(!img.empty())
-    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(ALGEBRAIC_NOTATION) + "_").findChessboard(img)
+    val rect = ChessboardFinder().findChessboard(img)
     assert(rect.isDefined)
     rect.get should be (ALGEBRAIC_NOTATION_RECT)
     val boardImage = new Mat(img, rect.get)
@@ -83,13 +83,17 @@ class ChessSquareFinderTester extends FlatSpec with Matchers {
   }
 
 
-//  "ChessSquareFinder" should "return Array with 64 Rects when given image " + BEGINN1 in {
-//    val img = Imgcodecs.imread(IMG_FOLDER + BEGINN1)
-//    assert(!img.empty())
-//    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(BEGINN1) + "_").findChessboard(img)
-//    assert(rect.isDefined)
-//    rect.get should be (BEGINN1_RECT)
-//  }
+  //  "ChessSquareFinder" should "return Array with 64 Rects when given image " + BEGINN1 in {
+  //    val img = Imgcodecs.imread(IMG_FOLDER + BEGINN1)
+  //    assert(!img.empty())
+  //    val rect = ChessboardFinder(OUTPUT_FOLDER + removeExt(BEGINN1) + "_").findChessboard(img)
+  //    //val rect = ChessboardFinder().findChessboard(img)
+  //    assert(rect.isDefined)
+  //    rect.get should be (BEGINN1_RECT)
+  //    val boardImage = new Mat(img, rect.get)
+  //    val squares = ChessSquareFinder(OUTPUT_FOLDER + removeExt(BEGINN1) + "_").getChessboardSquares(boardImage)
+  //    squares.length should be (64)
+  //  }
 
 
   "ChessSquareFinder" should "return Array with 64 Rects when given image " + BOARD_SETUP in {
