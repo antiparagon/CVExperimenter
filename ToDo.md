@@ -7,3 +7,4 @@
 * Work on ChessSquareFinderTester
 * Work on ChessPieceFinderTester
 * Test the webcam with ChessScanner
+* Upgrade to OpenCV 3.2
