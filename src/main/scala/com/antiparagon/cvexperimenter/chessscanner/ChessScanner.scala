@@ -94,7 +94,7 @@ class ChessScanner {
   def findPieces(): Int = {
     if(boardImage != null) {
       if(squares.size == 64) {
-        val piecesFound = ChessPieceFinder.findChessPieces(chessboard, boardImage)
+        val piecesFound = ChessPieceFinder().findChessPieces(chessboard, boardImage)
         return piecesFound
       }
     }

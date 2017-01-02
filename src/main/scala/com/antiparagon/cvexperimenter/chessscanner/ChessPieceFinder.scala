@@ -1,13 +1,37 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.io.{File, PrintStream}
-
 import org.opencv.core.{Mat, Rect}
+
+/**
+  * Factory methods to create ChessSquareFinder.
+  *
+  * Created by wmckay on 1/2/17.
+  */
+object ChessPieceFinder {
+
+  def apply(): ChessPieceFinder = {
+    new ChessPieceFinder
+  }
+
+  def apply(debugImagePrefix: String): ChessPieceFinder = {
+    val chessPieceFinder = new ChessPieceFinder
+    chessPieceFinder.outputDebugImgs = true
+    chessPieceFinder.debugImgPrefix = debugImagePrefix
+    chessPieceFinder
+  }
+}
 
 /**
   * Created by wmckay on 6/12/16.
   */
-object ChessPieceFinder {
+class ChessPieceFinder {
+
+  /*
+    For debugging of the algorithm. Outputs intermediate stage images.
+   */
+  var outputDebugImgs = false
+  // Prefix for debug images
+  var debugImgPrefix = "ChessboardFinder_"
 
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
 

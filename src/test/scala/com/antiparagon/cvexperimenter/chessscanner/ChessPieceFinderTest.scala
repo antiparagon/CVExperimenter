@@ -13,14 +13,14 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
   val BOARD_PIC = "images/Chess Scanner/Starting Position/StartingPosition.png"
 
   "ChessPieceFinder" should "return 0 when given nulls to findChessPieces()" in {
-    val pieces = ChessPieceFinder.findChessPieces(null, null)
+    val pieces = ChessPieceFinder().findChessPieces(null, null)
     pieces should be (0)
   }
 
   "ChessPieceFinder" should "return 0 when given an empty chessboard and a empty Mat to findChessPieces()" in {
     val chessboard = new Chessboard()
     val img = new Mat()
-    val pieces = ChessPieceFinder.findChessPieces(chessboard, img)
+    val pieces = ChessPieceFinder().findChessPieces(chessboard, img)
     pieces should be (0)
   }
 
@@ -28,7 +28,7 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
     val img = Imgcodecs.imread(BOARD_PIC)
     val chessboard = new Chessboard()
     val board = new Mat(img, new Rect(95, 49, 323, 324))
-    val pieces = ChessPieceFinder.findChessPieces(chessboard, board)
+    val pieces = ChessPieceFinder().findChessPieces(chessboard, board)
     pieces should be (0)
   }
 
@@ -40,7 +40,7 @@ class ChessPieceFinderTest extends FlatSpec with Matchers {
     val squares = ChessSquareFinder().getChessboardSquares(board)
     squares.length should be (64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder.findChessPieces(chessboard, board)
+    val pieces = ChessPieceFinder().findChessPieces(chessboard, board)
     pieces should be (32)
   }
 }
