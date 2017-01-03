@@ -165,19 +165,19 @@ class CommandPanel(tabManager: TabManager) {
             tabManager.addChessScannerTab(tabManager.getSelectedText + " - chess", image)
           }
         }
-      },
-
-      new Button {
-        text = "Chess Scanner Test"
-        style = BUTTON_STYLE
-        maxWidth = Double.MaxValue
-        onAction = handle {
-          if(tabManager.isTabSelected) {
-            val image = tabManager.getSelectedImg
-            tabManager.addChessScannerTestTab(tabManager.getSelectedText + " - test", image)
-          }
-        }
       }
+
+//      new Button {
+//        text = "Chess Scanner Test"
+//        style = BUTTON_STYLE
+//        maxWidth = Double.MaxValue
+//        onAction = handle {
+//          if(tabManager.isTabSelected) {
+//            val image = tabManager.getSelectedImg
+//            tabManager.addChessScannerTestTab(tabManager.getSelectedText + " - test", image)
+//          }
+//        }
+//      }
 
     )
   }
