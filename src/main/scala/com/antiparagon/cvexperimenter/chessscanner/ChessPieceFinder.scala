@@ -45,7 +45,7 @@ class ChessPieceFinder {
     //val output = new PrintStream(new File("foundpieces.csv"))
     //output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
-    val classifier = new ChessPieceClassifierFast()
+    val classifier = ChessPieceClassifierFast()
     val emptyRect = new Rect
 
     chessboard.getSquares().foreach(square => {

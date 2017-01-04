@@ -9,12 +9,36 @@ import org.opencv.imgcodecs.Imgcodecs
 case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double)
 
 /**
+  * Created by wmckay on 1/4/17.
+  */
+object ChessPieceClassifierFast {
+
+  def apply(): ChessPieceClassifierFast = {
+    new ChessPieceClassifierFast
+  }
+
+  def apply(debugImagePrefix: String): ChessPieceClassifierFast = {
+    val chessPieceClassifierFast = new ChessPieceClassifierFast
+    chessPieceClassifierFast.outputDebugImgs = true
+    chessPieceClassifierFast.debugImgPrefix = debugImagePrefix + chessPieceClassifierFast.debugImgPrefix
+    chessPieceClassifierFast
+  }
+}
+
+/**
   * Created by wmckay on 9/20/16.
   */
 class ChessPieceClassifierFast {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
+
+  /*
+    For debugging of the algorithm. Outputs intermediate stage images.
+   */
+  var outputDebugImgs = false
+  // Prefix for debug images
+  var debugImgPrefix = "ChessPieceClassifierFast"
 
   /**
     * Classifies the chess piece using FAST image detection features.
