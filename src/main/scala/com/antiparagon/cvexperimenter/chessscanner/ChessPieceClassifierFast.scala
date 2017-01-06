@@ -20,7 +20,7 @@ object ChessPieceClassifierFast {
   def apply(debugImagePrefix: String): ChessPieceClassifierFast = {
     val chessPieceClassifierFast = new ChessPieceClassifierFast
     chessPieceClassifierFast.outputDebugImgs = true
-    chessPieceClassifierFast.debugImgPrefix = debugImagePrefix + chessPieceClassifierFast.debugImgPrefix
+    chessPieceClassifierFast.debugImgPrefix = debugImagePrefix //+ chessPieceClassifierFast.debugImgPrefix
     chessPieceClassifierFast
   }
 }
@@ -74,7 +74,8 @@ class ChessPieceClassifierFast {
 
       val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
 
-      Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
+      //Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
+      //val imgPath = "ChessSquares/" + coorStr + "/" + coorStr + "_" + debugImgPrefix +".png"
       val imgPath = "ChessSquares/" + coorStr + "_" + debugImgPrefix +".png"
       Imgcodecs.imwrite(imgPath, squareImg)
 
