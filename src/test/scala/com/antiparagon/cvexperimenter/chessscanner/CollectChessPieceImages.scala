@@ -1,5 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import java.io.File
 import java.nio.file.{Files, Paths}
 
 
@@ -14,6 +15,21 @@ object CollectChessPieceImages {
     createFolders()
   }
 
+
+
+  def getListOfFiles(dir: String): List[File] = {
+    val d = new File(dir)
+    if (d.exists && d.isDirectory) {
+      d.listFiles.filter(_.isFile).toList
+    } else {
+      List[File]()
+    }
+  }
+
+  /**
+    * Helper function to create the folders the images are being collected
+    * into. Creates the folders if they don't exist.
+    */
   def createFolders(): Unit = {
     val rookFolder = Paths.get(IMG_FOLDER + "Rook")
     Files.createDirectories(rookFolder)
