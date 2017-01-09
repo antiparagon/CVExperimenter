@@ -13,9 +13,17 @@ object CollectChessPieceImages {
 
   def main(args: Array[String]): Unit = {
     createFolders()
+    collectStartingPositionImages()
   }
 
 
+  def collectStartingPositionImages(): Unit = {
+    var allImages = getListOfFiles(IMG_FOLDER)
+    allImages.foreach(f => {
+      println(f.getName())
+    })
+    //val rooks = allImages.filter(_.getName().startsWith("a1"))
+  }
 
   def getListOfFiles(dir: String): List[File] = {
     val d = new File(dir)
