@@ -19,10 +19,20 @@ object CollectChessPieceImages {
 
   def collectStartingPositionImages(): Unit = {
     var allImages = getListOfFiles(IMG_FOLDER)
-    allImages.foreach(f => {
-      println(f.getName())
+    allImages.foreach(img => {
+      if(startsWith(img.getName(), List("a1", "h1", "a8", "h8"))) {
+        println(img.getName())
+      }
     })
     //val rooks = allImages.filter(_.getName().startsWith("a1"))
+  }
+
+  def startsWith(filename: String, prefixes: List[String]): Boolean = {
+    val prefix = prefixes.find(prefix => filename.startsWith(prefix))
+    prefix match {
+      case Some(filename) => return true
+      case None => return false
+    }
   }
 
   def getListOfFiles(dir: String): List[File] = {
