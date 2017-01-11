@@ -1,7 +1,7 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.File
-import java.nio.file.{Files, Paths}
+import java.nio.file.{Files, Path, Paths, StandardCopyOption}
 
 
 /**
@@ -21,10 +21,23 @@ object CollectChessPieceImages {
     var allImages = getListOfFiles(IMG_FOLDER)
     allImages.foreach(img => {
       if(startsWith(img.getName(), List("a1", "h1", "a8", "h8"))) {
-        println(img.getName())
+        copyImg(img, Paths.get(IMG_FOLDER + "Rook/"))
       }
     })
     //val rooks = allImages.filter(_.getName().startsWith("a1"))
+  }
+
+  def copyImg(img: File, destination: Path, doMove: Boolean = false): Unit = {
+    println(s"Moving ${img.getName()} to $destination")
+
+    Not working it is writing over the Rook folder
+
+    if(doMove) {
+      Files.move(img.toPath, destination, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+    } else {
+      Files.copy(img.toPath, destination, StandardCopyOption.REPLACE_EXISTING)
+    }
+
   }
 
   def startsWith(filename: String, prefixes: List[String]): Boolean = {
