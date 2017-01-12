@@ -12,30 +12,46 @@ object CollectChessPieceImages {
   val IMG_FOLDER = "ChessSquares/"
 
   def main(args: Array[String]): Unit = {
-    createFolders()
-    collectStartingPositionImages()
+    createFolders
+    collectStartingPositionImages
   }
-
 
   def collectStartingPositionImages(): Unit = {
     var allImages = getListOfFiles(IMG_FOLDER)
     allImages.foreach(img => {
-      if(startsWith(img.getName(), List("a1", "h1", "a8", "h8"))) {
-        copyImg(img, Paths.get(IMG_FOLDER + "Rook/"))
+      if(startsWith(img.getName, List("a1", "h1", "a8", "h8"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Rook"))
+      }
+      if(startsWith(img.getName, List("b1", "g1", "b8", "g8"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Knight"))
+      }
+      if(startsWith(img.getName, List("c1", "f1", "c8", "f8"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Bishop"))
+      }
+      if(startsWith(img.getName, List("d1", "d8"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Queen"))
+      }
+      if(startsWith(img.getName, List("e1", "e8"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "King"))
+      }
+      if(startsWith(img.getName, List("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Pawn"))
+      }
+      if(startsWith(img.getName, List("a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"))) {
+        copyImg(img, Paths.get(IMG_FOLDER + "Pawn"))
       }
     })
-    //val rooks = allImages.filter(_.getName().startsWith("a1"))
   }
 
   def copyImg(img: File, destination: Path, doMove: Boolean = false): Unit = {
-    println(s"Moving ${img.getName()} to $destination")
-
-    Not working it is writing over the Rook folder
-
+    var dest = destination
+    if(destination.toFile.isDirectory) {
+      dest = destination.resolve(img.getName)
+    }
     if(doMove) {
-      Files.move(img.toPath, destination, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
+      Files.move(img.toPath, dest, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING)
     } else {
-      Files.copy(img.toPath, destination, StandardCopyOption.REPLACE_EXISTING)
+      Files.copy(img.toPath, dest, StandardCopyOption.REPLACE_EXISTING)
     }
 
   }
