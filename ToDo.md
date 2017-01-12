@@ -6,5 +6,6 @@
 * Learn about OpenCV descriptor extractors
 * Work on ChessSquareFinderTester
 * Work on ChessPieceFinderTester
+* Work with classification library
 * Test the webcam with ChessScanner
 * Upgrade to OpenCV 3.2
