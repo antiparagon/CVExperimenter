@@ -43,7 +43,7 @@ object CollectChessPieceImages {
     })
   }
 
-  def copyImg(img: File, destination: Path, doMove: Boolean = false): Unit = {
+  def copyImg(img: File, destination: Path, doMove: Boolean = true): Unit = {
     var dest = destination
     if(destination.toFile.isDirectory) {
       dest = destination.resolve(img.getName)
