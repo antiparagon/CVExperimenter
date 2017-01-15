@@ -70,10 +70,12 @@ class ChessPieceClassifierFast {
 
       val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
 
-      //Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
-      //val imgPath = "ChessSquares/" + coorStr + "/" + coorStr + "_" + debugImgPrefix +".png"
-      val imgPath = "ChessSquares/" + coorStr + "_" + debugImgPrefix +".png"
-      Imgcodecs.imwrite(imgPath, squareImg)
+      if(outputDebugImgs) {
+        //Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
+        //val imgPath = "ChessSquares/" + coorStr + "/" + coorStr + "_" + debugImgPrefix +".png"
+        val imgPath = "ChessSquares/" + coorStr + "_" + debugImgPrefix + ".png"
+        Imgcodecs.imwrite(imgPath, squareImg)
+      }
 
       x = x / keyPoints.length.toDouble
       y = y / keyPoints.length.toDouble
