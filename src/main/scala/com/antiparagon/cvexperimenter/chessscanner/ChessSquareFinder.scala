@@ -1,10 +1,8 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import com.typesafe.scalalogging.Logger
-import org.opencv.calib3d.Calib3d
 import org.opencv.core._
 import org.opencv.imgcodecs.Imgcodecs
-import org.opencv.imgproc.Imgproc
 import org.slf4j.LoggerFactory
 
 import scala.collection.mutable
@@ -50,7 +48,7 @@ class ChessSquareFinder {
    */
   var outputDebugImgs = false
   // Prefix for debug images
-  var debugImgPrefix = "ChessboardFinder_"
+  var debugImgPrefix = "ChessSquareFinder_"
   var cornersAlgorithm = ChessSquareFinderCornersAlgorithm()
 
   /**
