@@ -23,7 +23,7 @@ object ChessSquareFinder {
     val chessSquareFinder = new ChessSquareFinder
     chessSquareFinder.outputDebugImgs = true
     chessSquareFinder.debugImgPrefix = debugImagePrefix
-    chessSquareFinder.cornersAlgorithm = ChessSquareFinderCornersAlgorithm(chessSquareFinder.debugImgPrefix)
+    chessSquareFinder.algorithm = ChessSquareFinderCornersAlgorithm(chessSquareFinder.debugImgPrefix)
     //chessSquareFinder.contoursAlgorithm = ChessSquareFinderContoursAlgorithm(chessSquareFinder.debugImgPrefix)
     chessSquareFinder
   }
@@ -49,7 +49,7 @@ class ChessSquareFinder {
   var outputDebugImgs = false
   // Prefix for debug images
   var debugImgPrefix = "ChessSquareFinder_"
-  var cornersAlgorithm = ChessSquareFinderCornersAlgorithm()
+  var algorithm = ChessSquareFinderCornersAlgorithm()
 
   /**
     * Finds the Rect of the squares in the image of a chessboard. This function
@@ -73,7 +73,7 @@ class ChessSquareFinder {
       Imgcodecs.imwrite(debugImgPrefix + "_InputImg.png", inImg)
     }
 
-    val squares = cornersAlgorithm.getChessboardSquares(inImg)
+    val squares = algorithm.getChessboardSquares(inImg)
     return squares
   }
 }

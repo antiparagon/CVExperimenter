@@ -1,6 +1,6 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
-import java.io.File
+import java.io.{File, PrintStream}
 
 import org.opencv.core.{Core, Mat, Rect}
 import org.opencv.imgcodecs.Imgcodecs
@@ -46,9 +46,9 @@ object CreateFastClassifierTrainingData {
 
 
   def main(args: Array[String]): Unit = {
-    //val NL = System.lineSeparator()
-    //val output = new PrintStream(new File("foundpieces.csv"))
-    //output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
+    val NL = System.lineSeparator()
+    val output = new PrintStream(new File("foundpieces.csv"))
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
     /*
     val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()

@@ -17,6 +17,7 @@ object ChessPieceFinder {
     val chessPieceFinder = new ChessPieceFinder
     chessPieceFinder.outputDebugImgs = true
     chessPieceFinder.debugImgPrefix = debugImagePrefix
+    chessPieceFinder.classifier = ChessPieceClassifierFast(debugImagePrefix)
     chessPieceFinder
   }
 }
@@ -32,6 +33,7 @@ class ChessPieceFinder {
   var outputDebugImgs = false
   // Prefix for debug images
   var debugImgPrefix = "ChessPieceFinder_"
+  var classifier = ChessPieceClassifierFast(debugImgPrefix)
 
 
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
@@ -41,7 +43,6 @@ class ChessPieceFinder {
     }
 
     var piecesFound = 0
-    val classifier = ChessPieceClassifierFast(debugImgPrefix)
     val emptyRect = new Rect
 
     chessboard.getSquares().foreach(square => {
