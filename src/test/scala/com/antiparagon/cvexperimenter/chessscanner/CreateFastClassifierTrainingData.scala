@@ -47,10 +47,24 @@ object CreateFastClassifierTrainingData {
 
   def main(args: Array[String]): Unit = {
     val NL = System.lineSeparator()
-    val output = new PrintStream(new File("foundpieces.csv"))
+
+    val finders = List(
+      ChessPieceFinder(removeExt(CHESS_BOARD_NEW)),
+      ChessPieceFinder(removeExt(CHESS_KID_MODIFIED)),
+      ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)),
+      ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD)),
+      ChessPieceFinder(removeExt(NUMBER)),
+      ChessPieceFinder(removeExt(POSITION)),
+      ChessPieceFinder(removeExt(STAGRAM_MODIFIED)),
+      ChessPieceFinder(removeExt(STARTING_POSITION)),
+      ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED))
+    );
+
+    var classifier = finders(0).classifier
+
+    val output = new PrintStream(new File("FastClassiferData.csv"))
     output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
-    /*
     val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
     var halfBP1AvgX = 0.0
     var halfBP1AvgY = 0.0
@@ -125,15 +139,14 @@ object CreateFastClassifierTrainingData {
     scores += ("a2" -> FeatureScoreFast(halfWP1AvgX, halfWP1AvgY, halfWP1AvgResp))
     scores += ("e2" -> FeatureScoreFast(halfWP2AvgX, halfWP2AvgY, halfWP2AvgResp))
 
-    //scores.foreach {
-    //  case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
-    //    .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
-    //}
-    */
+    scores.foreach {
+      case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
+        .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
+    }
   }
 
 
-  def doCHESS_BOARD_NEW(): Unit = {
+  def doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_NEW)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -143,12 +156,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(CHESS_BOARD_NEW)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doCHESS_KID_MODIFIED(): Unit = {
+  def doCHESS_KID_MODIFIED(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_KID_MODIFIED)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -158,12 +171,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(CHESS_KID_MODIFIED)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doDIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED(): Unit = {
+  def doDIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -173,12 +186,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doKID_CHESS_SETUP_BOARD(): Unit = {
+  def doKID_CHESS_SETUP_BOARD(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + KID_CHESS_SETUP_BOARD)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -188,12 +201,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doNUMBER(): Unit = {
+  def doNUMBER(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + NUMBER)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -203,12 +216,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(NUMBER)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doPOSITION(): Unit = {
+  def doPOSITION(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + POSITION)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -218,12 +231,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(POSITION)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doSTAGRAM_MODIFIED(): Unit = {
+  def doSTAGRAM_MODIFIED(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + STAGRAM_MODIFIED)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -233,12 +246,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(STAGRAM_MODIFIED)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doSTARTING_POSITION(): Unit = {
+  def doSTARTING_POSITION(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + STARTING_POSITION)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -248,12 +261,12 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(STARTING_POSITION)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
 
-  def doVP_BLACKARRAY_MODIFIED(): Unit = {
+  def doVP_BLACKARRAY_MODIFIED(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + VP_BLACKARRAY_MODIFIED)
     assert(!img.empty())
     val rect = ChessboardFinder().findChessboard(img)
@@ -263,7 +276,7 @@ object CreateFastClassifierTrainingData {
     val squares = ChessSquareFinder().getChessboardSquares(boardImage)
     assert(squares.length == 64)
     val chessboard = Chessboard.create(squares)
-    val pieces = ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED)).findChessPieces(chessboard, boardImage)
+    val pieces = chessPieceFinder.findChessPieces(chessboard, boardImage)
     assert(pieces == 32)
   }
 
