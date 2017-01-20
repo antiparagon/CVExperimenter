@@ -46,24 +46,29 @@ object CreateFastClassifierTrainingData {
 
 
   def main(args: Array[String]): Unit = {
-    val NL = System.lineSeparator()
 
-    val finders = List(
-      ChessPieceFinder(removeExt(CHESS_BOARD_NEW)),
-      ChessPieceFinder(removeExt(CHESS_KID_MODIFIED)),
-      ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)),
-      ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD)),
-      ChessPieceFinder(removeExt(NUMBER)),
-      ChessPieceFinder(removeExt(POSITION)),
-      ChessPieceFinder(removeExt(STAGRAM_MODIFIED)),
-      ChessPieceFinder(removeExt(STARTING_POSITION)),
-      ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED))
-    );
-
-    var classifier = finders(0).classifier
-
+    val NL = System.lineSeparator
     val output = new PrintStream(new File("FastClassiferData.csv"))
     output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
+
+    classify(ChessPieceFinder(removeExt(CHESS_BOARD_NEW)), output)
+    classify(ChessPieceFinder(removeExt(CHESS_KID_MODIFIED)), output)
+    classify(ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)), output)
+    classify(ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD)), output)
+    classify(ChessPieceFinder(removeExt(NUMBER)), output)
+    classify(ChessPieceFinder(removeExt(POSITION)), output)
+    classify(ChessPieceFinder(removeExt(STAGRAM_MODIFIED)), output)
+    classify(ChessPieceFinder(removeExt(STARTING_POSITION)), output)
+    classify(ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED)),  output)
+    output.close
+  }
+
+
+  def classify(finder: ChessPieceFinder, output: PrintStream): Unit = {
+
+    val NL = System.lineSeparator
+
+    val classifier = finder.classifier
 
     val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
     var halfBP1AvgX = 0.0
@@ -144,7 +149,6 @@ object CreateFastClassifierTrainingData {
         .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
     }
   }
-
 
   def doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_NEW)
