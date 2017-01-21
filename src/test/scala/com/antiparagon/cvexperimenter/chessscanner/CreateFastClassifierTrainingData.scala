@@ -51,20 +51,47 @@ object CreateFastClassifierTrainingData {
     val output = new PrintStream(new File("FastClassiferData.csv"))
     output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
 
-    classify(ChessPieceFinder(removeExt(CHESS_BOARD_NEW)), output)
-    classify(ChessPieceFinder(removeExt(CHESS_KID_MODIFIED)), output)
-    classify(ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED)), output)
-    classify(ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD)), output)
-    classify(ChessPieceFinder(removeExt(NUMBER)), output)
-    classify(ChessPieceFinder(removeExt(POSITION)), output)
-    classify(ChessPieceFinder(removeExt(STAGRAM_MODIFIED)), output)
-    classify(ChessPieceFinder(removeExt(STARTING_POSITION)), output)
-    classify(ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED)),  output)
+    var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
+    doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(CHESS_KID_MODIFIED))
+    doCHESS_KID_MODIFIED(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED))
+    doDIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD))
+    doKID_CHESS_SETUP_BOARD(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(NUMBER))
+    doNUMBER(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(POSITION))
+    doPOSITION(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(STAGRAM_MODIFIED))
+    doSTAGRAM_MODIFIED(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(STARTING_POSITION))
+    doSTARTING_POSITION(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
+    chessPieceFinder = ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED))
+    doVP_BLACKARRAY_MODIFIED(chessPieceFinder)
+    outputScores(chessPieceFinder, output)
+
     output.close
   }
 
 
-  def classify(finder: ChessPieceFinder, output: PrintStream): Unit = {
+  def outputScores(finder: ChessPieceFinder, output: PrintStream): Unit = {
 
     val NL = System.lineSeparator
 
