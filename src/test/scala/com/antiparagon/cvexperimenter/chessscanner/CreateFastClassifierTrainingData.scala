@@ -49,7 +49,7 @@ object CreateFastClassifierTrainingData {
 
     val NL = System.lineSeparator
     val output = new PrintStream(new File("FastClassiferData.csv"))
-    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(NL)
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image").append(NL)
 
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
@@ -173,7 +173,7 @@ object CreateFastClassifierTrainingData {
 
     scores.foreach {
       case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
-        .append(",").append(coord).append(",").append(getSymbol(coord)).append(NL)
+        .append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(classifier.debugImgPrefix).append(NL)
     }
   }
 
