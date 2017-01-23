@@ -53,8 +53,6 @@ class ChessPieceClassifierFast {
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
 
-    println(s"There were ${keyPointsMat.toArray.size} KeyPoints detected")
-
     val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(15)
 
     var x = 0.0

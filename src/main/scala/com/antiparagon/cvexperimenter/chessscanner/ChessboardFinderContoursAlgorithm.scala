@@ -145,7 +145,7 @@ class ChessboardFinderContoursAlgorithm {
       return None
     }
 
-    println(s"Number of rectangles: ${rectList.size}")
+    //println(s"Number of rectangles: ${rectList.size}")
     val rectMap = mutable.Map[Rectangle, ArrayBuffer[Rectangle]]()
     for (rect <- rectList) {
       // Convert to Java Rectangle
@@ -166,7 +166,7 @@ class ChessboardFinderContoursAlgorithm {
         if(jRect.contains(rectangle)) {
           val ja = jRect.width.toDouble * jRect.height.toDouble
           val multiple = ja / area
-          log.debug(s"Rectangle area $ja has rectangle with $multiple multiple inside")
+          //log.debug(s"Rectangle area $ja has rectangle with $multiple multiple inside")
           if(multiple > 50.0) {
             rectMap(jRect) += rectangle
           }
@@ -179,12 +179,12 @@ class ChessboardFinderContoursAlgorithm {
     var max = 0
     for((jRect, rList) <- rectMap) {
       var squaresInside = rectMap(jRect).size
-      log.debug(s"Rectangle $jRect has $squaresInside rectangles inside")
+      //log.debug(s"Rectangle $jRect has $squaresInside rectangles inside")
       if(squaresInside >= 3) {
         if(squaresInside > max) {
           board = jRect
           max = squaresInside
-          log.debug(s"Found a new rectangle with $max rectangles inside: $board")
+          //log.debug(s"Found a new rectangle with $max rectangles inside: $board")
         }
       }
     }

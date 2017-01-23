@@ -65,7 +65,7 @@ class ChessboardFinderCornersAlgorithm {
         Some(new Mat(inImg, bbox))
       }
       case None => {
-        log.debug("No chessboard found")
+        //log.debug("No chessboard found")
         None
       }
     }
