@@ -41,7 +41,8 @@ class ChessPieceClassifierFast {
   var debugImgPrefix = "ChessPieceClassifierFast"
 
   /**
-    * Classifies the chess piece using FAST image detection features.
+    * Classifies the chess piece using FAST image detection features. The inputImg
+    * is an individual chess square with/without a chess piece.
     *
     * @param inputImg
     * @return Some(Piece symbol) or None
@@ -66,8 +67,6 @@ class ChessPieceClassifierFast {
 
     if(keyPoints.length >= 5) {
 
-      val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
-
       if(outputDebugImgs) {
         //Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
         //val imgPath = "ChessSquares/" + coorStr + "/" + coorStr + "_" + debugImgPrefix +".png"
@@ -81,8 +80,7 @@ class ChessPieceClassifierFast {
 
       scores += (coorStr -> FeatureScoreFast(x, y, resp))
 
-      val points = keyPoints.length
-      var piece = "P"
+      var piece = "X"
 
       Some(piece)
     } else {

@@ -87,7 +87,7 @@ object CreateFastClassifierTrainingData {
     doVP_BLACKARRAY_MODIFIED(chessPieceFinder)
     outputScores(chessPieceFinder, output)
 
-    output.close
+    output.close()
   }
 
 
