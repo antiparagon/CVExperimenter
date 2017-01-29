@@ -1,12 +1,12 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
 import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.{Mat, MatOfKeyPoint, Scalar}
+import org.opencv.core.{KeyPoint, Mat, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
 
 
-case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double)
+case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double, keyPoints: Array[KeyPoint])
 
 /**
   * Created by wmckay on 1/4/17.
@@ -68,9 +68,8 @@ class ChessPieceClassifierFast {
     if(keyPoints.length >= 5) {
 
       if(outputDebugImgs) {
-        val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
-        Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
-        //val imgPath = "ChessSquares/" + coorStr + "/" + coorStr + "_" + debugImgPrefix +".png"
+        //val bestKeyPoints: MatOfKeyPoint = new MatOfKeyPoint(keyPoints: _*)
+        //Features2d.drawKeypoints(squareImg, bestKeyPoints, squareImg, new Scalar(0, 0, 255), Features2d.DRAW_RICH_KEYPOINTS)
         val imgPath = "ChessSquares/" + coorStr + "_" + debugImgPrefix + ".png"
         Imgcodecs.imwrite(imgPath, squareImg)
       }
@@ -79,7 +78,7 @@ class ChessPieceClassifierFast {
       y = y / keyPoints.length.toDouble
       resp = resp / keyPoints.length.toDouble
 
-      scores += (coorStr -> FeatureScoreFast(x, y, resp))
+      scores += (coorStr -> FeatureScoreFast(x, y, resp, keyPoints))
 
       var piece = "X"
 

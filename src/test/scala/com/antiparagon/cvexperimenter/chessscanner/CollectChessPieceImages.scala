@@ -78,6 +78,7 @@ object CollectChessPieceImages {
     * into. Creates the folders if they don't exist.
     */
   def createFolders(): Unit = {
+
     val rookFolder = Paths.get(IMG_FOLDER + "Rook")
     Files.createDirectories(rookFolder)
     val knightFolder = Paths.get(IMG_FOLDER + "Knight")
