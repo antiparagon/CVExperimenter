@@ -49,10 +49,17 @@ object CreateFastClassifierTrainingData {
 
     val NL = System.lineSeparator
     val output = new PrintStream(new File("FastClassiferData.csv"))
-    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image").append(NL)
 
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
+
+    // Output header row here because the number of feature points is known now from ChessPieceFinder.
+    // This header row will work for all the rest of the ChessPieceFinders.
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image").append(NL)
+    // Add feature point headers
+    val featurePointsCount = chessPieceFinder.classifier.scores("a1").keyPoints.length
+
+
     outputScores(chessPieceFinder, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(CHESS_KID_MODIFIED))
