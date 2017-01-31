@@ -55,56 +55,68 @@ object CreateFastClassifierTrainingData {
 
     // Output header row here because the number of feature points is known now from ChessPieceFinder.
     // This header row will work for all the rest of the ChessPieceFinders.
-    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image").append(NL)
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image")
+    val numScores = chessPieceFinder.classifier.numScores
     // Add feature point headers
-    val featurePointsCount = chessPieceFinder.classifier.scores("a1").keyPoints.length
+    for(i <- 1 to numScores) {
+      output.append(",").append(s"Feature $i")
+    }
+    output.append(NL)
 
 
-    outputScores(chessPieceFinder, output)
+
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(CHESS_KID_MODIFIED))
     doCHESS_KID_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED))
     doDIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD))
     doKID_CHESS_SETUP_BOARD(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(NUMBER))
     doNUMBER(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(POSITION))
     doPOSITION(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(STAGRAM_MODIFIED))
     doSTAGRAM_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(STARTING_POSITION))
     doSTARTING_POSITION(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED))
     doVP_BLACKARRAY_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, output)
+    outputScores(chessPieceFinder, numScores, output)
 
     output.close()
   }
 
 
-  def outputScores(finder: ChessPieceFinder, output: PrintStream): Unit = {
+  def outputScores(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
 
     val NL = System.lineSeparator
 
     finder.classifier.scores.foreach {
-      case(coord, score) => output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
-        .append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix).append(NL)
+      case(coord, score) => {
+          output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
+            .append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix)
+          // Add feature point headers
+          for(i <- 1 to numScores) {
+            output.append(",").append(s"Feature $i")
+          }
+          output.append(NL)
+      }
     }
   }
 
