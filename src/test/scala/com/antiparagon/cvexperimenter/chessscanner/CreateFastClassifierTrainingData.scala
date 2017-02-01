@@ -53,16 +53,15 @@ object CreateFastClassifierTrainingData {
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
 
-    // Output header row here because the number of feature points is known now from ChessPieceFinder.
+    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
     // This header row will work for all the rest of the ChessPieceFinders.
     output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image")
     val numScores = chessPieceFinder.classifier.numScores
     // Add feature point headers
     for(i <- 1 to numScores) {
-      output.append(",").append(s"Feature $i")
+      output.append(",").append(s"Feature${i}X").append(",").append(s"Feature${i}Y").append(",").append(s"Feature${i}Resp")
     }
     output.append(NL)
-
 
 
     outputScores(chessPieceFinder, numScores, output)
@@ -112,8 +111,8 @@ object CreateFastClassifierTrainingData {
           output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
             .append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix)
           // Add feature point headers
-          for(i <- 1 to numScores) {
-            output.append(",").append(s"Feature $i")
+          for(i <- 0 until numScores) {
+            output.append(",").append(s"${score.keyPoints(i).pt.x}").append(",").append(s"${score.keyPoints(i).pt.y}").append(",").append(s"${score.keyPoints(i).response}")
           }
           output.append(NL)
       }
