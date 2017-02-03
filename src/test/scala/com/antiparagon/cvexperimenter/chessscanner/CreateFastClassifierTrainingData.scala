@@ -45,6 +45,11 @@ object CreateFastClassifierTrainingData {
   val VP_BLACKARRAY_MODIFIED_RECT = new Rect(6, 8, 280, 279)
 
 
+  /**
+    * Main() that creates the 'FastClassiferData.csv' data file.
+    *
+    * @param args
+    */
   def main(args: Array[String]): Unit = {
 
     val NL = System.lineSeparator
@@ -102,6 +107,13 @@ object CreateFastClassifierTrainingData {
   }
 
 
+  /**
+    * Writes the scores from the ChessPieceFinder to the output.
+    *
+    * @param finder ChessPieceFinder with the scores to output
+    * @param numScores number of scores to output
+    * @param output PrintStream to output to
+    */
   def outputScores(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
 
     val NL = System.lineSeparator
@@ -118,6 +130,7 @@ object CreateFastClassifierTrainingData {
       }
     }
   }
+
 
   def doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder): Unit = {
     val img = Imgcodecs.imread(IMG_FOLDER + CHESS_BOARD_NEW)
