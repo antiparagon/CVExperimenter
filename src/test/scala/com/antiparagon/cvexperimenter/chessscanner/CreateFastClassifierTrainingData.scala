@@ -58,16 +58,9 @@ object CreateFastClassifierTrainingData {
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
 
-    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
-    // This header row will work for all the rest of the ChessPieceFinders.
-    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image")
     val numScores = chessPieceFinder.classifier.numScores
-    // Add feature point headers
-    for(i <- 1 to numScores) {
-      output.append(",").append(s"Feature${i}X").append(",").append(s"Feature${i}Y").append(",").append(s"Feature${i}Resp")
-    }
-    output.append(NL)
-
+    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
+    outputHeaderRow(chessPieceFinder, numScores, output)
 
     outputScores(chessPieceFinder, numScores, output)
 
@@ -106,6 +99,25 @@ object CreateFastClassifierTrainingData {
     output.close()
   }
 
+  /**
+    * Writes the CSV header row to the output.
+    *
+    * @param finder ChessPieceFinder with the scores to output
+    * @param numScores number of scores to output
+    * @param output PrintStream to output to
+    */
+  def outputHeaderRow(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
+    val NL = System.lineSeparator
+    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
+    // This header row will work for all the rest of the ChessPieceFinders.
+    output.append("AvgX").append(",").append("AvgY").append(",").append("AvgResp").append(",").append("Coord").append(",").append("Symbol").append(",").append("Image")
+    val numScores = finder.classifier.numScores
+    // Add feature point headers
+    for(i <- 1 to numScores) {
+      output.append(",").append(s"Feature${i}X").append(",").append(s"Feature${i}Y").append(",").append(s"Feature${i}Resp")
+    }
+    output.append(NL)
+  }
 
   /**
     * Writes the scores from the ChessPieceFinder to the output.
@@ -115,9 +127,7 @@ object CreateFastClassifierTrainingData {
     * @param output PrintStream to output to
     */
   def outputScores(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
-
     val NL = System.lineSeparator
-
     finder.classifier.scores.foreach {
       case(coord, score) => {
           output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
