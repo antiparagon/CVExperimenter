@@ -5,6 +5,13 @@ import java.nio.file.{Files, Path, Paths, StandardCopyOption}
 
 
 /**
+  * This collects all the images in the 'ChessSquares' folder and copies
+  * or moves the images into 'Rook', 'Knight', 'Bishop', 'Queen', 'King'
+  * and 'Pawn' folders in ChessSquares. It creates the folders if they
+  * do not already exist. It use the fist to characters of the image name
+  * to determine the correct piece of the image. It is based on starting
+  * square.
+  *
   * Created by wmckay on 1/6/17.
   */
 object CollectChessPieceImages {

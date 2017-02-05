@@ -59,7 +59,7 @@ object CreateFastClassifierTrainingData {
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
 
     val numScores = chessPieceFinder.classifier.numScores
-    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
+    // Output header row here because the number of feature points is now known from using ChessPieceFinder.
     outputHeaderRow(chessPieceFinder, numScores, output)
 
     outputScores(chessPieceFinder, numScores, output)
