@@ -8,8 +8,17 @@ with(data, xyplot(AvgY ~ AvgX, group=Symbol, panel=function(x, y, ...) {
 }))
 
 
-with(data, xyplot(Feature1Y ~ Feature2X, group=Symbol))
+with(data, xyplot(Feature1Y ~ Feature1X, group=Symbol))
 with(data, xyplot(Feature1Y ~ Feature1X, group=Symbol, panel=function(x, y, ...) {
   panel.xyplot(Feature1X, Feature1Y, ...);
   ltext(x=Feature1X, y=Feature1Y, labels=Symbol, pos=1, offset=1, cex=0.8)
 }))
+
+with(data, xyplot(Feature2Y ~ Feature2X, group=Symbol, panel=function(x, y, ...) {
+  panel.xyplot(Feature2X, Feature2Y, ...);
+  ltext(x=Feature2X, y=Feature2Y, labels=Symbol, pos=1, offset=1, cex=0.8)
+}))
+
+qdata = data[which(data$Symbol == 'q' | data$Symbol == 'Q'),]
+with(qdata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+
