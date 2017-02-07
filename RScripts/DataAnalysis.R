@@ -22,3 +22,11 @@ with(data, xyplot(Feature2Y ~ Feature2X, group=Symbol, panel=function(x, y, ...)
 qdata = data[which(data$Symbol == 'q' | data$Symbol == 'Q'),]
 with(qdata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
 
+nNdata = data[which(data$Symbol == 'n' | data$Symbol == 'N'),]
+with(nNdata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+
+ndata = data[which(data$Symbol == 'n'),]
+with(ndata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+
+Ndata = data[which(data$Symbol == 'N'),]
+with(Ndata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
