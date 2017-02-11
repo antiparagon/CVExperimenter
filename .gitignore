@@ -36,7 +36,14 @@ org.scala-ide.sdt.update-site/site.xml
 # Chess square images
 ChessSquares
 foundpieces.csv
-FastClassiferData.csv
+FastClassifierData*.csv
 Debug Images/
 
+# R
 .Rproj.user
+RScripts/.RData
+RScripts/.Rhistory
+
+RScripts/.Rhistory
+
+RScripts/.RData

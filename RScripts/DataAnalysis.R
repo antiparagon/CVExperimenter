@@ -1,32 +1,32 @@
 data <- read.csv("FastClassiferData.csv")
 library(lattice)
-with(data, xyplot(AvgY ~ AvgX, group=Symbol))
-with(data, textxy(AvgX, AvgY, Symbol))
-with(data, xyplot(AvgY ~ AvgX, group=Symbol, panel=function(x, y, ...) {
-  panel.xyplot(AvgX, AvgY, ...);
-  ltext(x=AvgX, y=AvgY, labels=Symbol, pos=1, offset=1, cex=0.8)
+with(data, xyplot(AvgKeyPointY ~ AvgKeyPointX, group=Symbol))
+with(data, xyplot(AvgKeyPointY ~ AvgKeyPointX, group=Symbol, panel=function(x, y, ...) {
+  panel.xyplot(AvgKeyPointX, AvgKeyPointY, ...);
+  ltext(x=AvgKeyPointX, y=AvgKeyPointY, labels=Symbol, pos=1, offset=1, cex=0.8)
 }))
 
 
-with(data, xyplot(Feature1Y ~ Feature1X, group=Symbol))
-with(data, xyplot(Feature1Y ~ Feature1X, group=Symbol, panel=function(x, y, ...) {
-  panel.xyplot(Feature1X, Feature1Y, ...);
-  ltext(x=Feature1X, y=Feature1Y, labels=Symbol, pos=1, offset=1, cex=0.8)
+with(data, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol))
+with(data, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol, panel=function(x, y, ...) {
+  panel.xyplot(KeyPoint1X, KeyPoint1Y, ...);
+  ltext(x=KeyPoint1X, y=KeyPoint1Y, labels=Symbol, pos=1, offset=1, cex=0.8)
 }))
 
-with(data, xyplot(Feature2Y ~ Feature2X, group=Symbol, panel=function(x, y, ...) {
-  panel.xyplot(Feature2X, Feature2Y, ...);
-  ltext(x=Feature2X, y=Feature2Y, labels=Symbol, pos=1, offset=1, cex=0.8)
+
+with(data, xyplot(KeyPoint2Y ~ KeyPoint2X, group=Symbol, panel=function(x, y, ...) {
+  panel.xyplot(KeyPoint2X, KeyPoint2Y, ...);
+  ltext(x=KeyPoint2X, y=KeyPoint2Y, labels=Symbol, pos=1, offset=1, cex=0.8)
 }))
 
 qdata = data[which(data$Symbol == 'q' | data$Symbol == 'Q'),]
-with(qdata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+with(qdata, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol))
 
 nNdata = data[which(data$Symbol == 'n' | data$Symbol == 'N'),]
-with(nNdata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+with(nNdata, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol))
 
 ndata = data[which(data$Symbol == 'n'),]
-with(ndata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+with(ndata, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol))
 
 Ndata = data[which(data$Symbol == 'N'),]
-with(Ndata, xyplot(Feature1Y ~ Feature1X, group=Symbol))
+with(Ndata, xyplot(KeyPoint1Y ~ KeyPoint1X, group=Symbol))

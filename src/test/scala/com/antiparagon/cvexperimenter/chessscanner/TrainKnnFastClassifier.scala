@@ -13,7 +13,7 @@ import smile.neighbor.Neighbor
   */
 object TrainKnnFastClassifier {
 
-  val TRAINING_DATA = "FastClassiferData.csv"
+  val TRAINING_DATA = "FastClassifierData5KeyPoints.csv"
 
   def main(args: Array[String]): Unit = {
     val parser = new DelimitedTextParser()
