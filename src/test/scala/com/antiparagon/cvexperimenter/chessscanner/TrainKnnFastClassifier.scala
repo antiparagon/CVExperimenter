@@ -6,6 +6,8 @@ import smile.data.{AttributeDataset, NominalAttribute, NumericAttribute, StringA
 import smile.data.parser.DelimitedTextParser
 import smile.neighbor.Neighbor
 
+import scala.collection.mutable.ListBuffer
+
 /**
   * Trains a KNN classifier using the FAST training data.
   *
@@ -14,17 +16,23 @@ import smile.neighbor.Neighbor
 object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "FastClassifierData5KeyPoints.csv"
+  val numKeyPoints = 3
 
   def main(args: Array[String]): Unit = {
     val parser = new DelimitedTextParser()
     parser.setDelimiter(",")
     parser.setColumnNames(true)
-    val aAvgX = new NumericAttribute("AvgX")
-    val aAvgY = new NumericAttribute("AvgY")
-    val aAvgResp = new NumericAttribute("AvgResp")
-    val aCoord = new StringAttribute("Coord")
+    val aAvgX = new NumericAttribute("AvgKeyPointX")
+    val aAvgY = new NumericAttribute("AvgKeyPointY")
+    val aAvgResp = new NumericAttribute("AvgKeyPointResp")
+    val aCoord = new StringAttribute("ChessboardCoord")
     val aSymbol = new NominalAttribute("Symbol")
     val aImage = new StringAttribute("Image")
+
+    val keyPointList  = new ListBuffer[NumericAttribute]()
+    for(i <- 0 to numKeyPoints) {
+      keyPointList += new NumericAttribute(s"KeyPoint$i")
+    }
 
     //val attributes = Array(new Attribute)
     parser.setResponseIndex(aSymbol, 5)
