@@ -19,9 +19,7 @@ object TrainKnnFastClassifier {
   val numKeyPoints = 3
 
   def main(args: Array[String]): Unit = {
-    val parser = new DelimitedTextParser()
-    parser.setDelimiter(",")
-    parser.setColumnNames(true)
+
     val aAvgX = new NumericAttribute("AvgKeyPointX")
     val aAvgY = new NumericAttribute("AvgKeyPointY")
     val aAvgResp = new NumericAttribute("AvgKeyPointResp")
@@ -34,8 +32,11 @@ object TrainKnnFastClassifier {
       keyPointList += new NumericAttribute(s"KeyPoint$i")
     }
 
+    val parser = new DelimitedTextParser()
+    parser.setDelimiter(",")
+    parser.setColumnNames(true)
     //val attributes = Array(new Attribute)
-    parser.setResponseIndex(aSymbol, 5)
+    parser.setResponseIndex(aSymbol, 4)
     val attData = parser.parse("FAST Train", new File(TRAINING_DATA))
     //val x: Double[][] = usps.toArray(new double[usps.size()][]);
 
