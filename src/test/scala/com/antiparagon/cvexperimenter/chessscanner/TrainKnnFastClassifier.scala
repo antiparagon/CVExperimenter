@@ -9,7 +9,10 @@ import smile.neighbor.Neighbor
 import scala.collection.mutable.ListBuffer
 
 /**
-  * Trains a KNN classifier using the FAST training data.
+  * Trains a KNN classifier using the FAST training data. Currently uses the
+  * Statistical Machine Intelligence and Learning Engine project.
+  * The SMILE library (http://haifengl.github.io/smile/) has a Java and
+  * Scala API.
   *
   * Created by wmckay on 2/8/17.
   */
