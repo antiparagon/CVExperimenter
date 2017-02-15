@@ -51,5 +51,18 @@ object TrainKnnFastClassifier {
 
   }
 
+  def determineNumKeypoints(datafile: String): Int = {
 
+
+    return -1
+  }
+
+  def firstLine(f: java.io.File): Option[String] = {
+    val src = io.Source.fromFile(f)
+    try {
+      src.getLines.find(_ => true)
+    } finally {
+      src.close()
+    }
+  }
 }
