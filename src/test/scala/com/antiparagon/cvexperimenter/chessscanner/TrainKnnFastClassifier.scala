@@ -35,6 +35,9 @@ object TrainKnnFastClassifier {
       keyPointList += new NumericAttribute(s"KeyPoint$i")
     }
 
+    val numPoints = determineNumKeypoints(TRAINING_DATA)
+    println(s"Num keypoints: $numPoints")
+
     val parser = new DelimitedTextParser()
     parser.setDelimiter(",")
     parser.setColumnNames(true)
@@ -52,12 +55,21 @@ object TrainKnnFastClassifier {
   }
 
   def determineNumKeypoints(datafile: String): Int = {
-
-
-    return -1
+    val firstLine = getFirstLine(new File(datafile))
+    firstLine match {
+      case Some(line) => {
+        val parts = line.split(",")
+        val numKeyPoints = parts.count(_.startsWith("KeyPoint"))
+        if(numKeyPoints % 3 != 0) {
+          return -1
+        }
+        return numKeyPoints / 3
+      }
+      case None => return -1
+    }
   }
 
-  def firstLine(f: java.io.File): Option[String] = {
+  def getFirstLine(f: java.io.File): Option[String] = {
     val src = io.Source.fromFile(f)
     try {
       src.getLines.find(_ => true)
