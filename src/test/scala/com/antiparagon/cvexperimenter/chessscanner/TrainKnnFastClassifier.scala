@@ -19,7 +19,6 @@ import scala.collection.mutable.ListBuffer
 object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "FastClassifierData5KeyPoints.csv"
-  val numKeyPoints = 3
 
   def main(args: Array[String]): Unit = {
 
@@ -30,13 +29,17 @@ object TrainKnnFastClassifier {
     val aSymbol = new NominalAttribute("Symbol")
     val aImage = new StringAttribute("Image")
 
+    val numKeyPoints =  determineNumKeypoints(TRAINING_DATA)
+    println(s"Num keypoints: $numKeyPoints")
+    if(numKeyPoints < 1) {
+      println("Not enough keypoints for classification")
+      return
+    }
+
     val keyPointList  = new ListBuffer[NumericAttribute]()
     for(i <- 0 to numKeyPoints) {
       keyPointList += new NumericAttribute(s"KeyPoint$i")
     }
-
-    val numPoints = determineNumKeypoints(TRAINING_DATA)
-    println(s"Num keypoints: $numPoints")
 
     val parser = new DelimitedTextParser()
     parser.setDelimiter(",")
