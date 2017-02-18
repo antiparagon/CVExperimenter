@@ -57,12 +57,18 @@ object TrainKnnFastClassifier {
 
   }
 
+  /**
+    * Determines the number of key points saved in the training data file.
+    *
+    * @param datafile
+    * @return number of keypoints or -1 if no key points wee found
+    */
   def determineNumKeypoints(datafile: String): Int = {
     val firstLine = getFirstLine(new File(datafile))
     firstLine match {
       case Some(line) => {
         val parts = line.split(",")
-        val numKeyPoints = parts.count(_.startsWith("KeyPoint"))
+        val numKeyPoints = parts.count(_.toLowerCase.startsWith("keypoint"))
         if(numKeyPoints % 3 != 0) {
           return -1
         }
@@ -72,8 +78,14 @@ object TrainKnnFastClassifier {
     }
   }
 
-  def getFirstLine(f: java.io.File): Option[String] = {
-    val src = io.Source.fromFile(f)
+  /**
+    * Helper function that returns the first line of a file.
+    *
+    * @param file
+    * @return first line of a file or None
+    */
+  def getFirstLine(file: java.io.File): Option[String] = {
+    val src = io.Source.fromFile(file)
     try {
       src.getLines.find(_ => true)
     } finally {
