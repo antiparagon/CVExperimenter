@@ -2,11 +2,11 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.File
 
-import smile.data.{AttributeDataset, NominalAttribute, NumericAttribute, StringAttribute}
+import smile.data.{Attribute, AttributeDataset, NominalAttribute, NumericAttribute, StringAttribute}
 import smile.data.parser.DelimitedTextParser
 import smile.neighbor.Neighbor
 
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Trains a KNN classifier using the FAST training data. Currently uses the
@@ -22,12 +22,19 @@ object TrainKnnFastClassifier {
 
   def main(args: Array[String]): Unit = {
 
+    val attributeBuffer  = new ArrayBuffer[Attribute]()
     val aAvgX = new NumericAttribute("AvgKeyPointX")
+    attributeBuffer += aAvgX
     val aAvgY = new NumericAttribute("AvgKeyPointY")
+    attributeBuffer += aAvgY
     val aAvgResp = new NumericAttribute("AvgKeyPointResp")
+    attributeBuffer += aAvgResp
     val aCoord = new StringAttribute("ChessboardCoord")
+    attributeBuffer += aCoord
     val aSymbol = new NominalAttribute("Symbol")
+    attributeBuffer += aSymbol
     val aImage = new StringAttribute("Image")
+    attributeBuffer += aImage
 
     val numKeyPoints =  determineNumKeypoints(TRAINING_DATA)
     println(s"Num keypoints: $numKeyPoints")
@@ -36,17 +43,20 @@ object TrainKnnFastClassifier {
       return
     }
 
-    val keyPointList  = new ListBuffer[NumericAttribute]()
-    for(i <- 0 to numKeyPoints) {
-      keyPointList += new NumericAttribute(s"KeyPoint$i")
+    for(i <- 1 to numKeyPoints) {
+      attributeBuffer += new NumericAttribute(s"KeyPoint${i}X")
+      attributeBuffer += new NumericAttribute(s"KeyPoint${i}Y")
+      attributeBuffer += new NumericAttribute(s"KeyPoint${i}Resp")
     }
+
+    println(s"attributeBuffer length: ${attributeBuffer.length}")
 
     val parser = new DelimitedTextParser()
     parser.setDelimiter(",")
     parser.setColumnNames(true)
     //val attributes = Array(new Attribute)
-    parser.setResponseIndex(aSymbol, 4)
-    val attData = parser.parse("FAST Train", new File(TRAINING_DATA))
+    //parser.setResponseIndex(aSymbol, 4)
+    val attData = parser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
     //val x: Double[][] = usps.toArray(new double[usps.size()][]);
 
     println(s"Num Attr: ${attData.attributes.size}")
@@ -61,7 +71,7 @@ object TrainKnnFastClassifier {
     * Determines the number of key points saved in the training data file.
     *
     * @param datafile
-    * @return number of keypoints or -1 if no key points wee found
+    * @return number of keypoints or -1 if no key points were found
     */
   def determineNumKeypoints(datafile: String): Int = {
     val firstLine = getFirstLine(new File(datafile))
