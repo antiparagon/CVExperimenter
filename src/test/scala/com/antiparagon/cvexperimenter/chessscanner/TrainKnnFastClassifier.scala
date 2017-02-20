@@ -2,6 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.File
 
+import smile.classification.KNN
 import smile.data.{Attribute, AttributeDataset, NominalAttribute, NumericAttribute, StringAttribute}
 import smile.data.parser.DelimitedTextParser
 import smile.neighbor.Neighbor
@@ -43,6 +44,7 @@ object TrainKnnFastClassifier {
       return
     }
 
+    // Add the number of key points found by parsing the training file
     for(i <- 1 to numKeyPoints) {
       attributeBuffer += new NumericAttribute(s"KeyPoint${i}X")
       attributeBuffer += new NumericAttribute(s"KeyPoint${i}Y")
@@ -57,7 +59,11 @@ object TrainKnnFastClassifier {
     //val attributes = Array(new Attribute)
     //parser.setResponseIndex(aSymbol, 4)
     val attData = parser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
-    //val x: Double[][] = usps.toArray(new double[usps.size()][]);
+    //val x: Double[][] = attData.toArray(new Double[attData.size()][])
+    val x = attData.toArray(new Double(0)())
+    val y = attData.toArray(new Int[0])
+
+    val knn = KNN.learn(x, y, 1)
 
     println(s"Num Attr: ${attData.attributes.size}")
 
