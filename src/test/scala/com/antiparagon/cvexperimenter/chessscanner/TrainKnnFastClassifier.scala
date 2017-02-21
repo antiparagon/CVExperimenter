@@ -33,7 +33,7 @@ object TrainKnnFastClassifier {
     val aCoord = new StringAttribute("ChessboardCoord")
     attributeBuffer += aCoord
     val aSymbol = new NominalAttribute("Symbol")
-    attributeBuffer += aSymbol
+    //attributeBuffer += aSymbol
     val aImage = new StringAttribute("Image")
     attributeBuffer += aImage
 
@@ -57,15 +57,18 @@ object TrainKnnFastClassifier {
     parser.setDelimiter(",")
     parser.setColumnNames(true)
     //val attributes = Array(new Attribute)
-    //parser.setResponseIndex(aSymbol, 4)
+    parser.setResponseIndex(aSymbol, 4)
     val attData = parser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
     //val x: Double[][] = attData.toArray(new Double[attData.size()][])
-    val x = attData.toArray(new Double(0)())
-    val y = attData.toArray(new Int[0])
+    //attData.setResponseIndex(4)
+    //val x = attData.toArray(new Double(0)())
+    //val y = attData.toArray(new Int(0))
 
-    val knn = KNN.learn(x, y, 1)
+    //val knn = KNN.learn(x, y, 1)
 
     println(s"Num Attr: ${attData.attributes.size}")
+    val response = attData.response()
+    println(s"Response: ${response.getName}")
 
     for(att <- attData.attributes()) {
       println(s"Attr: ${att.getName}")
