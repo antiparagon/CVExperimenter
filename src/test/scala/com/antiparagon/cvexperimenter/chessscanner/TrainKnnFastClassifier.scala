@@ -114,4 +114,12 @@ object TrainKnnFastClassifier {
       src.close()
     }
   }
+
+  /**
+    * Function to output the classes determined by the parser.
+    * @param classses
+    */
+  def outputClasses(classses: Array[Int]): Unit = {
+
+  }
 }
