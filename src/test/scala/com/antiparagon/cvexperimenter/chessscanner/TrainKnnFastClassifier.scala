@@ -64,6 +64,11 @@ object TrainKnnFastClassifier {
     //val x = attData.toArray(new Double(0)())
     val y = attData.toArray(new Array[Int](attData.size()))
 
+    outputClasses(y)
+    for(att <- attData.attributes()) {
+      println(s"Attr: ${att.getName}")
+    }
+
     val knn = KNN.learn(x, y, 5)
     for(i <- 0 until attData.size()) {
       println(s"Predict: ${knn.predict(x(i))} - ${x(i)(4)}")
@@ -73,9 +78,7 @@ object TrainKnnFastClassifier {
     val response = attData.response()
     println(s"Response: ${response.getName}")
 
-    //for(att <- attData.attributes()) {
-    //  println(s"Attr: ${att.getName}")
-    //}
+
 
   }
 
@@ -120,6 +123,8 @@ object TrainKnnFastClassifier {
     * @param classses
     */
   def outputClasses(classses: Array[Int]): Unit = {
-
+      for(clazz <- classses) {
+        println(s"Class: $clazz")
+      }
   }
 }
