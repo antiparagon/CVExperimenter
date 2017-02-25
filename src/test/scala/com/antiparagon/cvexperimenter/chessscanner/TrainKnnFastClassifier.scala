@@ -64,19 +64,26 @@ object TrainKnnFastClassifier {
     //val x = attData.toArray(new Double(0)())
     val y = attData.toArray(new Array[Int](attData.size()))
 
-    outputClasses(y)
-    for(att <- attData.attributes()) {
-      println(s"Attr: ${att.getName}")
-    }
+//    outputClasses(aSymbol, y)
+//    for(att <- attData.attributes()) {
+//      println(s"Attr: ${att.getName}")
+//    }
 
-    val knn = KNN.learn(x, y, 5)
+    val knn = KNN.learn(x, y, 1)
+    var right = 0
+    var total = 0
     for(i <- 0 until attData.size()) {
-      println(s"Predict: ${knn.predict(x(i))} - ${x(i)(4)}")
+      val predict = knn.predict(x(i))
+      val correct = x(i)(4)
+      if(predict == correct) right += 1
+      total += 1
+      println(s"Predict: ${aSymbol.toString(predict)} - ${aSymbol.toString(correct)}")
     }
+    println(s"Correct predict: $right of $total")
 
-    println(s"Num Attr: ${attData.attributes.size}")
-    val response = attData.response()
-    println(s"Response: ${response.getName}")
+    //println(s"Num Attr: ${attData.attributes.size}")
+    //val response = attData.response()
+    //println(s"Response: ${response.getName}")
 
 
 
@@ -122,9 +129,9 @@ object TrainKnnFastClassifier {
     * Function to output the classes determined by the parser.
     * @param classses
     */
-  def outputClasses(classses: Array[Int]): Unit = {
+  def outputClasses(attribute: Attribute, classses: Array[Int]): Unit = {
       for(clazz <- classses) {
-        println(s"Class: $clazz")
+        println(s"Class: ${attribute.toString(clazz)}")
       }
   }
 }
