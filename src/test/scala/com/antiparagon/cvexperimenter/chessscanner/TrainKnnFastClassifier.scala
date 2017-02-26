@@ -19,7 +19,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 object TrainKnnFastClassifier {
 
-  val TRAINING_DATA = "FastClassifierData5KeyPoints.csv"
+  val TRAINING_DATA = "FastClassifierData.csv"
 
   def main(args: Array[String]): Unit = {
 
@@ -30,12 +30,12 @@ object TrainKnnFastClassifier {
     attributeBuffer += aAvgY
     val aAvgResp = new NumericAttribute("AvgKeyPointResp")
     attributeBuffer += aAvgResp
-    val aCoord = new StringAttribute("ChessboardCoord")
-    attributeBuffer += aCoord
+    //val aCoord = new StringAttribute("ChessboardCoord")
+    //attributeBuffer += aCoord
     val aSymbol = new NominalAttribute("Symbol")
     //attributeBuffer += aSymbol
-    val aImage = new StringAttribute("Image")
-    attributeBuffer += aImage
+    //val aImage = new StringAttribute("Image")
+    //attributeBuffer += aImage
 
     val numKeyPoints =  determineNumKeypoints(TRAINING_DATA)
     println(s"Num keypoints: $numKeyPoints")
@@ -56,32 +56,30 @@ object TrainKnnFastClassifier {
     val parser = new DelimitedTextParser()
     parser.setDelimiter(",")
     parser.setColumnNames(true)
-    //val attributes = Array(new Attribute)
-    parser.setResponseIndex(aSymbol, 4)
+    parser.setResponseIndex(aSymbol, 3)
     val attData = parser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
+
     val x  = attData.toArray(new Array[Array[Double]](attData.size()))
-    //attData.setResponseIndex(4)
-    //val x = attData.toArray(new Double(0)())
     val y = attData.toArray(new Array[Int](attData.size()))
 
-//    outputClasses(aSymbol, y)
-//    for(att <- attData.attributes()) {
-//      println(s"Attr: ${att.getName}")
-//    }
+    outputClasses(aSymbol, y)
+    for(att <- attData.attributes()) {
+      println(s"Attr: ${att.getName}")
+    }
 
-    val knn = KNN.learn(x, y, 1)
+    val knn = KNN.learn(x, y, 3)
     var right = 0
     var total = 0
     for(i <- 0 until attData.size()) {
       val predict = knn.predict(x(i))
-      val correct = x(i)(4)
+      val correct = y(i)
       if(predict == correct) right += 1
       total += 1
       println(s"Predict: ${aSymbol.toString(predict)} - ${aSymbol.toString(correct)}")
     }
-    println(s"Correct predict: $right of $total")
+    println(s"Correct prediction: $right of $total")
 
-    //println(s"Num Attr: ${attData.attributes.size}")
+    println(s"Num Attr: ${attData.attributes.size}")
     //val response = attData.response()
     //println(s"Response: ${response.getName}")
 

@@ -110,7 +110,8 @@ object CreateFastClassifierTrainingData {
     val NL = System.lineSeparator
     // Output header row here because the number of feature points is known now from using ChessPieceFinder.
     // This header row will work for all the rest of the ChessPieceFinders.
-    output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("ChessboardCoord").append(",").append("Symbol").append(",").append("Image")
+    //output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("ChessboardCoord").append(",").append("Symbol").append(",").append("Image")
+    output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("Symbol")
     val numScores = finder.classifier.numScores
     // Add key point headers
     for(i <- 1 to numScores) {
@@ -130,8 +131,8 @@ object CreateFastClassifierTrainingData {
     val NL = System.lineSeparator
     finder.classifier.scores.foreach {
       case(coord, score) => {
-          output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString)
-            .append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix)
+          //output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix)
+        output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(getSymbol(coord))
           // Add keypoints points
           for(i <- 0 until numScores) {
             output.append(",").append(s"${score.keyPoints(i).pt.x}").append(",").append(s"${score.keyPoints(i).pt.y}").append(",").append(s"${score.keyPoints(i).response}")
