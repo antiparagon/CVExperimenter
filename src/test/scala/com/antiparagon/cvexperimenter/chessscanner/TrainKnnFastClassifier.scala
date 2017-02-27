@@ -79,7 +79,7 @@ object TrainKnnFastClassifier {
     }
     println(s"Correct prediction: $right of $total")
 
-    println(s"Num Attr: ${attData.attributes.size}")
+    //println(s"Num Attr: ${attData.attributes.size}")
     //val response = attData.response()
     //println(s"Response: ${response.getName}")
 
