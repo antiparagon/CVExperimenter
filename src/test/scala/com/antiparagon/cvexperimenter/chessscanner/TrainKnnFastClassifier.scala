@@ -7,6 +7,7 @@ import smile.data.{Attribute, AttributeDataset, NominalAttribute, NumericAttribu
 import smile.data.parser.DelimitedTextParser
 import smile.neighbor.Neighbor
 
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
@@ -67,17 +68,27 @@ object TrainKnnFastClassifier {
       println(s"Attr: ${att.getName}")
     }
 
+    val correctMap = mutable.Map[String, Int]()
     val knn = KNN.learn(x, y, 3)
     var right = 0
     var total = 0
     for(i <- 0 until attData.size()) {
       val predict = knn.predict(x(i))
       val correct = y(i)
-      if(predict == correct) right += 1
+      if(predict == correct) {
+        right += 1
+        if(!(correctMap contains aSymbol.toString(correct))) {
+          correctMap += (aSymbol.toString(correct) -> 0)
+        }
+        correctMap(aSymbol.toString(correct)) = correctMap(aSymbol.toString(correct))  + 1
+      }
       total += 1
       println(s"Predict: ${aSymbol.toString(predict)} - ${aSymbol.toString(correct)}")
     }
     println(s"Correct prediction: $right of $total")
+    correctMap.foreach(entry => {
+      println(s"${entry._1} - ${entry._2}")
+    })
 
     //println(s"Num Attr: ${attData.attributes.size}")
     //val response = attData.response()
