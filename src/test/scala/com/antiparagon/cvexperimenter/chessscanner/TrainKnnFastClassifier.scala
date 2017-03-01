@@ -68,25 +68,46 @@ object TrainKnnFastClassifier {
       println(s"Attr: ${att.getName}")
     }
 
+    val totalMap = mutable.Map[String, Int]()
     val correctMap = mutable.Map[String, Int]()
+    val wrongMap = mutable.Map[String, Int]()
     val knn = KNN.learn(x, y, 3)
     var right = 0
     var total = 0
     for(i <- 0 until attData.size()) {
       val predict = knn.predict(x(i))
       val correct = y(i)
+
+      if(!(totalMap contains aSymbol.toString(correct))) {
+        totalMap += (aSymbol.toString(correct) -> 0)
+      }
+      totalMap(aSymbol.toString(correct)) = totalMap(aSymbol.toString(correct))  + 1
+
       if(predict == correct) {
         right += 1
         if(!(correctMap contains aSymbol.toString(correct))) {
           correctMap += (aSymbol.toString(correct) -> 0)
         }
         correctMap(aSymbol.toString(correct)) = correctMap(aSymbol.toString(correct))  + 1
+      } else {
+        if(!(wrongMap contains aSymbol.toString(correct))) {
+          wrongMap += (aSymbol.toString(correct) -> 0)
+        }
+        wrongMap(aSymbol.toString(correct)) = wrongMap(aSymbol.toString(correct))  + 1
       }
       total += 1
       println(s"Predict: ${aSymbol.toString(predict)} - ${aSymbol.toString(correct)}")
     }
     println(s"Correct prediction: $right of $total")
     correctMap.foreach(entry => {
+      println(s"${entry._1} - ${entry._2}")
+    })
+    println(s"Wrong prediction: ${total - right} of $total")
+    wrongMap.foreach(entry => {
+      println(s"${entry._1} - ${entry._2}")
+    })
+    println(s"Total: $total")
+    totalMap.foreach(entry => {
       println(s"${entry._1} - ${entry._2}")
     })
 
