@@ -3,6 +3,8 @@ package com.antiparagon.cvexperimenter.chessscanner
 import java.io.File
 import java.nio.file.{Files, Path, Paths, StandardCopyOption}
 
+import scala.io.Source
+
 
 /**
   * Program to modify the training data created to only have the same
@@ -15,6 +17,10 @@ object ModifyFastClassifierTrainingData {
   val TRAINING_DATA = "FastClassifierData.csv"
 
   def main(args: Array[String]): Unit = {
+
+    for (line <- Source.fromFile(TRAINING_DATA).getLines.drop(1)) {
+      println(line)
+    }
 
   }
 
