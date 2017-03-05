@@ -14,6 +14,7 @@ import org.opencv.imgcodecs.Imgcodecs
 object CreateFastClassifierTrainingData {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
+  val NL = System.lineSeparator
   val IMG_FOLDER = "images/Chess Scanner/Starting Position/"
   val OUTPUT_FOLDER = "Debug Images/"
 
@@ -58,43 +59,43 @@ object CreateFastClassifierTrainingData {
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
 
-    val numScores = chessPieceFinder.classifier.numScores
-    // Output header row here because the number of feature points is now known from using ChessPieceFinder.
-    outputHeaderRow(chessPieceFinder, numScores, output)
+    val numKeyPoints = chessPieceFinder.classifier.numScores
+    // Output header row here because the number of key points points is now known from using ChessPieceFinder.
+    outputHeaderRow(numKeyPoints, output)
 
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(CHESS_KID_MODIFIED))
     doCHESS_KID_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(DIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED))
     doDIAGRAM_OF_CHESS_BOARD_SETUP_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(KID_CHESS_SETUP_BOARD))
     doKID_CHESS_SETUP_BOARD(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(NUMBER))
     doNUMBER(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(POSITION))
     doPOSITION(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(STAGRAM_MODIFIED))
     doSTAGRAM_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(STARTING_POSITION))
     doSTARTING_POSITION(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     chessPieceFinder = ChessPieceFinder(removeExt(VP_BLACKARRAY_MODIFIED))
     doVP_BLACKARRAY_MODIFIED(chessPieceFinder)
-    outputScores(chessPieceFinder, numScores, output)
+    outputScores(chessPieceFinder, numKeyPoints, output)
 
     output.close()
   }
@@ -102,19 +103,13 @@ object CreateFastClassifierTrainingData {
   /**
     * Writes the CSV header row to the output.
     *
-    * @param finder ChessPieceFinder with the scores to output
-    * @param numScores number of scores to output
+    * @param numKeyPoints number of key points to output
     * @param output PrintStream to output to
     */
-  def outputHeaderRow(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
-    val NL = System.lineSeparator
-    // Output header row here because the number of feature points is known now from using ChessPieceFinder.
-    // This header row will work for all the rest of the ChessPieceFinders.
-    //output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("ChessboardCoord").append(",").append("Symbol").append(",").append("Image")
+  def outputHeaderRow(numKeyPoints: Int, output: PrintStream): Unit = {
     output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("Symbol")
-    val numScores = finder.classifier.numScores
     // Add key point headers
-    for(i <- 1 to numScores) {
+    for(i <- 1 to numKeyPoints) {
       output.append(",").append(s"KeyPoint${i}X").append(",").append(s"KeyPoint${i}Y").append(",").append(s"KeyPoint${i}Resp")
     }
     output.append(NL)
@@ -124,17 +119,16 @@ object CreateFastClassifierTrainingData {
     * Writes the scores from the ChessPieceFinder to the output.
     *
     * @param finder ChessPieceFinder with the scores to output
-    * @param numScores number of scores to output
+    * @param numKeyPoints number of scores to output
     * @param output PrintStream to output to
     */
-  def outputScores(finder: ChessPieceFinder, numScores: Int, output: PrintStream): Unit = {
+  def outputScores(finder: ChessPieceFinder, numKeyPoints: Int, output: PrintStream): Unit = {
     val NL = System.lineSeparator
     finder.classifier.scores.foreach {
       case(coord, score) => {
-          //output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(coord).append(",").append(getSymbol(coord)).append(",").append(finder.classifier.debugImgPrefix)
         output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(getSymbol(coord))
           // Add keypoints points
-          for(i <- 0 until numScores) {
+          for(i <- 0 until numKeyPoints) {
             output.append(",").append(s"${score.keyPoints(i).pt.x}").append(",").append(s"${score.keyPoints(i).pt.y}").append(",").append(s"${score.keyPoints(i).response}")
           }
           output.append(NL)
