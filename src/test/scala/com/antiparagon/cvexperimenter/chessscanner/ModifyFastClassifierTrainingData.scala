@@ -71,6 +71,18 @@ object ModifyFastClassifierTrainingData {
   }
 
   /**
+    * Writes a row to the output.
+    *
+    * @param data a row of data
+    * @param output PrintStream to output to
+    */
+  def outputDataRow(data: Array[String], output: PrintStream): Unit = {
+
+
+    output.append(NL)
+  }
+
+  /**
     * Determines the number of key points saved in the training data file.
     *
     * @param datafile
