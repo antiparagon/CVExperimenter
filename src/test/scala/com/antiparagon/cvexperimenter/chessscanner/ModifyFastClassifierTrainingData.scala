@@ -16,6 +16,7 @@ import scala.io.Source
 object ModifyFastClassifierTrainingData {
 
   val TRAINING_DATA = "FastClassifierData.csv"
+  val MOD_TRAINING_DATA = "ModFastClassifierData.csv"
   val NL = System.lineSeparator
 
   def main(args: Array[String]): Unit = {
@@ -34,7 +35,7 @@ object ModifyFastClassifierTrainingData {
       println(line)
       val data = line.split(",")
       if(data.length != (numKeyPoints * 3) + 4) {
-        println("Unable to parse trainging data correctly")
+        println("Unable to parse training data correctly")
         return
       }
       val piece = data(3)
@@ -48,11 +49,22 @@ object ModifyFastClassifierTrainingData {
     pieceData.foreach(entry => {
       println(s"Piece: ${entry._1} - examples ${entry._2.size}")
     })
+
+    outputHeaderRow(numKeyPoints, System.out)
+    pieceData.foreach(entry => {
+      entry._2.foreach(row => {
+        outputDataRow(row, System.out)
+      })
+    })
   }
 
 
-  def outputData(): Unit = {
+  def outputData(data: Array[String], output: PrintStream): Unit = {
 
+    for(i <- 0 until (data.length - 1)) {
+      output.append(data(i)).append(",")
+    }
+    output.append(data(data.length - 1)).append(NL)
   }
 
   /**
