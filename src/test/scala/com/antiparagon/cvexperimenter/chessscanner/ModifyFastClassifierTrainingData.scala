@@ -32,14 +32,12 @@ object ModifyFastClassifierTrainingData {
 
     // Drop one to remove the column headers
     for (line <- Source.fromFile(TRAINING_DATA).getLines.drop(1)) {
-      println(line)
       val data = line.split(",")
       if(data.length != (numKeyPoints * 3) + 4) {
         println("Unable to parse training data correctly")
         return
       }
       val piece = data(3)
-      println(piece)
       if(!pieceData.contains(piece)) {
         pieceData += (piece -> mutable.ListBuffer())
       }
@@ -50,16 +48,24 @@ object ModifyFastClassifierTrainingData {
       println(s"Piece: ${entry._1} - examples ${entry._2.size}")
     })
 
-    outputHeaderRow(numKeyPoints, System.out)
+    val output = new PrintStream(new File(MOD_TRAINING_DATA))
+    outputHeaderRow(numKeyPoints, output)
     pieceData.foreach(entry => {
       entry._2.foreach(row => {
-        outputDataRow(row, System.out)
+        outputDataRow(row, output)
       })
     })
+    output.close()
   }
 
 
-  def outputData(data: Array[String], output: PrintStream): Unit = {
+  /**
+    * Writes a row to the output.
+    *
+    * @param data a row of data
+    * @param output PrintStream to output to
+    */
+  def outputDataRow(data: Array[String], output: PrintStream): Unit = {
 
     for(i <- 0 until (data.length - 1)) {
       output.append(data(i)).append(",")
@@ -79,18 +85,6 @@ object ModifyFastClassifierTrainingData {
     for(i <- 1 to numKeyPoints) {
       output.append(",").append(s"KeyPoint${i}X").append(",").append(s"KeyPoint${i}Y").append(",").append(s"KeyPoint${i}Resp")
     }
-    output.append(NL)
-  }
-
-  /**
-    * Writes a row to the output.
-    *
-    * @param data a row of data
-    * @param output PrintStream to output to
-    */
-  def outputDataRow(data: Array[String], output: PrintStream): Unit = {
-
-
     output.append(NL)
   }
 
