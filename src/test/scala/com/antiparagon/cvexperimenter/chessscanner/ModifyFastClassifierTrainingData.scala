@@ -5,6 +5,7 @@ import java.nio.file.{Files, Path, Paths, StandardCopyOption}
 
 import scala.collection.mutable
 import scala.io.Source
+import scala.util.Random
 
 
 /**
@@ -44,14 +45,19 @@ object ModifyFastClassifierTrainingData {
       pieceData(piece) += data
     }
 
+    var minExamples = 1000000 // A large number for intitialization
     pieceData.foreach(entry => {
       println(s"Piece: ${entry._1} - examples ${entry._2.size}")
+      if(entry._2.size < minExamples) {
+        minExamples = entry._2.size
+      }
     })
 
     val output = new PrintStream(new File(MOD_TRAINING_DATA))
     outputHeaderRow(numKeyPoints, output)
     pieceData.foreach(entry => {
-      entry._2.foreach(row => {
+      val rows = Random.shuffle(entry._2.toList).take(minExamples)
+      rows.foreach(row => {
         outputDataRow(row, output)
       })
     })

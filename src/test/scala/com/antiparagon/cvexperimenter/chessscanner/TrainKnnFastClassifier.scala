@@ -20,7 +20,7 @@ import scala.collection.mutable.ArrayBuffer
   */
 object TrainKnnFastClassifier {
 
-  val TRAINING_DATA = "FastClassifierData.csv"
+  val TRAINING_DATA = "ModFastClassifierData.csv"
 
   def main(args: Array[String]): Unit = {
 
