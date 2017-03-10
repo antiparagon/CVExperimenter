@@ -3,9 +3,8 @@ package com.antiparagon.cvexperimenter.chessscanner
 import java.io.File
 
 import smile.classification.KNN
-import smile.data.{Attribute, AttributeDataset, NominalAttribute, NumericAttribute, StringAttribute}
+import smile.data.{Attribute, NominalAttribute, NumericAttribute}
 import smile.data.parser.DelimitedTextParser
-import smile.neighbor.Neighbor
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -20,7 +19,8 @@ import scala.collection.mutable.ArrayBuffer
   */
 object TrainKnnFastClassifier {
 
-  val TRAINING_DATA = "ModFastClassifierData.csv"
+  val TRAINING_DATA = "TrainFastClassifierData.csv"
+  val TEST_DATA = "TestFastClassifierData.csv"
 
   def main(args: Array[String]): Unit = {
 
@@ -68,10 +68,15 @@ object TrainKnnFastClassifier {
       println(s"Attr: ${att.getName}")
     }
 
+    val knn = KNN.learn(x, y, 3)
+
+    // Load in the test data
+
+
     val totalMap = mutable.Map[String, Int]()
     val correctMap = mutable.Map[String, Int]()
     val wrongMap = mutable.Map[String, Int]()
-    val knn = KNN.learn(x, y, 3)
+
     var right = 0
     var total = 0
     for(i <- 0 until attData.size()) {
@@ -114,8 +119,6 @@ object TrainKnnFastClassifier {
     //println(s"Num Attr: ${attData.attributes.size}")
     //val response = attData.response()
     //println(s"Response: ${response.getName}")
-
-
 
   }
 
@@ -160,8 +163,8 @@ object TrainKnnFastClassifier {
     * @param classses
     */
   def outputClasses(attribute: Attribute, classses: Array[Int]): Unit = {
-      for(clazz <- classses) {
-        println(s"Class: ${attribute.toString(clazz)}")
-      }
+    for(clazz <- classses) {
+      println(s"Class: ${attribute.toString(clazz)}")
+    }
   }
 }
