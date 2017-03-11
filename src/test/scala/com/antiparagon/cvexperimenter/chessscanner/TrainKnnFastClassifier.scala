@@ -54,23 +54,32 @@ object TrainKnnFastClassifier {
 
     println(s"attributeBuffer length: ${attributeBuffer.length}")
 
-    val parser = new DelimitedTextParser()
-    parser.setDelimiter(",")
-    parser.setColumnNames(true)
-    parser.setResponseIndex(aSymbol, 3)
-    val attData = parser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
+    val trainingParser = new DelimitedTextParser()
+    trainingParser.setDelimiter(",")
+    trainingParser.setColumnNames(true)
+    trainingParser.setResponseIndex(aSymbol, 3)
+    val trainingAttData = trainingParser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
 
-    val x  = attData.toArray(new Array[Array[Double]](attData.size()))
-    val y = attData.toArray(new Array[Int](attData.size()))
+    val trainingX  = trainingAttData.toArray(new Array[Array[Double]](trainingAttData.size()))
+    val trainingY = trainingAttData.toArray(new Array[Int](trainingAttData.size()))
 
-    outputClasses(aSymbol, y)
-    for(att <- attData.attributes()) {
+    outputClasses(aSymbol, trainingY)
+    for(att <- trainingAttData.attributes()) {
       println(s"Attr: ${att.getName}")
     }
 
-    val knn = KNN.learn(x, y, 3)
+    val knn = KNN.learn(trainingX, trainingY, 3)
+
 
     // Load in the test data
+    val testParser = new DelimitedTextParser()
+    testParser.setDelimiter(",")
+    testParser.setColumnNames(true)
+    testParser.setResponseIndex(aSymbol, 3)
+    val testAttData = testParser.parse("FAST Test", attributeBuffer.toArray, new File(TEST_DATA))
+
+    val testX  = testAttData.toArray(new Array[Array[Double]](testAttData.size()))
+    val testY = testAttData.toArray(new Array[Int](testAttData.size()))
 
 
     val totalMap = mutable.Map[String, Int]()
@@ -79,9 +88,9 @@ object TrainKnnFastClassifier {
 
     var right = 0
     var total = 0
-    for(i <- 0 until attData.size()) {
-      val predict = knn.predict(x(i))
-      val correct = y(i)
+    for(i <- 0 until trainingAttData.size()) {
+      val predict = knn.predict(trainingX(i))
+      val correct = trainingY(i)
 
       if(!(totalMap contains aSymbol.toString(correct))) {
         totalMap += (aSymbol.toString(correct) -> 0)
