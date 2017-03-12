@@ -21,6 +21,7 @@ object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "TrainFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
+  val NUM_NEIGHBOORS = 3
 
   def main(args: Array[String]): Unit = {
 
@@ -68,7 +69,7 @@ object TrainKnnFastClassifier {
       println(s"Attr: ${att.getName}")
     }
 
-    val knn = KNN.learn(trainingX, trainingY, 3)
+    val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBOORS)
 
 
     // Load in the test data
@@ -88,9 +89,9 @@ object TrainKnnFastClassifier {
 
     var right = 0
     var total = 0
-    for(i <- 0 until trainingAttData.size()) {
-      val predict = knn.predict(trainingX(i))
-      val correct = trainingY(i)
+    for(i <- 0 until testAttData.size()) {
+      val predict = knn.predict(testX(i))
+      val correct = testY(i)
 
       if(!(totalMap contains aSymbol.toString(correct))) {
         totalMap += (aSymbol.toString(correct) -> 0)

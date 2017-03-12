@@ -32,7 +32,7 @@ class ChessPieceClassifierFast {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
-  val numScores = 5
+  val numScores = 15
 
   /*
     For debugging of the algorithm. Outputs intermediate stage images.

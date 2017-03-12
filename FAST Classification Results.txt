@@ -1,0 +1,123 @@
+5 Key points
+
+Correct prediction: 133 of 288
+P - 74
+R - 15
+N - 16
+Q - 7
+K - 10
+B - 11
+Wrong prediction: 155 of 288
+P - 70
+R - 21
+N - 20
+Q - 11
+K - 8
+B - 25
+Total: 288
+P - 144
+R - 36
+N - 36
+Q - 18
+K - 18
+B - 36
+
+
+7 Key points
+
+Correct prediction: 132 of 288
+P - 76
+R - 14
+N - 17
+Q - 10
+B - 6
+K - 9
+Wrong prediction: 156 of 288
+P - 68
+R - 22
+N - 19
+Q - 8
+K - 9
+B - 30
+Total: 288
+P - 144
+R - 36
+N - 36
+Q - 18
+K - 18
+B - 36
+
+
+10 Key points
+
+Correct prediction: 165 of 288
+P - 111
+R - 19
+N - 12
+Q - 10
+K - 6
+B - 7
+Wrong prediction: 123 of 288
+P - 33
+R - 17
+N - 24
+Q - 8
+K - 12
+B - 29
+Total: 288
+P - 144
+R - 36
+N - 36
+Q - 18
+K - 18
+B - 36
+
+
+12 Key points
+
+Correct prediction: 159 of 288
+P - 110
+R - 12
+N - 12
+Q - 8
+K - 8
+B - 9
+Wrong prediction: 129 of 288
+P - 34
+R - 24
+N - 24
+Q - 10
+K - 10
+B - 27
+Total: 288
+P - 144
+R - 36
+N - 36
+Q - 18
+K - 18
+B - 36
+
+
+15 Key points
+
+Correct prediction: 167 of 288
+P - 111
+R - 15
+N - 15
+Q - 4
+K - 12
+B - 10
+Wrong prediction: 121 of 288
+P - 33
+R - 21
+N - 21
+Q - 14
+K - 6
+B - 26
+Total: 288
+P - 144
+R - 36
+N - 36
+Q - 18
+K - 18
+B - 36
