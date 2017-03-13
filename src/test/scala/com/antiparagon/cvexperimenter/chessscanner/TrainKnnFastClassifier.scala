@@ -21,7 +21,7 @@ object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "TrainFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
-  val NUM_NEIGHBOORS = 3
+  val NUM_NEIGHBOORS = 1
 
   def main(args: Array[String]): Unit = {
 
@@ -32,12 +32,9 @@ object TrainKnnFastClassifier {
     attributeBuffer += aAvgY
     val aAvgResp = new NumericAttribute("AvgKeyPointResp")
     attributeBuffer += aAvgResp
-    //val aCoord = new StringAttribute("ChessboardCoord")
-    //attributeBuffer += aCoord
+    // Response attribute
     val aSymbol = new NominalAttribute("Symbol")
-    //attributeBuffer += aSymbol
-    //val aImage = new StringAttribute("Image")
-    //attributeBuffer += aImage
+
 
     val numKeyPoints =  determineNumKeypoints(TRAINING_DATA)
     println(s"Num keypoints: $numKeyPoints")
@@ -64,10 +61,6 @@ object TrainKnnFastClassifier {
     val trainingX  = trainingAttData.toArray(new Array[Array[Double]](trainingAttData.size()))
     val trainingY = trainingAttData.toArray(new Array[Int](trainingAttData.size()))
 
-    outputClasses(aSymbol, trainingY)
-    for(att <- trainingAttData.attributes()) {
-      println(s"Attr: ${att.getName}")
-    }
 
     val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBOORS)
 
@@ -126,10 +119,6 @@ object TrainKnnFastClassifier {
       println(s"${entry._1} - ${entry._2}")
     })
 
-    //println(s"Num Attr: ${attData.attributes.size}")
-    //val response = attData.response()
-    //println(s"Response: ${response.getName}")
-
   }
 
   /**
@@ -168,13 +157,4 @@ object TrainKnnFastClassifier {
     }
   }
 
-  /**
-    * Function to output the classes determined by the parser.
-    * @param classses
-    */
-  def outputClasses(attribute: Attribute, classses: Array[Int]): Unit = {
-    for(clazz <- classses) {
-      println(s"Class: ${attribute.toString(clazz)}")
-    }
-  }
 }
