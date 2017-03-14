@@ -44,7 +44,7 @@ object CreateFastClassifierTrainingData {
       pieceData(piece) += data
     }
 
-    var minExamples = 1000000 // A large number for intitialization
+    var minExamples = 1000000 // A large number for initialization
     pieceData.foreach(entry => {
       println(s"Piece: ${entry._1} - examples ${entry._2.size}")
       if(entry._2.size < minExamples) {
@@ -59,6 +59,9 @@ object CreateFastClassifierTrainingData {
       rows.foreach(row => {
         outputDataRow(row, output)
       })
+
+      // Output rows not used for training to test with
+
     })
     output.close()
   }

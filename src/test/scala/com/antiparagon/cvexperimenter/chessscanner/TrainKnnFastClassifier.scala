@@ -21,7 +21,7 @@ object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "TrainFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
-  val NUM_NEIGHBOORS = 1
+  val NUM_NEIGHBORS = 1
 
   def main(args: Array[String]): Unit = {
 
@@ -50,7 +50,6 @@ object TrainKnnFastClassifier {
       attributeBuffer += new NumericAttribute(s"KeyPoint${i}Resp")
     }
 
-    println(s"attributeBuffer length: ${attributeBuffer.length}")
 
     val trainingParser = new DelimitedTextParser()
     trainingParser.setDelimiter(",")
@@ -62,18 +61,18 @@ object TrainKnnFastClassifier {
     val trainingY = trainingAttData.toArray(new Array[Int](trainingAttData.size()))
 
 
-    val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBOORS)
+    val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBORS)
 
 
     // Load in the test data
-    val testParser = new DelimitedTextParser()
+    val testParser = new DelimitedTextParser
     testParser.setDelimiter(",")
     testParser.setColumnNames(true)
     testParser.setResponseIndex(aSymbol, 3)
     val testAttData = testParser.parse("FAST Test", attributeBuffer.toArray, new File(TEST_DATA))
 
-    val testX  = testAttData.toArray(new Array[Array[Double]](testAttData.size()))
-    val testY = testAttData.toArray(new Array[Int](testAttData.size()))
+    val testX  = testAttData.toArray(new Array[Array[Double]](testAttData.size))
+    val testY = testAttData.toArray(new Array[Int](testAttData.size))
 
 
     val totalMap = mutable.Map[String, Int]()
@@ -82,7 +81,7 @@ object TrainKnnFastClassifier {
 
     var right = 0
     var total = 0
-    for(i <- 0 until testAttData.size()) {
+    for(i <- 0 until testAttData.size) {
       val predict = knn.predict(testX(i))
       val correct = testY(i)
 
