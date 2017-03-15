@@ -15,13 +15,14 @@ import scala.util.Random
   */
 object CreateFastClassifierTrainingData {
 
+  val ALL_DATA = "AllFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
   val TRAINING_DATA = "TrainFastClassifierData.csv"
   val NL = System.lineSeparator
 
   def main(args: Array[String]): Unit = {
 
-    val numKeyPoints =  determineNumKeypoints(TEST_DATA)
+    val numKeyPoints =  determineNumKeypoints(ALL_DATA)
     println(s"Num keypoints: $numKeyPoints")
     if(numKeyPoints < 1) {
       println("Not enough keypoints for classification")
@@ -31,7 +32,7 @@ object CreateFastClassifierTrainingData {
     val pieceData = mutable.Map[String, mutable.ListBuffer[Array[String]]]()
 
     // Drop one to remove the column headers
-    for (line <- Source.fromFile(TEST_DATA).getLines.drop(1)) {
+    for (line <- Source.fromFile(ALL_DATA).getLines.drop(1)) {
       val data = line.split(",")
       if(data.length != (numKeyPoints * 3) + 4) {
         println("Unable to parse training data correctly")

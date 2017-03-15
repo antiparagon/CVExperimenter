@@ -11,7 +11,7 @@ import org.opencv.imgcodecs.Imgcodecs
   *
   * Created by wmckay on 1/16/17.
   */
-object CreateFastClassifierTestData {
+object CreateFastClassifierData {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
   val NL = System.lineSeparator
@@ -54,7 +54,7 @@ object CreateFastClassifierTestData {
   def main(args: Array[String]): Unit = {
 
     val NL = System.lineSeparator
-    val output = new PrintStream(new File("TestFastClassifierData.csv"))
+    val output = new PrintStream(new File("AllFastClassifierData.csv"))
 
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
