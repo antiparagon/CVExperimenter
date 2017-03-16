@@ -13,7 +13,7 @@ import scala.util.Random
   *
   * Created by wmckay on 3/2/17.
   */
-object CreateFastClassifierTrainingData {
+object CreateFastClassifierInputData {
 
   val ALL_DATA = "AllFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
@@ -53,18 +53,31 @@ object CreateFastClassifierTrainingData {
       }
     })
 
-    val output = new PrintStream(new File(TRAINING_DATA))
-    outputHeaderRow(numKeyPoints, output)
+    val trainingOutput = new PrintStream(new File(TRAINING_DATA))
+    outputHeaderRow(numKeyPoints, trainingOutput)
+
+    val testOutput = new PrintStream(new File(TEST_DATA))
+    outputHeaderRow(numKeyPoints, testOutput)
+
     pieceData.foreach(entry => {
-      val rows = Random.shuffle(entry._2.toList).take(minExamples)
-      rows.foreach(row => {
-        outputDataRow(row, output)
-      })
+      val rows = Random.shuffle(entry._2.toList)
+//      rows.foreach(row => {
+//        outputDataRow(row, trainingOutput)
+//      })
+
+      for(i <- 0 until rows.size) {
+        if(i < minExamples) {
+          outputDataRow(rows(i), trainingOutput)
+        } else {
+          outputDataRow(rows(i), testOutput)
+        }
+      }
 
       // Output rows not used for training to test with
 
     })
-    output.close()
+    trainingOutput.close()
+    testOutput.close()
   }
 
 

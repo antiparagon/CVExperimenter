@@ -21,7 +21,7 @@ object TrainKnnFastClassifier {
 
   val TRAINING_DATA = "TrainFastClassifierData.csv"
   val TEST_DATA = "TestFastClassifierData.csv"
-  val NUM_NEIGHBORS = 1
+  val NUM_NEIGHBORS = 2
 
   def main(args: Array[String]): Unit = {
 
