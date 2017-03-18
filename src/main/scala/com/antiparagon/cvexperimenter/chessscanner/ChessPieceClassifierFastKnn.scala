@@ -1,12 +1,19 @@
 package com.antiparagon.cvexperimenter.chessscanner
 
+import java.io.File
+
 import com.antiparagon.cvexperimenter.tools.ImageTools
 import org.opencv.core.{KeyPoint, Mat, MatOfKeyPoint, Scalar}
 import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
+import smile.classification.KNN
+import smile.data.{Attribute, NominalAttribute, NumericAttribute}
+import smile.data.parser.DelimitedTextParser
+
+import scala.collection.mutable.ArrayBuffer
 
 
-case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double, keyPoints: Array[KeyPoint])
+case class FeatureScoreFastKnn(avgX: Double, avgY: Double, avgResp: Double, keyPoints: Array[KeyPoint])
 
 /**
   * Created by wmckay on 3/17/17.
@@ -20,7 +27,7 @@ object ChessPieceClassifierFastKnn {
   def apply(debugImagePrefix: String): ChessPieceClassifierFastKnn = {
     val chessPieceClassifierFastKnn = new ChessPieceClassifierFastKnn
     chessPieceClassifierFastKnn.outputDebugImgs = true
-    chessPieceClassifierFastKnn.debugImgPrefix = debugImagePrefix //+ chessPieceClassifierFast.debugImgPrefix
+    chessPieceClassifierFastKnn.debugImgPrefix = debugImagePrefix //+ chessPieceClassifierFastKnn.debugImgPrefix
     chessPieceClassifierFastKnn
   }
 }
@@ -31,15 +38,39 @@ object ChessPieceClassifierFastKnn {
 class ChessPieceClassifierFastKnn {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
-  val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
+  val scores = scala.collection.mutable.Map[String, FeatureScoreFastKnn]()
   val numScores = 15
+
+  val NUM_NEIGHBORS = 2
+  val TRAINING_DATA = "TrainFastClassifierData.csv"
+  val attributeBuffer  = new ArrayBuffer[Attribute]()
+  val aAvgX = new NumericAttribute("AvgKeyPointX")
+  attributeBuffer += aAvgX
+  val aAvgY = new NumericAttribute("AvgKeyPointY")
+  attributeBuffer += aAvgY
+  val aAvgResp = new NumericAttribute("AvgKeyPointResp")
+  attributeBuffer += aAvgResp
+  // Response attribute
+  val aSymbol = new NominalAttribute("Symbol")
+
+  val trainingParser = new DelimitedTextParser()
+  trainingParser.setDelimiter(",")
+  trainingParser.setColumnNames(true)
+  trainingParser.setResponseIndex(aSymbol, 3)
+  val trainingAttData = trainingParser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
+
+  val trainingX  = trainingAttData.toArray(new Array[Array[Double]](trainingAttData.size()))
+  val trainingY = trainingAttData.toArray(new Array[Int](trainingAttData.size()))
+
+
+  val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBORS)
 
   /*
     For debugging of the algorithm. Outputs intermediate stage images.
    */
   var outputDebugImgs = false
   // Prefix for debug images
-  var debugImgPrefix = "ChessPieceClassifierFast"
+  var debugImgPrefix = "ChessPieceClassifierFastKnn"
 
   /**
     * Classifies the chess piece using FAST image detection features. The inputImg
@@ -79,7 +110,7 @@ class ChessPieceClassifierFastKnn {
       y = y / keyPoints.length.toDouble
       resp = resp / keyPoints.length.toDouble
 
-      scores += (coorStr -> FeatureScoreFast(x, y, resp, keyPoints))
+      scores += (coorStr -> FeatureScoreFastKnn(x, y, resp, keyPoints))
 
       var piece = "X"
 
