@@ -39,7 +39,6 @@ class ChessPieceClassifierFastKnn {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFastKnn]()
-  val numScores = 15
 
   val NUM_NEIGHBORS = 2
   val TRAINING_DATA = "TrainFastClassifierData.csv"
@@ -52,6 +51,19 @@ class ChessPieceClassifierFastKnn {
   attributeBuffer += aAvgResp
   // Response attribute
   val aSymbol = new NominalAttribute("Symbol")
+
+  val numKeyPoints =  determineNumKeypoints(TRAINING_DATA)
+  println(s"Num keypoints: $numKeyPoints")
+  if(numKeyPoints < 1) {
+    println("Not enough keypoints for classification")
+  }
+
+  // Add the number of key points found by parsing the training file
+  for(i <- 1 to numKeyPoints) {
+    attributeBuffer += new NumericAttribute(s"KeyPoint${i}X")
+    attributeBuffer += new NumericAttribute(s"KeyPoint${i}Y")
+    attributeBuffer += new NumericAttribute(s"KeyPoint${i}Resp")
+  }
 
   val trainingParser = new DelimitedTextParser()
   trainingParser.setDelimiter(",")
@@ -86,7 +98,7 @@ class ChessPieceClassifierFastKnn {
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
 
-    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(numScores)
+    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(numKeyPoints)
 
     var x = 0.0
     var y = 0.0
@@ -117,6 +129,42 @@ class ChessPieceClassifierFastKnn {
       Some(piece)
     } else {
       None
+    }
+  }
+
+  /**
+    * Determines the number of key points saved in the training data file.
+    *
+    * @param datafile
+    * @return number of keypoints or -1 if no key points were found
+    */
+  def determineNumKeypoints(datafile: String): Int = {
+    val firstLine = getFirstLine(new File(datafile))
+    firstLine match {
+      case Some(line) => {
+        val parts = line.split(",")
+        val numKeyPoints = parts.count(_.toLowerCase.startsWith("keypoint"))
+        if(numKeyPoints % 3 != 0) {
+          return -1
+        }
+        return numKeyPoints / 3
+      }
+      case None => return -1
+    }
+  }
+
+  /**
+    * Helper function that returns the first line of a file.
+    *
+    * @param file
+    * @return first line of a file or None
+    */
+  def getFirstLine(file: java.io.File): Option[String] = {
+    val src = io.Source.fromFile(file)
+    try {
+      src.getLines.find(_ => true)
+    } finally {
+      src.close()
     }
   }
 }
