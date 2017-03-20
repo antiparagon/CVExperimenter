@@ -124,6 +124,8 @@ class ChessPieceClassifierFastKnn {
 
       scores += (coorStr -> FeatureScoreFastKnn(x, y, resp, keyPoints))
 
+      // Encode data into input format for KNN
+
       var piece = "X"
 
       Some(piece)
