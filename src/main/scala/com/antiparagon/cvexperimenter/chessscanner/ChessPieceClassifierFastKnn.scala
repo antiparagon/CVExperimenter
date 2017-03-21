@@ -122,16 +122,34 @@ class ChessPieceClassifierFastKnn {
       y = y / keyPoints.length.toDouble
       resp = resp / keyPoints.length.toDouble
 
-      scores += (coorStr -> FeatureScoreFastKnn(x, y, resp, keyPoints))
+      val features = toDoubleArray(FeatureScoreFastKnn(x, y, resp, keyPoints))
 
-      // Encode data into input format for KNN
-
-      var piece = "X"
+      val predict = knn.predict(features)
+      var piece = aSymbol.toString(predict)
 
       Some(piece)
     } else {
       None
     }
+  }
+
+  /**
+    * Converts a FeatureScoreFastKnn into Array[Double].
+    *
+    * @param featureScore to convert
+    * @return Array[Double]
+    */
+  def toDoubleArray(featureScore: FeatureScoreFastKnn): Array[Double] = {
+    val doubleBuffer = scala.collection.mutable.ArrayBuffer[Double]()
+    doubleBuffer += featureScore.avgX
+    doubleBuffer += featureScore.avgY
+    doubleBuffer += featureScore.avgResp
+    featureScore.keyPoints.foreach(keyPoint => {
+      doubleBuffer += keyPoint.pt.x
+      doubleBuffer += keyPoint.pt.y
+      doubleBuffer += keyPoint.response
+    })
+    doubleBuffer.toArray
   }
 
   /**
