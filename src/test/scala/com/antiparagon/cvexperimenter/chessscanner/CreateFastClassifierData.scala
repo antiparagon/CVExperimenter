@@ -59,7 +59,7 @@ object CreateFastClassifierData {
     var chessPieceFinder = ChessPieceFinder(removeExt(CHESS_BOARD_NEW))
     doCHESS_BOARD_NEW(chessPieceFinder: ChessPieceFinder)
 
-    val numKeyPoints = chessPieceFinder.classifier.numScores
+    val numKeyPoints = chessPieceFinder.classifier.numKeyPoints
     // Output header row here because the number of key points points is now known from using ChessPieceFinder.
     outputHeaderRow(numKeyPoints, output)
 

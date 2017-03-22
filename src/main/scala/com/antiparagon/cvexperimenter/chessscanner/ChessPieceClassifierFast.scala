@@ -32,7 +32,7 @@ class ChessPieceClassifierFast {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
-  val numScores = 15
+  val numKeyPoints = 15
 
   /*
     For debugging of the algorithm. Outputs intermediate stage images.
@@ -55,7 +55,7 @@ class ChessPieceClassifierFast {
     val keyPointsMat = new MatOfKeyPoint()
     features.detect(squareImg, keyPointsMat)
 
-    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(numScores)
+    val keyPoints = keyPointsMat.toArray.sortWith(_.response > _.response).take(numKeyPoints)
 
     var x = 0.0
     var y = 0.0

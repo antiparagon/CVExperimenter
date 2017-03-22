@@ -17,7 +17,7 @@ object ChessPieceFinder {
     val chessPieceFinder = new ChessPieceFinder
     chessPieceFinder.outputDebugImgs = true
     chessPieceFinder.debugImgPrefix = debugImagePrefix
-    chessPieceFinder.classifier = ChessPieceClassifierFast(debugImagePrefix)
+    chessPieceFinder.classifier = ChessPieceClassifierFastKnn(debugImagePrefix)
     chessPieceFinder
   }
 }
@@ -33,7 +33,7 @@ class ChessPieceFinder {
   var outputDebugImgs = false
   // Prefix for debug images
   var debugImgPrefix = "ChessPieceFinder_"
-  var classifier = ChessPieceClassifierFast(debugImgPrefix)
+  var classifier = ChessPieceClassifierFastKnn(debugImgPrefix)
 
 
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {
