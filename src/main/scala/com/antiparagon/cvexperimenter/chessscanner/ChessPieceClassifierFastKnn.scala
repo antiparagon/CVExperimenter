@@ -3,8 +3,8 @@ package com.antiparagon.cvexperimenter.chessscanner
 import java.io.File
 
 import com.antiparagon.cvexperimenter.tools.ImageTools
-import org.opencv.core.{KeyPoint, Mat, MatOfKeyPoint, Scalar}
-import org.opencv.features2d.{FeatureDetector, Features2d}
+import org.opencv.core.{KeyPoint, Mat, MatOfKeyPoint}
+import org.opencv.features2d.FeatureDetector
 import org.opencv.imgcodecs.Imgcodecs
 import smile.classification.KNN
 import smile.data.{Attribute, NominalAttribute, NumericAttribute}

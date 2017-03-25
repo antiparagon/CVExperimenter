@@ -5,9 +5,6 @@ import org.opencv.core._
 import org.opencv.imgcodecs.Imgcodecs
 import org.slf4j.LoggerFactory
 
-import scala.collection.mutable
-
-
 /**
   * Factory methods to create ChessSquareFinder.
   *

@@ -6,3 +6,4 @@
 * Learn about OpenCV descriptor extractors
 * Test the webcam with ChessScanner
 * Upgrade to OpenCV 3.2
+* Use DL4J for piece classification
