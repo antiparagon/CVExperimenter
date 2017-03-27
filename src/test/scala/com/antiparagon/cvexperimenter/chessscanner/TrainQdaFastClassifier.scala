@@ -2,7 +2,7 @@ package com.antiparagon.cvexperimenter.chessscanner
 
 import java.io.File
 
-import smile.classification.{KNN, QDA}
+import smile.classification.{KNN, LDA, QDA}
 import smile.data.parser.DelimitedTextParser
 import smile.data.{Attribute, NominalAttribute, NumericAttribute}
 
@@ -61,7 +61,7 @@ object TrainQdaFastClassifier {
 
 
     //val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBORS)
-    val qda = new QDA(trainingX, trainingY)
+    val qda = new QDA(trainingX, trainingY, null, 0.000000000000000000000000000000000000001)
 
 
     // Load in the test data
