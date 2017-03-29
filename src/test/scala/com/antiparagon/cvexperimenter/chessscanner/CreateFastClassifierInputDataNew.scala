@@ -101,7 +101,7 @@ object CreateFastClassifierInputDataNew {
     * @param output PrintStream to output to
     */
   def outputHeaderRow(numKeyPoints: Int, output: PrintStream): Unit = {
-    output.append("AvgKeyPointX").append(",").append("AvgKeyPointY").append(",").append("AvgKeyPointResp").append(",").append("Symbol")
+    output.append("Symbol")
     // Add key point headers
     for(i <- 1 to numKeyPoints) {
       output.append(",").append(s"KeyPoint${i}X").append(",").append(s"KeyPoint${i}Y").append(",").append(s"KeyPoint${i}Resp")
