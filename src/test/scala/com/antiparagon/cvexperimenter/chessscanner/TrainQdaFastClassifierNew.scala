@@ -17,20 +17,14 @@ import scala.collection.mutable.ArrayBuffer
   *
   * Created by wmckay on 3/26/17.
   */
-object TrainQdaFastClassifier {
+object TrainQdaFastClassifierNew {
 
-  val TRAINING_DATA = "TrainFastClassifierData.csv"
-  val TEST_DATA = "TestFastClassifierData.csv"
+  val TRAINING_DATA = "TrainFastClassifierDataNew.csv"
+  val TEST_DATA = "TestFastClassifierDataNew.csv"
 
   def main(args: Array[String]): Unit = {
 
     val attributeBuffer  = new ArrayBuffer[Attribute]()
-    val aAvgX = new NumericAttribute("AvgKeyPointX")
-    attributeBuffer += aAvgX
-    val aAvgY = new NumericAttribute("AvgKeyPointY")
-    attributeBuffer += aAvgY
-    val aAvgResp = new NumericAttribute("AvgKeyPointResp")
-    attributeBuffer += aAvgResp
     // Response attribute
     val aSymbol = new NominalAttribute("Symbol")
 
@@ -53,7 +47,7 @@ object TrainQdaFastClassifier {
     val trainingParser = new DelimitedTextParser()
     trainingParser.setDelimiter(",")
     trainingParser.setColumnNames(true)
-    trainingParser.setResponseIndex(aSymbol, 3)
+    trainingParser.setResponseIndex(aSymbol, 0)
     val trainingAttData = trainingParser.parse("FAST Train", attributeBuffer.toArray, new File(TRAINING_DATA))
 
     val trainingX  = trainingAttData.toArray(new Array[Array[Double]](trainingAttData.size()))
@@ -61,14 +55,14 @@ object TrainQdaFastClassifier {
 
 
     //val knn = KNN.learn(trainingX, trainingY, NUM_NEIGHBORS)
-    val qda = new QDA(trainingX, trainingY, null, 0.000000000000000000000000000000000000001)
+    val qda = new QDA(trainingX, trainingY, null, 0.00000000000000001)
 
 
     // Load in the test data
     val testParser = new DelimitedTextParser
     testParser.setDelimiter(",")
     testParser.setColumnNames(true)
-    testParser.setResponseIndex(aSymbol, 3)
+    testParser.setResponseIndex(aSymbol, 0)
     val testAttData = testParser.parse("FAST Test", attributeBuffer.toArray, new File(TEST_DATA))
 
     val testX  = testAttData.toArray(new Array[Array[Double]](testAttData.size))

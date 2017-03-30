@@ -17,6 +17,7 @@ object ChessPieceFinder {
     val chessPieceFinder = new ChessPieceFinder
     chessPieceFinder.outputDebugImgs = true
     chessPieceFinder.debugImgPrefix = debugImagePrefix
+    //chessPieceFinder.classifier = ChessPieceClassifierFastKnn(debugImagePrefix)
     chessPieceFinder.classifier = ChessPieceClassifierFast(debugImagePrefix)
     chessPieceFinder
   }

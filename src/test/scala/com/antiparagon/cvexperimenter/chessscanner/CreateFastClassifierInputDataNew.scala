@@ -33,11 +33,11 @@ object CreateFastClassifierInputDataNew {
     // Drop one to remove the column headers
     for (line <- Source.fromFile(ALL_DATA).getLines.drop(1)) {
       val data = line.split(",")
-      if(data.length != (numKeyPoints * 3) + 4) {
+      if(data.length != (numKeyPoints * 3) + 1) {
         println("Unable to parse training data correctly")
         return
       }
-      val piece = data(3)
+      val piece = data(0)
       if(!pieceData.contains(piece)) {
         pieceData += (piece -> mutable.ListBuffer())
       }
