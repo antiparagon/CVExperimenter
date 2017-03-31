@@ -10,10 +10,9 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /**
-  * Trains a KNN classifier using the FAST training data. Currently uses the
-  * Statistical Machine Intelligence and Learning Engine project.
-  * The SMILE library (http://haifengl.github.io/smile/) has a Java and
-  * Scala API.
+  * Trains a KNN classifier using the FAST training data. Removed the
+  * average keypoint x, y, and response data. It only uses the raw
+  * keypoint data.
   *
   * Created by wmckay on 3/30/17.
   */

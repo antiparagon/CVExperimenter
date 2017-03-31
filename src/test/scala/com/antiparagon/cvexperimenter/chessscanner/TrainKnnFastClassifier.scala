@@ -84,10 +84,10 @@ object TrainKnnFastClassifier {
     for(i <- 0 until testAttData.size) {
 
 
-      for(j <- 0 until testX(i).length) {
-        System.out.print(s"${testX(i)(j)} ")
-      }
-      System.out.println()
+//      for(j <- 0 until testX(i).length) {
+//        System.out.print(s"${testX(i)(j)} ")
+//      }
+//      System.out.println()
 
       val predict = knn.predict(testX(i))
       val correct = testY(i)
