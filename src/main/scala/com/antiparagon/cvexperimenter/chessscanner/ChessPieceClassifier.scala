@@ -7,6 +7,8 @@ import org.opencv.core.Mat
   */
 trait ChessPieceClassifier {
 
+  val numKeyPoints = 0
+
   def classifyPiece(inputImg: Mat, coorStr: String): Option[String]
 
 }

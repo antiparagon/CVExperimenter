@@ -35,7 +35,7 @@ class ChessPieceFinder {
   // Prefix for debug images
   var debugImgPrefix = "ChessPieceFinder_"
   //var classifier = ChessPieceClassifierFastKnn(debugImgPrefix)
-  var classifier = ChessPieceClassifierFast(debugImgPrefix)
+  var classifier: ChessPieceClassifier = ChessPieceClassifierFast(debugImgPrefix)
 
 
   def findChessPieces(chessboard: Chessboard, boardImg: Mat): Int = {

@@ -52,7 +52,7 @@ class ChessPieceClassifierFastKnn extends ChessPieceClassifier {
   // Response attribute
   val aSymbol = new NominalAttribute("Symbol")
 
-  val numKeyPoints =  FeatureUtils.determineNumKeypoints(TRAINING_DATA)
+  override val numKeyPoints =  FeatureUtils.determineNumKeypoints(TRAINING_DATA)
   println(s"Num keypoints: $numKeyPoints")
   if(numKeyPoints < 1) {
     println("Not enough keypoints for classification")

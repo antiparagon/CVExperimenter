@@ -32,7 +32,7 @@ class ChessPieceClassifierFast extends ChessPieceClassifier {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
-  val numKeyPoints = 15
+  override val numKeyPoints = 15
 
   /*
     For debugging of the algorithm. Outputs intermediate stage images.
