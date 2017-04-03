@@ -28,7 +28,7 @@ object ChessPieceClassifierFast {
 /**
   * Created by wmckay on 9/20/16.
   */
-class ChessPieceClassifierFast {
+class ChessPieceClassifierFast extends ChessPieceClassifier {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
   val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
