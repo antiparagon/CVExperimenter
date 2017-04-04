@@ -124,7 +124,7 @@ object CreateFastClassifierData {
     */
   def outputScores(finder: ChessPieceFinder, numKeyPoints: Int, output: PrintStream): Unit = {
     val NL = System.lineSeparator
-    finder.classifier.scores.keyPoints.foreach {
+    finder.classifier.scores.foreach {
       case(coord, score) => {
         output.append(score.avgX.toString).append(",").append(score.avgY.toString).append(",").append(score.avgResp.toString).append(",").append(getSymbol(coord))
           // Add keypoints points

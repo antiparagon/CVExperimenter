@@ -38,7 +38,6 @@ object ChessPieceClassifierFastKnn {
 class ChessPieceClassifierFastKnn extends ChessPieceClassifier {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
-  val scores = scala.collection.mutable.Map[String, FeatureScoreFastKnn]()
 
   val NUM_NEIGHBORS = 2
   val TRAINING_DATA = "TrainFastClassifierData.csv"

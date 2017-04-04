@@ -6,8 +6,6 @@ import org.opencv.features2d.{FeatureDetector, Features2d}
 import org.opencv.imgcodecs.Imgcodecs
 
 
-case class FeatureScoreFast(avgX: Double, avgY: Double, avgResp: Double, keyPoints: Array[KeyPoint])
-
 /**
   * Created by wmckay on 1/4/17.
   */
@@ -31,7 +29,6 @@ object ChessPieceClassifierFast {
 class ChessPieceClassifierFast extends ChessPieceClassifier {
 
   val features = FeatureDetector.create(FeatureDetector.FAST)
-  val scores = scala.collection.mutable.Map[String, FeatureScoreFast]()
   override val numKeyPoints = 15
 
   /*
@@ -79,7 +76,7 @@ class ChessPieceClassifierFast extends ChessPieceClassifier {
       y = y / keyPoints.length.toDouble
       resp = resp / keyPoints.length.toDouble
 
-      scores += (coorStr -> FeatureScoreFast(x, y, resp, keyPoints))
+      scores += (coorStr -> FeatureScore(x, y, resp, keyPoints))
 
       var piece = "X"
 
