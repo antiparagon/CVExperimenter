@@ -9,9 +9,9 @@ import org.opencv.imgcodecs.Imgcodecs
   * This file is meant to collect the classifier data from the example chessboard images
   * saved in the 'CVExperimenter/images/Chess Scanner/Starting Position' folder.
   *
-  * Created by wmckay on 1/16/17.
+  * Created by wmckay on 4/5/17.
   */
-object CreateFastClassifierData {
+object CreateXXXClassifierData {
 
   System.loadLibrary(Core.NATIVE_LIBRARY_NAME)
   val NL = System.lineSeparator

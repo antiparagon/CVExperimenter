@@ -47,7 +47,7 @@ object CreateFastClassifierDataNew {
 
 
   /**
-    * Main() that creates the 'TestFastClassiferDataNew.csv' data file.
+    * Main() that creates the data file.
     *
     * @param args
     */
